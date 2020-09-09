@@ -41,5 +41,26 @@ function update(user, success, fail) {
     .then(success)
     .catch(fail);
 }
-
-export { findById, signup, login, update };
+// 비밀번호찾기
+function findpw(name, email, success, fail) {
+  const user = {
+    name: name,
+    email: email
+  };
+  instance
+    .post("/api/users/findpw", JSON.stringify(user))
+    .then(success)
+    .catch(fail)
+}
+// 이메일전송
+function sendEmail(name, email, success, fail) {
+  const user = {
+    name: name,
+    email: email
+  };
+  instance
+    .post("/api/users/sendemail", JSON.stringify(user))
+    .then(success)
+    .catch(fail)
+}
+export { findById, signup, login, update, findpw, sendEmail };
