@@ -21,6 +21,8 @@ public interface IWalletService
 {
 	Wallet get(long userId);
 
+	Wallet get(String walletAddress);
+	
 	@Transactional
 	Wallet register(Wallet wallet);
 

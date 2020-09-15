@@ -36,7 +36,7 @@ public class WalletController {
 	@ApiOperation(value = "Register wallet of user")
 	@RequestMapping(value = "/wallets", method = RequestMethod.POST)
 	public Wallet register(@Valid @RequestBody Wallet wallet) {
-		return null;
+		return walletService.register(wallet);
 	}
 
 	/**
@@ -47,7 +47,12 @@ public class WalletController {
 	@ApiOperation(value = "Fetch wallet by address")
 	@RequestMapping(value = "/wallets/{address}", method = RequestMethod.GET)
 	public Wallet get(@PathVariable String address) {
-		return null;
+		Wallet wallet = walletService.get(address);
+		if (wallet == null) {
+			logger.error("NOT FOUND WALLET BY WALLET ADDRESS: ", address);
+			throw new NotFoundException(address + " 주소의 지갑 정보를 찾을 수 없습니다.");
+		}
+		return wallet;
 	}
 
 	/**
@@ -58,7 +63,14 @@ public class WalletController {
 	@ApiOperation(value = "Fetch wallet of user")
 	@RequestMapping(value = "/wallets/of/{uid}", method = RequestMethod.GET)
 	public Wallet getByUser(@PathVariable long uid) {
-		return null;
+		System.out.println(uid);
+		Wallet wallet = walletService.get(uid);
+		System.out.println(wallet);
+		if (wallet == null) {
+			logger.error("NOT FOUND WALLET BY USER ID: ", uid);
+			throw new NotFoundException(uid + " 회원의 지갑 정보를 찾을 수 없습니다.");
+		}
+		return wallet;
 	}
 
 	/**
@@ -69,6 +81,7 @@ public class WalletController {
 	@ApiOperation(value = "Request ether")
 	@RequestMapping(value ="/wallets/{address}", method = RequestMethod.PUT)
 	public Wallet requestEth(@PathVariable String address){ // 테스트 가능하도록 일정 개수의 코인을 충전해준다.
-		return null;
+		System.out.println(address);
+		return walletService.requestEth(address);
 	}
 }
