@@ -9,13 +9,20 @@ import MyPage from "@/views/MyPage.vue";
 import Item from "@/views/Item.vue";
 import Explorer from "@/views/Explorer.vue";
 import Escrow from "@/views/Escrow.vue";
-
+//비밀번호찾기
+import FindPw from "@/views/FindPw.vue";
 Vue.use(VueRouter);
 
 /**
  * 아래의 router를 변경하여 구현할 수 있습니다.
  */
 const routes = [
+  //비밀번호찾기 페이지 추가
+  {
+    path: "/findpw",
+    name: "findpw",
+    component: FindPw,
+  },
   {
     path: "/",
     name: "home",
@@ -183,7 +190,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register"].includes(to.path) ||
+    ["/", "/login", "/register","/findpw"].includes(to.path) ||
     to.path.startsWith("/explorer");
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
