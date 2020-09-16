@@ -14,7 +14,8 @@ public class UserFactory {
         user.setName(rs.getString("name"));
         user.setEmail(rs.getString("email"));
         user.setPassword(rs.getString("password"));
-        user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+        user.setSignupDate(rs.getTimestamp("created_at").toLocalDateTime());
+//        user.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
 
         return user;
     }
