@@ -61,6 +61,7 @@
 import { registerWallet } from "@/api/wallet.js";
 import Web3 from "web3";
 import MyPageNav from "./MyPageNav.vue";
+import { BLOCKCHAIN_URL } from '../../config';
 
 export default {
   components: {
@@ -81,15 +82,33 @@ export default {
        * TODO: PJTⅡ 과제 Req.1-1 [지갑 생성]
        * web3 api를 사용하여 지갑을 생성한다.
        */
-      
 
-      this.step += 1;
+        // 1) Web3 클래스의 인스턴스 생성
+        var web3 = new Web3(BLOCKCHAIN_URL);
+
+        // 2) accounts(wallet) 생성
+        
+        var privateKey = web3.eth.accounts.create().privateKey;
+
+        web3.eth.personal.newAccount(privateKey)
+        .then( response => {
+          this.privateKey = privateKey;
+          this.walletAddress = response;
+          this.step += 1;
+          alert("지갑 생성이 완료되었습니다.");
+        });
     },
     saveWallet: function() {
-      /**
-       * TODO: PJTⅡ 과제 Req.1-1 [지갑 생성]
-       * 생성된 사용자의 지갑 정보를 서버에 등록한다.
-       */
+        registerWallet(this.userId, this.walletAddress,
+          response => {
+            this.sharedState.user.walletAddress = this.walletAddress;
+            alert("지갑이 등록되었습니다.");
+            this.$router.push("/mypage/wallet_info");
+          },
+          error => {
+            console.error(error);
+          }
+        );
      
     }
   }

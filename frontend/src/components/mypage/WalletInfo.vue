@@ -117,6 +117,15 @@ export default {
        * TODO: PJTⅡ 과제1 Req.1-2 [지갑 조회]
        * 사용자 지갑을 조회하여 잔액을 화면에 보여준다.
        */
+      walletService.findByUserId(this.userId, 
+        response => {
+          console.log(response);
+          this.wallet = response.data;
+        },
+        function(error){
+          console.log(error);
+        }
+      );
 
       /**
        * TODO: PJTⅡ 과제3 Req.1-3 [지갑 조회 확장]
@@ -129,6 +138,18 @@ export default {
      * 이더 충전을 요청
      */
     chargeETH() {
+      const vm = this;
+      this.isCharging = true;
+      walletService.chargeEther(this.walletAddress,
+        response => {
+          this.isCharging = false;
+          this.wallet = response.data;
+          console.log(response);
+        },
+        error => {
+          console.log(error);
+        }  
+      )
   
     },
     chargeCash() {

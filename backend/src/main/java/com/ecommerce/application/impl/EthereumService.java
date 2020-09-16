@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.*;
@@ -57,40 +58,56 @@ public class EthereumService implements IEthereumService {
 	}
 
 	/**
-	 * TODO Sub PJT Ⅱ 과제 1
-	 * 이더리움으로부터 해당 주소의 잔액을 조회한다.
+	 * TODO Sub PJT Ⅱ 과제 1 이더리움으로부터 해당 주소의 잔액을 조회한다.
+	 * 
 	 * @param address
 	 * @return BigInteger
 	 */
 	@Override
-	public BigInteger getBalance(String address){
-		return null;
+	public BigInteger getBalance(String address) {
+		EthGetBalance ethGetBalance = null;
+		try {
+			ethGetBalance = web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST).send();
+			System.out.println("성공 " + ethGetBalance.getBalance());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ethGetBalance.getBalance();
+
 	}
 
 	/**
-	 * TODO Sub PJT Ⅱ 과제 1
-	 * [주소]로 시스템에서 정한 양 만큼 이더를 송금한다.
-	 * 이더를 송금하는 트랜잭션을 생성, 전송한 후 결과인
-	 * String형의 트랜잭션 hash 값을 반환한다.
+	 * TODO Sub PJT Ⅱ 과제 1 [주소]로 시스템에서 정한 양 만큼 이더를 송금한다. 이더를 송금하는 트랜잭션을 생성, 전송한 후
+	 * 결과인 String형의 트랜잭션 hash 값을 반환한다.
+	 * 
 	 * @param address
 	 * @return String 생성된 트랜잭션의 hash 반환 (참고, TransactionReceipt)
 	 */
 	@Override
 	public String requestEth(final String address) // 특정 주소로 테스트 특정 양(5Eth) 만큼 충전해준다.
 	{
-		return null;
+		TransactionReceipt transactionReceipt = null;
+		try {
+			BigDecimal value = BigDecimal.valueOf(0.1);
+			CommonUtil commonUtil = new CommonUtil();
+			Credentials credentials = commonUtil.getCredential(ADMIN_WALLET_FILE, PASSWORD);
+			transactionReceipt = Transfer.sendFunds(web3j, credentials, address, value, Convert.Unit.ETHER).send();
+			System.out.println(transactionReceipt);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return transactionReceipt.getTransactionHash();
 	}
 
 	/**
-	 * TODO Sub PJT Ⅲ 추가과제
-	 * 이더리움으로부터 해당 주소의 잔액을 조회하고
-	 * 동기화한 트랜잭션 테이블로부터 Address 정보의 trans 필드를 완성하여
-	 * 정보를 반환한다.
+	 * TODO Sub PJT Ⅲ 추가과제 이더리움으로부터 해당 주소의 잔액을 조회하고 동기화한 트랜잭션 테이블로부터 Address 정보의
+	 * trans 필드를 완성하여 정보를 반환한다.
+	 * 
 	 * @param addr
 	 * @return Address
 	 */
 	@Override
-	public Address getAddress(String addr){
+	public Address getAddress(String addr) {
 		return null;
 	}
 
