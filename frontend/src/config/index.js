@@ -2,7 +2,7 @@
  * TODO: 개발 및 배포 환경 에 맞추어 아래의 상수들을 지정합니다.
  */
 const API_BASE_URL = "https://j3b101.p.ssafy.io";
-const BLOCKCHAIN_URL = "http://j3b101.p.ssafy.io:8545";
+const BLOCKCHAIN_URL = "https://j3b101.p.ssafy.io:8545";
 const BLOCKCHAIN_WEBSOCKET_URL = "ws://127.0.0.1:8545";
 const ITEM_INVENTORY_CONTRACT_ADDRESS =
     "0x0c2BC3cAB0036D1E51734B4D6e6cb8BCB046A2C7";
