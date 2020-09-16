@@ -27,6 +27,12 @@
           <button type="submit" class="btn btn-primary" v-on:click="login">
             로그인
           </button>
+           <router-link
+            :to="{ name: 'findpw' }"
+            class="btn btn-primary "
+          >
+            비밀번호 찾기
+          </router-link>
         </div>
       </div>
     </div>
