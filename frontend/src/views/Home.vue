@@ -4,9 +4,9 @@
     <div id="main-overview" class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1>DCOMMERCE PLATFORM</h1>
+          <h1>GuaranTicket</h1>
           <h4 class="mt-5">
-            블록체인 기반의 에스크로를 사용하는 전자상거래 플랫폼을 이용해보세요!
+            모두가 함께 만드는 공정한 티켓 거래
           </h4>
           <router-link
             :to="{ name: 'signup' }"

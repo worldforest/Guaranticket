@@ -5,6 +5,8 @@ import com.ecommerce.domain.User;
 import com.ecommerce.domain.exception.DomainException;
 import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
+import com.ecommerce.mapper.UserMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +50,8 @@ public class UserController {
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public User get(@PathVariable int id) {
-
         User user = userService.get(id);
+        
         if (user == null) {
             logger.error("NOT FOUND ID: ", id);
             throw new NotFoundException(id + " 회원 정보를 찾을 수 없습니다.");
@@ -60,9 +62,11 @@ public class UserController {
 
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     public User login(@RequestBody User user) {
-        User userFetched = userService.get(user.getEmail());
+    	User userFetched = userService.get(user.getEmail());
+    	
         if (!userFetched.getPassword().equals(user.getPassword()))
             throw new DomainException("비밀번호가 일치하지 않습니다.");
+        
         userFetched.setPassword("");
         return userFetched;
     }
@@ -78,7 +82,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable long id) {
         userService.delete(id);
     }
     
