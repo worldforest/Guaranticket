@@ -34,32 +34,31 @@ public class PerformanceRepository implements IPerformanceRepository
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	@Override
-	public List<Performance> list() {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances"); // where available
-		try {
-			return this.jdbcTemplate.query(sbSql.toString(),
-							   new Object[]{true}, (rs, rowNum) -> PerformanceFactory.create(rs));
-		} catch (Exception e) {
-			throw new RepositoryException(e, e.getMessage());
-		}
-		
-	}
-
-	@Override
-	public List<Performance> getByPid(long pid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid=? ");
-		try {
-			return this.jdbcTemplate.query(sbSql.toString(),
-					new Object[]{ pid }, (rs, rowNum) -> PerformanceFactory.create(rs));
-		} catch (Exception e) {
-			throw new RepositoryException(e, e.getMessage());
-		}
-	}
-
+//	@Override
+//	public List<Performance> list() {
+//		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances"); // where available
+//		try {
+//			return this.jdbcTemplate.query(sbSql.toString(),
+//							   new Object[]{true}, (rs, rowNum) -> PerformanceFactory.create(rs));
+//		} catch (Exception e) {
+//			throw new RepositoryException(e, e.getMessage());
+//		}
+//		
+//	}
+//
+//	@Override
+//	public List<Performance> getByPid(long pid) {
+//		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid=? ");
+//		try {
+//			return this.jdbcTemplate.query(sbSql.toString(),
+//					new Object[]{ pid }, (rs, rowNum) -> PerformanceFactory.create(rs));
+//		} catch (Exception e) {
+//			throw new RepositoryException(e, e.getMessage());
+//		}
+//	}
+//
 	@Override
 	public Performance get(long pid) {
-		System.out.println("pid = "+pid);
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid=?");
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
@@ -87,6 +86,7 @@ public class PerformanceRepository implements IPerformanceRepository
 			paramMap.put("notice", performance.getNotice());
 			paramMap.put("detail", performance.getDetail());
 			paramMap.put("permission", performance.getPermission());
+			paramMap.put("uid", performance.getUid());
 			
 			this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 					.withTableName("performances")
@@ -102,7 +102,23 @@ public class PerformanceRepository implements IPerformanceRepository
 	}
 
 	@Override
-	public int update(Performance performance) {
+	public int updatePermission(long pid) {
+		StringBuilder sbSql =  new StringBuilder("UPDATE performances ");
+		sbSql.append("SET permission = ? ");
+		sbSql.append("where pid = ?");
+		try {
+			return this.jdbcTemplate.update(sbSql.toString(),
+								new Object[] {
+										true,
+										pid
+								});
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+
+//	@Override
+//	public int update(Performance performance) {
 //		StringBuilder sbSql =  new StringBuilder("UPDATE performances ");
 //		sbSql.append("SET name=?, category=?, explanation=?, available=? ");
 //		sbSql.append("where id=?");
@@ -118,11 +134,11 @@ public class PerformanceRepository implements IPerformanceRepository
 //		} catch (Exception e) {
 //			throw new RepositoryException(e, e.getMessage());
 //		}
-		return 0;
-	}
-
-	@Override
-	public int delete(final long pid) {
+//		return 0;
+//	}
+//
+//	@Override
+//	public int delete(final long pid) {
 //		StringBuilder sbSql =  new StringBuilder("UPDATE items ");
 //		sbSql.append("SET available=? ");
 //		sbSql.append("where id=?");
@@ -133,7 +149,7 @@ public class PerformanceRepository implements IPerformanceRepository
 //		} catch (Exception e) {
 //			throw new RepositoryException(e, e.getMessage());
 //		}
-		return 0;
-	}
+//		return 0;
+//	}
 
 }

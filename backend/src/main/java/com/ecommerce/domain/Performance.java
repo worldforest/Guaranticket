@@ -17,13 +17,14 @@ public class Performance
 	private String attendance;
 	private String notice;
 	private String detail;
-	private Boolean permission =false;
+	private Boolean permission;
+	private long uid;
 	@Override
 	public String toString() {
 		return "Performance [pid=" + pid + ", title=" + title + ", poster=" + poster + ", category=" + category
 				+ ", location=" + location + ", place=" + place + ", running=" + running + ", term=" + term
 				+ ", attendance=" + attendance + ", notice=" + notice + ", detail=" + detail + ", permission="
-				+ permission + "]";
+				+ permission + ", uid=" + uid + "]";
 	}
 	
 }
