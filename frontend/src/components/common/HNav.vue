@@ -2,7 +2,6 @@
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
     <div class="container">
       <img id="nav-icon" src="../../../public/images/guaranticket.svg">
-      <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
       <router-link class="navbar-brand" to="/">GuaranTicket</router-link>
       <div
         class="navbar-collapse offcanvas-collapse"

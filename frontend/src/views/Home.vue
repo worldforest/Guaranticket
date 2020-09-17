@@ -8,6 +8,17 @@
           <h4 class="mt-5">
             모두가 함께 만드는 공정한 티켓 거래
           </h4>
+          <div>
+            <v-card>
+              <v-responsive :aspect-ratio="16/9">
+               <v-img
+                height="200"
+                width="200"
+                src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
+              ></v-img>
+              </v-responsive>
+            </v-card>
+          </div>
           <router-link
             :to="{ name: 'signup' }"
             class="btn btn-lg btn-primary mt-5"
@@ -20,7 +31,7 @@
             class="btn btn-lg btn-primary mt-5"
             v-if="$store.state.isSigned"
           >
-            Shop
+            hello
           </router-link>
         </div>
       </div>
