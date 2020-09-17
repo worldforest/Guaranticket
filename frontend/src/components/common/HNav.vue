@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+  <nav class="navbar navbar-expand fixed-top navbar-dark basic-color">
     <div class="container">
       <img id="nav-icon" src="../../../public/images/guaranticket.svg">
       <router-link class="navbar-brand" to="/">GuaranTicket</router-link>
@@ -10,34 +10,23 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link class="nav-link" to="/explorer/dashboard"
-              >공연가기</router-link
+              >콘서트</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/shop">티켓거래</router-link>
+            <router-link class="nav-link" to="/shop">뮤지컬</router-link>
           </li>
-          <li class="nav-item" v-if="$store.state.isSigned">
-            <router-link
-              class="nav-link"
-              to="/mypage/wallet_create"
-              v-if="!$store.state.user.walletAddress"
-              >MyPage</router-link
-            >
-            <router-link
-              class="nav-link"
-              to="/mypage/wallet_info"
-              v-if="$store.state.user.walletAddress"
-              >MyPage</router-link
-            >
+          <li class="nav-item">
+            <router-link class="nav-link" to="/shop">스포츠</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/shop">거래하기</router-link>
           </li>
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/login">로그인</router-link>
           </li>
-          <li class="nav-item" v-if="!$store.state.isSigned">
-            <router-link class="nav-link" to="/register">회원가입</router-link>
-          </li>
           <li class="nav-item" v-if="$store.state.isSigned">
-            <router-link class="nav-link" to="/logout">로그아웃</router-link>
+            <router-link class="nav-link" to="/logout">MyPage</router-link>
           </li>
         </ul>
       </div>
