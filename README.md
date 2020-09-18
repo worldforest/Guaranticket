@@ -82,7 +82,7 @@
 ![SEQD](./산출물/시퀀스%20다이어그램/티켓판매.jpg)
 
 ### REST API
-![REST_API](./산출물/REST%20API/REST_API.jpg)
+![REST_API](./산출물/REST%20API/REST%20API.jpg)
 
 ## 테스트 방법
 > - URL : https://j3b101.p.ssafy.io/
