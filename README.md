@@ -10,7 +10,7 @@
 - [기술 설명](#기술-설명)
 	- [ERD](#erd)
 	- [SEQD](#seqd)
-	- [기타](#기타)
+	- [REST API](#rest-api)
 - [테스트 방법](#테스트-방법)
 
 ## 개요
@@ -44,7 +44,7 @@
 |6|디버깅 및 UCC 제작|
 
 ## 기술 스택
-| PART|TECH|
+|PART|TECH|
 |:--:|----|
 |FRONTEND|`Vue.js` `Vuetify`|
 |BACKEND|`Springboot` `MyBatis` `Lombok`|
@@ -61,7 +61,7 @@
 ### ERD
 ![ERD](./산출물/ER%20다이어그램/ERD.png)
 
-### SQED
+### SEQD
 
 > #### 회원
 
