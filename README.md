@@ -1,5 +1,6 @@
 # Guranticket : 개런티켓
-> Guarantee + Ticket
+> - Guarantee + Ticket
+> - 블록체인의 투명성을 활용한 공정한 티켓거래 플랫폼
 
 ## 목차
 - [개요](#개요)
@@ -22,8 +23,12 @@
 
 
 ## 기능
-### 블록체인의 투명성을 활용한 공정한 티켓거래 플랫폼
->
+|번호|기능|기대효과|
+|:--:|----|--------|
+|1|구매 수량 제한|공연당 살 수 있는 갯수의 제한을 둬서 사재기 방지|
+|2|티켓 양도가 제한|블록에 기록된 최초 구매 가격을 통해 적정가에 가격에 양도할 수 있도록 함|
+|3|공연사와 계약 보장|블록에 기록된 거래내역을 통해 계약 신뢰성 보장|
+|4|구매자-사용자 불일치 시 입장불가|암거래를 통한 구매 행위를 막음|
 
 
 
@@ -45,7 +50,7 @@
 |BACKEND|`Springboot` `MyBatis` `Lombok`|
 |BLOCKCHAIN|`Go-Ethereum` `web.3js` `web3.j` |
 |DATABASE|`MYSQL`|
-|SERVER|`AWS EC2 Ubuntu 18.04` `Nginx` `Springboot Tomcat 8.0`|
+|SERVER|`AWS EC2 Ubuntu 18.04` `Nginx` `Springboot Tomcat 8.0` `SSL`|
 |CO-WORK|`GitLab` `Slack` `Notion` `Jira` `Google Docs` `ERD Cloud` `Dirgrams`|
 
 
@@ -57,14 +62,30 @@
 ![ERD](./산출물/ER%20다이어그램/ERD.png)
 
 ### SQED
-![SEQD](./산출물/시퀀스%20다이어그램/로그인.jpg)
-![SEQD](./산출물/시퀀스%20다이어그램/로그인.jpg)
-![SEQD](./산출물/시퀀스%20다이어그램/로그인.jpg)
-![SEQD](./산출물/시퀀스%20다이어그램/로그인.jpg)
-![SEQD](./산출물/시퀀스%20다이어그램/로그인.jpg)
 
-### 기타
-> 이외에도 프로젝트를 이해하기 위해 필요한 것들을 적어주세요 (팀별 개발표준, API Documentation 등등...)
+> #### 회원
+
+![SEQD](./산출물/시퀀스%20다이어그램/회원가입.jpg)
+![SEQD](./산출물/시퀀스%20다이어그램/로그인.jpg)
+![SEQD](./산출물/시퀀스%20다이어그램/비밀번호찾기.jpg)
+<br>
+> #### 공연
+
+![SEQD](./산출물/시퀀스%20다이어그램/공연등록.jpg)
+![SEQD](./산출물/시퀀스%20다이어그램/공연등록요청.jpg)
+![SEQD](./산출물/시퀀스%20다이어그램/공연정보조회.jpg)
+<br>
+> #### 티켓
+
+![SEQD](./산출물/시퀀스%20다이어그램/티켓구매.jpg)
+![SEQD](./산출물/시퀀스%20다이어그램/티켓예매.jpg)
+![SEQD](./산출물/시퀀스%20다이어그램/티켓판매.jpg)
+
+### REST API
+![REST_API](./산출물/REST%20API/REST_API.jpg)
 
 ## 테스트 방법
-> 프로젝트를 배포한 url과 테스트하기 위한 계정 ID/PW를 적어주세요
+> - URL : https://j3b101.p.ssafy.io/
+> - TEST ID : test3
+> - TEST PW : 3
+> <br>*<i>현재 로그인 및 이더리움 블록 현황까지만 가능</i>
