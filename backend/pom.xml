@@ -15,7 +15,7 @@
 	<description>Blockchain based E-Commerce Service</description>
 
 	<properties>
-		<java.version>12</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 
 	<dependencies>
