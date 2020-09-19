@@ -1,5 +1,13 @@
 package com.ecommerce.domain;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+
 import lombok.Data;
 
 
@@ -19,13 +27,9 @@ public class Performance
 	private String detail;
 	private Boolean permission;
 	private long uid;
-	@Override
-	public String toString() {
-		return "Performance [pid=" + pid + ", title=" + title + ", poster=" + poster + ", category=" + category
-				+ ", location=" + location + ", place=" + place + ", running=" + running + ", term=" + term
-				+ ", attendance=" + attendance + ", notice=" + notice + ", detail=" + detail + ", permission="
-				+ permission + ", uid=" + uid + "]";
-	}
 	
+	private ArrayList<String> prices;
+	private ArrayList<String> grades;
+	
+	private ArrayList<String> dates;
 }
-

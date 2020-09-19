@@ -34,17 +34,16 @@ public class PerformanceRepository implements IPerformanceRepository
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-//	@Override
-//	public List<Performance> list() {
-//		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances"); // where available
-//		try {
-//			return this.jdbcTemplate.query(sbSql.toString(),
-//							   new Object[]{true}, (rs, rowNum) -> PerformanceFactory.create(rs));
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//		
-//	}
+	@Override
+	public List<Performance> list() {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances "); // where available
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{}, (rs, rowNum) -> PerformanceFactory.create(rs));
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
 //
 //	@Override
 //	public List<Performance> getByPid(long pid) {
@@ -59,7 +58,7 @@ public class PerformanceRepository implements IPerformanceRepository
 //
 	@Override
 	public Performance get(long pid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid=?");
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid = ? ");
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
 								new Object[] { pid }, (rs, rowNum) -> PerformanceFactory.create(rs) );
@@ -85,8 +84,8 @@ public class PerformanceRepository implements IPerformanceRepository
 			paramMap.put("attendance", performance.getAttendance());
 			paramMap.put("notice", performance.getNotice());
 			paramMap.put("detail", performance.getDetail());
-			paramMap.put("permission", performance.getPermission());
 			paramMap.put("uid", performance.getUid());
+			paramMap.put("permission", false);
 			
 			this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 					.withTableName("performances")

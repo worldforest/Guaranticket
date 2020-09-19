@@ -4,6 +4,7 @@ import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.IPerformanceSubmissonService;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
+import com.ecommerce.domain.PerformancePrice;
 import com.ecommerce.domain.PerformanceSubmission;
 import com.ecommerce.domain.User;
 import com.ecommerce.domain.exception.EmptyListException;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -40,29 +42,29 @@ public class PerformanceController
 		this.performanceSubmissonService = performanceSubmissonService;
 	}
 
-//	@ApiOperation(value = "Fetch all performances")
-//	@RequestMapping(value = "/performance", method = RequestMethod.GET)
-//	public List<Performance> list() {
-//		List<Performance> list = performanceService.list();
-//
-//		if (list == null || list.isEmpty())
-//			throw new EmptyListException("NO DATA");
-//
-//		return list;
-//	}
-//	
-//	@ApiOperation(value = "Fetch an performance with pid")
-//	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.GET)
-//	public Performance get(@PathVariable int pid) {
-//		Performance performance = performanceService.get(pid);
-//		if (performance == null) {
-//			logger.error("NOT FOUND ID: ", pid);
-//			throw new NotFoundException(pid + " 공연 정보를 찾을 수 없습니다.");
-//		}
-//		return performance;
-//	}
+	@ApiOperation(value = "모든 공연 검색")
+	@RequestMapping(value = "/performance", method = RequestMethod.GET)
+	public List<Performance> list() {
+		List<Performance> list = performanceService.list();
+
+		if (list == null || list.isEmpty())
+			throw new EmptyListException("NO DATA");
+
+		return list;
+	}
 	
-	@ApiOperation(value = "공연 등록(공연등록요청, 공연날짜, 공연가격 테이블 생성")
+	@ApiOperation(value = "공연검색 with pid")
+	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.GET)
+	public Performance get(@PathVariable int pid) {
+		Performance performance = performanceService.get(pid);
+		if (performance == null) {
+			logger.error("NOT FOUND ID: ", pid);
+			throw new NotFoundException(pid + " 공연 정보를 찾을 수 없습니다.");
+		}
+		return performance;
+	}
+	
+	@ApiOperation(value = "공연 등록,(공연등록요청, 공연날짜, 공연가격 테이블 생성")
 	@RequestMapping(value = "/performance", method = RequestMethod.POST)
 	public Performance create(@RequestBody Performance performance) {
 		return performanceService.create(performance);

@@ -24,6 +24,7 @@ public class PerformanceFactory
 		performance.setDetail(rs.getString("detail"));
 		performance.setPermission(rs.getBoolean("permission"));
 		performance.setUid(rs.getLong("uid"));
+		
 		return performance;
 	}
 }

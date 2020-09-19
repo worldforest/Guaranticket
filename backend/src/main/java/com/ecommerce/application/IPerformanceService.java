@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface IPerformanceService {
-//	List<Performance> list();
+	List<Performance> list();
 //	List<Performance> getByPid(int pid);
 	Performance get(long pid);
 

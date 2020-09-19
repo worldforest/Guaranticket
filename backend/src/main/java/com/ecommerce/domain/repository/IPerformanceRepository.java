@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface IPerformanceRepository
 {
-//	List<Performance> list();
+	List<Performance> list();
 //	List<Performance> getByPid(final long pid);
 	Performance get(long pid);
 	
@@ -23,4 +23,5 @@ public interface IPerformanceRepository
 	
 	@Transactional
 	int updatePermission(long pid);
+
 }
