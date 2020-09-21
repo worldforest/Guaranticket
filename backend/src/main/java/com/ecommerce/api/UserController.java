@@ -5,11 +5,12 @@ import com.ecommerce.domain.User;
 import com.ecommerce.domain.exception.DomainException;
 import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
-import com.ecommerce.mapper.UserMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.util.Assert;
@@ -59,6 +60,12 @@ public class UserController {
 
         return user;
     }
+    
+    @RequestMapping(value = "/users/email/{email}", method = RequestMethod.GET)
+    public Object get(@PathVariable String email) {
+    	User user = userService.get(email);
+    	return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/users/login", method = RequestMethod.POST)
     public User login(@RequestBody User user) {
@@ -73,7 +80,8 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public User create(@RequestBody User user) {
-        return userService.add(user);
+    	User newUser = userService.add(user);
+        return newUser;
     }
 
     @RequestMapping(value = "/users", method = RequestMethod.PUT)
