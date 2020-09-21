@@ -12,10 +12,10 @@ public class DealFactory
 	{
 		if (rs == null) return null;
 		Deal deal = new Deal();
-		deal.setDid(rs.getInt("did"));
-		deal.setTid(rs.getInt("tid"));
-		deal.setBuyUid(rs.getInt("buy_uid"));
-		deal.setSellUid(rs.getInt("sell_uid"));
+		deal.setDid(rs.getLong("did"));
+		deal.setTid(rs.getLong("tid"));
+		deal.setBuyUid(rs.getLong("buy_uid"));
+		deal.setSellUid(rs.getLong("sell_uid"));
 		deal.setDate(rs.getDate("date").toString());
 		deal.setTime(rs.getTime("time").toString());
 		deal.setGrade(rs.getString("grade"));

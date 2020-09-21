@@ -53,9 +53,9 @@ public class PerformanceController
 		return list;
 	}
 	
-	@ApiOperation(value = "공연검색 with pid")
+	@ApiOperation(value = "공연검색 with 공연번호")
 	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.GET)
-	public Performance get(@PathVariable int pid) {
+	public Performance get(@PathVariable long pid) {
 		Performance performance = performanceService.get(pid);
 		if (performance == null) {
 			logger.error("NOT FOUND ID: ", pid);

@@ -51,7 +51,7 @@ public class DealController
 	
 	@ApiOperation(value = "거래 상세보기")
 	@RequestMapping(value = "/deal/{did}", method = RequestMethod.GET)
-	public Deal get(@PathVariable int did) {
+	public Deal get(@PathVariable long did) {
 		Deal deal = dealService.get(did);
 		if (deal == null) {
 			logger.error("NOT FOUND ID: ", did);
