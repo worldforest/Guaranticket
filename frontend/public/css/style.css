@@ -182,6 +182,11 @@ nav.bottom-pagination {
     font-weight: bold;
 }
 
+.basic-color {
+    color: #FF4155;
+    background-color: #FF4155;
+}
+
 /* Shop Card의 아이템 상태 */
 #item-status-S {
     background: #d7ffcd;
