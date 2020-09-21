@@ -46,74 +46,13 @@ public class PerformanceService implements IPerformanceService
 
 	@Override
 	public List<Performance> list() {
-		// TODO Auto-generated method stub
-//		List<Performance> list = null;
-//		list = this.iPerformanceRepository.list();
-//		if(list != null) {
-//			for (Performance performance : list) {
-//				long pid = performance.getPid();
-//				// 가격 테이블 정보 더하기
-//				List<PerformancePrice>pricelist = this.iPerformancePriceRepository.getByPid(pid);
-//				ArrayList<String> grades = new ArrayList<>();
-//				ArrayList<String> prices = new ArrayList<>();
-//				for (PerformancePrice performancePrice : pricelist) {
-//					grades.add(performancePrice.getPrice());
-//					prices.add(performancePrice.getGrade());
-//				}
-//				performance.setGrades(grades);
-//				performance.setPrices(prices);
-//				// 날짜 테이블 정보 더하기
-//				List<PerformanceDate>datelist = this.iPerformanceDateRepository.getByPid(pid);
-//				ArrayList<String> dates = new ArrayList<>();
-//				for (PerformanceDate performanceDate : datelist) {
-//					StringBuilder sb = new StringBuilder();
-//					sb.append(performanceDate.getDate()+" ");
-//					sb.append(performanceDate.getTime());
-//					dates.add(sb.toString());
-//				}
-//				performance.setDates(dates);
-//			}
-//		}
 		return this.iPerformanceRepository.list();
 	}
 
-//	@Override
-//	public List<Performance> getByPid(int pid) {
-//		// TODO Auto-generated method stub
-//		return this.iPerformanceRepository.getByPid(pid);
-//	}
-//
 	@Override
 	public Performance get(long pid) {
-//		// TODO Auto-generated method stub
-//		Performance performance = null;
-//		// 공연 테이블 정보
-//		performance = this.iPerformanceRepository.get(pid);
-//		if(performance != null) {
-//			// 가격 테이블 정보 더하기
-//			List<PerformancePrice>pricelist = this.iPerformancePriceRepository.getByPid(pid);
-//			ArrayList<String> grades = new ArrayList<>();
-//			ArrayList<String> prices = new ArrayList<>();
-//			for (PerformancePrice performancePrice : pricelist) {
-//				grades.add(performancePrice.getPrice());
-//				prices.add(performancePrice.getGrade());
-//			}
-//			performance.setGrades(grades);
-//			performance.setPrices(prices);
-//			// 날짜 테이블 정보 더하기
-//			List<PerformanceDate>datelist = this.iPerformanceDateRepository.getByPid(pid);
-//			ArrayList<String> dates = new ArrayList<>();
-//			for (PerformanceDate performanceDate : datelist) {
-//				StringBuilder sb = new StringBuilder();
-//				sb.append(performanceDate.getDate()+" ");
-//				sb.append(performanceDate.getTime());
-//				dates.add(sb.toString());
-//			}
-//			performance.setDates(dates);
-//		}
-//		return performance;
-		
-		return null;
+		// TODO Auto-generated method stub
+		return this.iPerformanceRepository.get(pid);
 	}
 
 	@Override

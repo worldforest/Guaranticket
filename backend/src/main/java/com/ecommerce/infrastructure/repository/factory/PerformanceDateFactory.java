@@ -13,8 +13,8 @@ public class PerformanceDateFactory
 		if (rs == null) return null;
 		PerformanceDate performanceDate = new PerformanceDate();
 		performanceDate.setPid(rs.getLong("pid"));
-		performanceDate.setDate(rs.getDate("date"));
-		performanceDate.setTime(rs.getTime("time"));
+		performanceDate.setDate(rs.getString("date"));
+		performanceDate.setTime(rs.getString("time"));
 		return performanceDate;
 	}
 }
