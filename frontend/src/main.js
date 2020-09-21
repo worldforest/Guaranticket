@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import HNav from "./components/common/HNav.vue";
 import HBreadcumb from "./components/common/HBreadcrumb.vue";
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false;
 Vue.filter("truncate", function(text, length, clamp) {
@@ -16,6 +17,7 @@ Vue.filter("truncate", function(text, length, clamp) {
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");
 

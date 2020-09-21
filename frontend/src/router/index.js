@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Signup from "@/views/Signup.vue";
+import SignupUser from "@/views/SignupUser.vue";
+import SignupBiz from "@/views/SignupBiz.vue";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import store from "@/store";
@@ -37,6 +39,16 @@ const routes = [
     path: "/register",
     name: "signup",
     component: Signup,
+  },
+  {
+    path: "/signupUser",
+    name: "signupUser",
+    component: SignupUser,
+  },
+  {
+    path: "/signupBiz",
+    name: "signupBiz",
+    component: SignupBiz,
   },
   {
     path: "/logout",
@@ -190,7 +202,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register","/findpw"].includes(to.path) ||
+    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz"].includes(to.path) ||
     to.path.startsWith("/explorer");
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
