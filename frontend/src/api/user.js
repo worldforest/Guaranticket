@@ -3,6 +3,13 @@ import { createInstance } from "./index.js";
 
 const instance = createInstance();
 
+function findByEmail(email, success, fail) {
+  instance
+    .get("/api/users/email/" + email)
+    .then(success)
+    .catch(fail);
+}
+
 function findById(id, success, fail) {
   instance
     .get("/api/users/" + id)
@@ -10,12 +17,17 @@ function findById(id, success, fail) {
     .catch(fail);
 }
 
-function signup(email, name, password, success, fail) {
+function signup(email, password, name, businessNumer, companyName, representativeName, gender, birth, success, fail) {
   const user = {
-    email: email,
-    name: name,
-    password: password
-  };
+    email : email,
+    password : password,
+    name : name,
+    businessNumer : businessNumer,
+    companyName : companyName,
+    representativeName : representativeName,
+    gender : gender,
+    birth : birth,
+  }
 
   instance
     .post("/api/users", JSON.stringify(user))
@@ -63,4 +75,4 @@ function sendEmail(name, email, success, fail) {
     .then(success)
     .catch(fail)
 }
-export { findById, signup, login, update, findpw, sendEmail };
+export { findByEmail, findById, signup, login, update, findpw, sendEmail };
