@@ -20,7 +20,7 @@
             <router-link class="nav-link" to="/shop">스포츠</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/shop">거래하기</router-link>
+            <router-link class="nav-link" to="/deallist">티켓거래</router-link>
           </li>
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/login">로그인</router-link>
