@@ -18,8 +18,8 @@ public interface IPerformanceRepository
 //	@Transactional
 //	int update(Performance Performance);
 //
-//	@Transactional
-//	int delete(long pid);
+	@Transactional
+	int delete(long pid);
 	
 	@Transactional
 	int updatePermission(long pid);

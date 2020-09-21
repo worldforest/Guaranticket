@@ -115,4 +115,16 @@ public class PerformanceRepository implements IPerformanceRepository
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
+
+	@Override
+	public int delete(long pid) {
+		StringBuilder sbSql =  new StringBuilder("DELETE FROM performances ");
+		sbSql.append("where pid = ?");
+		try {
+			return this.jdbcTemplate.update(sbSql.toString(),
+					new Object[] { pid });
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
 }
