@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import HNav from "../components/common/HNav";
+import HNav from "@/components/common/HNav";
 import StepFlow from '@/components/common/StepFlow';
 
 export default {
