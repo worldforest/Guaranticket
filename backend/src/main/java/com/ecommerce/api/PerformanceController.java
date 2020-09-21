@@ -46,16 +46,14 @@ public class PerformanceController
 	@RequestMapping(value = "/performance", method = RequestMethod.GET)
 	public List<Performance> list() {
 		List<Performance> list = performanceService.list();
-
 		if (list == null || list.isEmpty())
 			throw new EmptyListException("NO DATA");
-
 		return list;
 	}
 	
-	@ApiOperation(value = "공연검색 with pid")
+	@ApiOperation(value = "공연검색 with 공연번호")
 	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.GET)
-	public Performance get(@PathVariable int pid) {
+	public Performance get(@PathVariable long pid) {
 		Performance performance = performanceService.get(pid);
 		if (performance == null) {
 			logger.error("NOT FOUND ID: ", pid);
@@ -83,8 +81,8 @@ public class PerformanceController
 //	}
 	
 	
-	@ApiOperation(value = "공연등록요청한것을 관리자가 승락(요청리스트에서 삭제되고 공연테이블의 등록여부(permission)값이 true로 변경)")
-	@RequestMapping(value = "/performanceSubmission/{sid}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "공연 등록 요청한것을 관리자가 승락")
+	@RequestMapping(value = "/performance/submission/{sid}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long sid) {
 		int num = performanceSubmissonService.delete(sid);
 		System.out.println("num 값은 " + num);

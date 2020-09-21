@@ -1,11 +1,11 @@
 <template>
-<div class="text-center" style="margin-top:10rem;">
-  <!-- <h-nav></h-nav> -->
+<div class="text-center" style="margin-top:20rem;">
+  <h-nav></h-nav>
     <div class="text-h4">회원가입</div>
     <div class="text-h6">가입 종류를 선택해주세요</div>
     <div class="my-16">
       <v-btn @click="goSignupUser()" class="ma-2" width="100" height="100">
-        <v-card width="100" height="100" color="pink" flat>
+        <v-card width="100" height="100" color="#FF4155" flat>
           <v-card-title class="pb-2">
             <v-icon x-large color="white" class="ma-auto">mdi-account-multiple</v-icon>
           </v-card-title>
@@ -15,7 +15,7 @@
         </v-card>
       </v-btn>
       <v-btn @click="goSignupBiz()" class="ma-2" width="100" height="100">
-        <v-card width="100" height="100" color="pink" flat>
+        <v-card width="100" height="100" color="#FF4155" flat>
           <v-card-title class="pb-2">
             <v-icon x-large color="white" class="ma-auto">mdi-domain</v-icon>
           </v-card-title>
