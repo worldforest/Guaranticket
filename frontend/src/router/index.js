@@ -11,6 +11,12 @@ import MyPage from "@/views/MyPage.vue";
 import Item from "@/views/Item.vue";
 import Explorer from "@/views/Explorer.vue";
 import Escrow from "@/views/Escrow.vue";
+//티켓거래
+import DealList from "@/views/deal/DealList.vue";
+import DealRegister from "@/views/deal/DealRegister.vue";
+import DealDetail from "@/views/deal/DealDetail.vue";
+//마이페이지
+import PurchaseList from "@/views/mypage/PurchaseList.vue";
 //비밀번호찾기
 import FindPw from "@/views/FindPw.vue";
 Vue.use(VueRouter);
@@ -19,6 +25,28 @@ Vue.use(VueRouter);
  * 아래의 router를 변경하여 구현할 수 있습니다.
  */
 const routes = [
+  //마이페이지
+  {
+    path: "/purchaselist",
+    name: "purchaselist",
+    component: PurchaseList
+  },
+  //티켓거래
+  {
+    path: "/deallist",
+    name: "deallist",
+    component: DealList
+  },
+  {
+    path: "/dealregister",
+    name: "dealregister",
+    component: DealRegister
+  },
+  {
+    path: "/dealdetail",
+    name: "dealdetail",
+    component: DealDetail
+  },
   //비밀번호찾기 페이지 추가
   {
     path: "/findpw",
