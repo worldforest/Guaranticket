@@ -44,14 +44,14 @@ public class DealController
 		List<Deal> list = dealService.list();
 
 		if (list == null || list.isEmpty())
-			throw new EmptyListException("NO DATA");
+			throw new NotFoundException("거래 정보를 찾을 수 없습니다.");
 
 		return list;
 	}
 	
-	@ApiOperation(value = "거래 상세보기")
-	@RequestMapping(value = "/deal/{did}", method = RequestMethod.GET)
-	public Deal get(@PathVariable long did) {
+	@ApiOperation(value = "거래번호별 거래 상세보기")
+	@RequestMapping(value = "/deal/did/{did}", method = RequestMethod.GET)
+	public Deal getByDid(@PathVariable long did) {
 		Deal deal = dealService.get(did);
 		if (deal == null) {
 			logger.error("NOT FOUND ID: ", did);
@@ -66,4 +66,14 @@ public class DealController
 		return dealService.create(deal);
 	}
 	
+	@ApiOperation(value = "사용자 판매내역 보기")
+	@RequestMapping(value = "/deal/seller/{seller}", method = RequestMethod.GET)
+	public List<Deal> getBySeller(@PathVariable long seller) {
+		List<Deal> list = dealService.getBySeller(seller);
+
+		if (list == null || list.isEmpty())
+			throw new NotFoundException(seller + " 판매 내역 정보를 찾을 수 없습니다.");
+
+		return list;
+	}
 }

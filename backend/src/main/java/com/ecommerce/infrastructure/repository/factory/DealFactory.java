@@ -1,8 +1,6 @@
 package com.ecommerce.infrastructure.repository.factory;
 
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.Performance;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,8 +12,8 @@ public class DealFactory
 		Deal deal = new Deal();
 		deal.setDid(rs.getLong("did"));
 		deal.setTid(rs.getLong("tid"));
-		deal.setBuyUid(rs.getLong("buy_uid"));
-		deal.setSellUid(rs.getLong("sell_uid"));
+		deal.setBuyer(rs.getLong("buyer"));
+		deal.setSeller(rs.getLong("seller"));
 		deal.setDate(rs.getDate("date").toString());
 		deal.setTime(rs.getTime("time").toString());
 		deal.setGrade(rs.getString("grade"));
