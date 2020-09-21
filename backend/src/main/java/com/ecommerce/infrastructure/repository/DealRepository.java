@@ -1,15 +1,9 @@
 package com.ecommerce.infrastructure.repository;
 
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.Item;
-import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.exception.RepositoryException;
 import com.ecommerce.domain.repository.IDealRepository;
-import com.ecommerce.domain.repository.IItemRepository;
-import com.ecommerce.domain.repository.IPerformanceRepository;
 import com.ecommerce.infrastructure.repository.factory.DealFactory;
-import com.ecommerce.infrastructure.repository.factory.ItemFactory;
-import com.ecommerce.infrastructure.repository.factory.PerformanceFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,8 +60,8 @@ public class DealRepository implements IDealRepository
 		try {
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("tid", deal.getTid());
-			paramMap.put("buy_uid", deal.getBuyUid());
-			paramMap.put("sell_uid", deal.getSellUid());
+			paramMap.put("buy_uid", deal.getBuyer());
+			paramMap.put("sell_uid", deal.getSeller());
 			paramMap.put("date", deal.getDate());
 			paramMap.put("time", deal.getTime());
 			paramMap.put("grade", deal.getGrade());
@@ -82,6 +76,17 @@ public class DealRepository implements IDealRepository
 			log.debug("INSERTED: " + newId.longValue());
 			return newId.longValue();
 
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Deal> getBySeller(long seller) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals where seller = ?"); // where available
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{seller}, (rs, rowNum) -> DealFactory.create(rs));
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}

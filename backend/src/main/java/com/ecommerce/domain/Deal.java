@@ -7,8 +7,8 @@ public class Deal
 {
 	private long did;
 	private long tid;
-	private long buyUid;
-	private long sellUid;
+	private long buyer;
+	private long seller;
 	private String date;
 	private String time;
 	private String grade;
