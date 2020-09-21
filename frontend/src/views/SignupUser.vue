@@ -180,15 +180,26 @@ export default {
     },
     methods: {
         duplicationVaild(){
+            if(!this.user.email1 || !this.user.email2){
+                alert("이메일을 입력해주세요.");
+                return;
+            }
             findByEmail(
                 this.user.email1 + '@' + this.user.email2, 
                 response => {
-                    alert("사용가능한 이메일입니다.");
-                    this.emailVaild = true;
+                    console.log(response);
+                    if(!response.data){
+                        alert("사용가능한 이메일입니다.");
+                        this.emailVaild = true;
+                    }
+                    else{
+                        alert("존재하는 이메일입니다.");
+                        this.emailVaild = false;
+                    }
                 },
                 error => {
-                    alert("존재하는 이메일입니다.");
-                    this.duplicationVaild = false;
+                    alert("이메일을 확인해주세요.");
+                    this.emailVaild = false;
                 }
             )
         },

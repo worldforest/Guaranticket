@@ -41,8 +41,8 @@ public class UserService implements IUserService {
 
 	@Override
 	public User add(User user) {
-		long id = this.userMapper.create(user);
-		return this.userMapper.getById(id);
+		this.userMapper.create(user);
+		return this.userMapper.getById(user.getId());
 	}
 
 	@Override
