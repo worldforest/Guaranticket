@@ -46,10 +46,8 @@ public class PerformanceController
 	@RequestMapping(value = "/performance", method = RequestMethod.GET)
 	public List<Performance> list() {
 		List<Performance> list = performanceService.list();
-
 		if (list == null || list.isEmpty())
 			throw new EmptyListException("NO DATA");
-
 		return list;
 	}
 	
@@ -83,8 +81,8 @@ public class PerformanceController
 //	}
 	
 	
-	@ApiOperation(value = "공연등록요청한것을 관리자가 승락(요청리스트에서 삭제되고 공연테이블의 등록여부(permission)값이 true로 변경)")
-	@RequestMapping(value = "/performanceSubmission/{sid}", method = RequestMethod.DELETE)
+	@ApiOperation(value = "공연 등록 요청한것을 관리자가 승락")
+	@RequestMapping(value = "/performance/submission/{sid}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long sid) {
 		int num = performanceSubmissonService.delete(sid);
 		System.out.println("num 값은 " + num);
