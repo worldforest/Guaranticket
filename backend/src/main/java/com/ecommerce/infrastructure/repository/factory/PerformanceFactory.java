@@ -18,7 +18,10 @@ public class PerformanceFactory
 		performance.setLocation(rs.getString("location"));
 		performance.setPlace(rs.getString("place"));
 		performance.setRunning(rs.getString("running"));
-		performance.setTerm(rs.getString("term"));
+		performance.setTicketingStartDate(rs.getString("ticketing_start_date"));
+		performance.setTicketingEndDate(rs.getString("ticketing_end_date"));
+		performance.setStartDate(rs.getString("start_date"));
+		performance.setEndDate(rs.getString("end_date"));
 		performance.setAttendance(rs.getString("attendance"));
 		performance.setNotice(rs.getString("notice"));
 		performance.setDetail(rs.getString("detail"));

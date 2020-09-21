@@ -80,7 +80,10 @@ public class PerformanceRepository implements IPerformanceRepository
 			paramMap.put("location", performance.getLocation());
 			paramMap.put("place", performance.getPlace());
 			paramMap.put("running", performance.getRunning());
-			paramMap.put("term", performance.getTerm());
+			paramMap.put("ticketing_start_date", performance.getTicketingStartDate());
+			paramMap.put("ticketing_end_date", performance.getTicketingEndDate());
+			paramMap.put("start_date", performance.getStartDate());
+			paramMap.put("end_date", performance.getEndDate());
 			paramMap.put("attendance", performance.getAttendance());
 			paramMap.put("notice", performance.getNotice());
 			paramMap.put("detail", performance.getDetail());
@@ -107,48 +110,9 @@ public class PerformanceRepository implements IPerformanceRepository
 		sbSql.append("where pid = ?");
 		try {
 			return this.jdbcTemplate.update(sbSql.toString(),
-								new Object[] {
-										true,
-										pid
-								});
+								new Object[] {true,pid});
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
-
-//	@Override
-//	public int update(Performance performance) {
-//		StringBuilder sbSql =  new StringBuilder("UPDATE performances ");
-//		sbSql.append("SET name=?, category=?, explanation=?, available=? ");
-//		sbSql.append("where id=?");
-//		try {
-//			return this.jdbcTemplate.update(sbSql.toString(),
-//								new Object[] {
-//										performance.getName(),
-//										performance.getCategory(),
-//										performance.getExplanation(),
-//										performance.getAvailable(),
-//										performance.getId()
-//								});
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//		return 0;
-//	}
-//
-//	@Override
-//	public int delete(final long pid) {
-//		StringBuilder sbSql =  new StringBuilder("UPDATE items ");
-//		sbSql.append("SET available=? ");
-//		sbSql.append("where id=?");
-//
-//		try {
-//			return this.jdbcTemplate.update(sbSql.toString(),
-//								new Object[] { false, id });
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//		return 0;
-//	}
-
 }
