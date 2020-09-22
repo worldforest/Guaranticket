@@ -10,7 +10,8 @@ public interface ITicketRepository
 {
 	List<Ticket> getByPid(long pid);
 	List<Ticket> getByUid(long uid);
-	
+	@Transactional
+	Ticket get(long tid);
 	@Transactional
 	long create(Ticket ticket);
 

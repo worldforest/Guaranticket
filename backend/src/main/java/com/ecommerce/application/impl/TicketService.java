@@ -37,13 +37,20 @@ public class TicketService implements ITicketService
 
 	@Override
 	public Ticket create(Ticket ticket) {
-		return null;
+		long tid = this.iTicketRepository.create(ticket);
+		return this.iTicketRepository.get(tid);
 	}
 
 	@Override
 	public List<Ticket> getByPid(long pid) {
 		// TODO Auto-generated method stub
 		return this.iTicketRepository.getByPid(pid);
+	}
+
+	@Override
+	public Ticket get(long tid) {
+		// TODO Auto-generated method stub
+		return this.iTicketRepository.get(tid);
 	}
 
 

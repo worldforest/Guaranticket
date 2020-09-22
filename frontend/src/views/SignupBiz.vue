@@ -3,7 +3,7 @@
         <h-nav></h-nav>
         <v-container style="width:600px; margin-top:8rem;">
         <h2 class="mb-10">기업회원가입</h2>
-        <v-form ref="form" v-model="formValid">
+        <v-form ref="form" v-model="validations.form">
             <v-row>
                 <v-col class="pr-0 pb-0" cols="4">
                     <v-text-field
@@ -14,7 +14,7 @@
                         outlined
                     ></v-text-field>
                 </v-col>
-                <v-col class="pb-0" cols="5">
+                <v-col class="pb-0" cols="8">
                     <v-autocomplete
                         prepend-icon="mdi-at"
                         ref="email"
@@ -25,12 +25,12 @@
                         required
                         outlined
                     >
+                        <template v-slot:append-outer>
+                            <v-btn style="top:-17px;" @click="duplicationValid" x-large width="100%" color="grey lighten-2 font-weight-bold">
+                                중복확인
+                            </v-btn>
+                        </template>
                     </v-autocomplete>
-                </v-col>
-                <v-col class="pl-0" cols="3">
-                    <v-btn @click="duplicationVaild" x-large width="100%" color="grey lighten-2 font-weight-bold">
-                        중복확인
-                    </v-btn>
                 </v-col>
             </v-row>
             <v-text-field
@@ -84,6 +84,58 @@
                 required
                 outlined
             ></v-text-field>
+
+            <v-text-field
+                v-model="user.phone"
+                :rules="[() => !!user.phone || '휴대폰 번호를 입력해주세요.']"
+                placeholder="휴대폰 번호를 입력해주세요."
+                required
+                outlined
+            >
+                <template v-slot:append-outer>
+                    <v-btn style="top:-17px;" @click="sms" x-large width="100%" color="grey lighten-2 font-weight-bold">
+                        문자인증
+                    </v-btn>
+                    <v-dialog
+                        v-model="authMenu"
+                        max-width="350"
+                        persistent 
+                        >
+                        <v-card>
+                            <v-card-title class="white--text" style="background-color:#FF4155;">
+                                SMS 본인 인증
+                                <v-spacer></v-spacer>
+                                <v-btn @click="authMenu=false" icon color="white">
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
+                            </v-card-title>
+
+                            <v-card-text class="pt-5 pb-0">
+                                <v-text-field
+                                    v-model="enterAuthNumber"
+                                    placeholder="인증번호를 입력해주세요."
+                                    :rules="[() => enterAuthNumber==authNumber || '인증번호를 다시 확인해주세요.']"
+                                    required
+                                    outlined
+                                    dense
+                                >
+                                    <template v-slot:append-outer>
+                                        <v-btn style="top:-6px;" 
+                                        class="pa-0 white--text"
+                                        color="#FF4155"
+                                        :disabled="enterAuthNumber!=authNumber"
+                                        @click="authValid"
+                                    >
+                                    확인
+                                    </v-btn>
+                                    </template>
+                                </v-text-field>
+                            </v-card-text>
+                        </v-card>
+                    </v-dialog>
+                </template>
+            </v-text-field>
+
             <v-row> 
                 <v-col class="pt-0 pb-7" cols="6">
                     <v-btn ref="male" @click="user.gender='남'" :color="user.gender=='남'?'#FF4155':'grey'" x-large outlined width="100%">
@@ -95,25 +147,6 @@
                         여성
                     </v-btn>
                 </v-col>
-
-                <!-- <v-col cols="6">
-                    <v-row class="mx-auto">
-                        성별을 선택해주세요
-                    </v-row>
-                </v-col>
-                <v-col cols="6">
-                    <v-row class="mx-auto">
-                        <v-spacer></v-spacer>
-                        <v-btn small fab dark flat color="grey">
-                            <v-icon dark>mdi-account</v-icon>         
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn small fab dark flat color="grey">
-                            <v-icon dark>mdi-face-woman</v-icon>         
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                    </v-row>
-                </v-col> -->
             </v-row>
 
             <v-menu
@@ -156,16 +189,29 @@
 <script>
 import { signup } from "../api/user.js";
 import { findByEmail } from "../api/user.js";
+import { sendSMS } from "../api/user.js";
+
 
 export default {
   data() {
     return {
         emails: ['naver.com', 'gmail.com', 'hanmail.com'],
-        emailVaild : false,
-        formValid : false,
+
+        validations : {
+            email : false,
+            form : false,
+            auth : false,
+        },
+
         pwdShow: false,
         pwdConfirmShow: false,
+
+        authMenu : false,
         birthMenu : false,
+
+        authNumber : "",
+        enterAuthNumber : "",
+    
         user: {
             email1: "",
             email2: "",
@@ -203,7 +249,28 @@ export default {
     computed: {
     },
     methods: {
-        duplicationVaild(){
+        authValid(){
+            if(this.authNumber == this.enterAuthNumber){
+                this.validations.auth = true;
+                this.authMenu = false;
+            }
+        },
+        sms(){
+            if(!this.user.phone){
+                alert("휴대폰 번호를 입력해주세요.");
+                return;
+            }
+            this.authMenu = true;
+            sendSMS(this.user.phone,
+                response => {
+                    this.authNumber = response.data;
+                },
+                error => {
+                    console.log(error);
+                }
+            )
+        },
+         duplicationValid(){
             if(!this.user.email1 || !this.user.email2){
                 alert("이메일을 입력해주세요.");
                 return;
@@ -211,25 +278,26 @@ export default {
             findByEmail(
                 this.user.email1 + '@' + this.user.email2, 
                 response => {
-                    console.log(response);
                     if(!response.data){
                         alert("사용가능한 이메일입니다.");
-                        this.emailVaild = true;
+                        this.validations.email = true;
                     }
                     else{
                         alert("존재하는 이메일입니다.");
-                        this.emailVaild = false;
+                        this.validations.email = false;
                     }
                 },
                 error => {
                     alert("이메일을 확인해주세요.");
-                    this.emailVaild = false;
+                    this.validations.email = false;
                 }
             )
         },
         doJoin(){
-            if(!this.emailVaild)
+            if(!this.validations.email)
                 alert("이메일 중복확인이 필요합니다.");
+            else if(!this.validations.auth)
+                alert("휴대폰 인증이 필요합니다.");
             else if(!this.user.gender)
                 alert("성별을 선택하세요.");
             else if(this.$refs.form.validate()){
@@ -237,11 +305,12 @@ export default {
                     this.user.email1 + '@' + this.user.email2, 
                     this.user.password,
                     this.user.name,
+                    this.user.phone,
+                    this.user.gender,
+                    this.user.birth,
                     this.user.businessNumber,
                     this.user.companyName,
                     this.user.representativeName,
-                    this.user.gender,
-                    this.user.birth,
                     response => {
                         alert("회원가입이 완료되었습니다.");
                         this.$router.push("/");

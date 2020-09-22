@@ -65,10 +65,21 @@ public class TicketController
 		return list;
 	}
 	
-//	@ApiOperation(value = "예매 하기")
-//	@RequestMapping(value = "/ticket/{uid}", method = RequestMethod.POST)
-//	public Deal create(@PathVariable long uid) {
-//		return ticketService.create(deal);
-//	}
+	@ApiOperation(value = "공연 예매 하기")
+	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
+	public Ticket create(@RequestBody Ticket ticket) {
+		return ticketService.create(ticket);
+	}
 	
+	@ApiOperation(value = "티켓 정보 검색")
+	@RequestMapping(value = "/ticket/tid/{tid}", method = RequestMethod.GET)
+	public Ticket getBytid(@PathVariable long tid) {
+		
+		Ticket ticket = ticketService.get(tid);
+
+		if (ticket == null)
+			throw new NotFoundException(tid + "의 티켓 정보를 찾을 수 없습니다.");
+
+		return ticket;
+	}
 }

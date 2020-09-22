@@ -18,4 +18,6 @@ public interface IUserService {
 
     @Transactional
     void delete(long id);
+    
+    void certifiedPhoneNumber(String phoneNumber, String certNum);
 }

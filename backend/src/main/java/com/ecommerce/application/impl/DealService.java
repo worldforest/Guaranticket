@@ -2,6 +2,7 @@ package com.ecommerce.application.impl;
 
 import com.ecommerce.application.IDealService;
 import com.ecommerce.domain.Deal;
+import com.ecommerce.domain.DealJoinData;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.exception.ApplicationException;
 import com.ecommerce.domain.repository.IDealRepository;
@@ -38,7 +39,7 @@ public class DealService implements IDealService
 	}
 
 	@Override
-	public List<Deal> list() {
+	public List<DealJoinData> list() {
 		// TODO Auto-generated method stub
 		return this.idealDealRepository.list();
 	}

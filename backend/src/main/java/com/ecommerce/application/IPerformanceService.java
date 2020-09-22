@@ -12,6 +12,6 @@ public interface IPerformanceService {
 
 	@Transactional
 	Performance create(Performance performance);
-
-	
+	@Transactional
+	int delete(long pid);
 }
