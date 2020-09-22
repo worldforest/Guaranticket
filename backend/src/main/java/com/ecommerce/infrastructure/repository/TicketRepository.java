@@ -63,7 +63,19 @@ public class TicketRepository implements ITicketRepository
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
-
+	@Override
+	public Ticket get(long tid) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE tid = ? ");
+		try {
+			return this.jdbcTemplate.queryForObject(sbSql.toString(),
+								new Object[] { tid }, (rs, rowNum) -> TicketFactory.create(rs) );
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+	
 	@Override
 	public long create(Ticket ticket) {
 		try {
@@ -85,6 +97,5 @@ public class TicketRepository implements ITicketRepository
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
-
-
+	
 }
