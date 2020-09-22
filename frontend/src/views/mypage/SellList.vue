@@ -2,7 +2,7 @@
   <div>
     <h-nav></h-nav>
       <div class="container" style="text-align: center;">
-        <h3 style="margin-top: 100px;">예매내역 리스트 페이지</h3>
+        <h3 style="margin-top: 100px;">판매내역 리스트 페이지</h3>
       </div>
   </div>
 </template>

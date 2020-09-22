@@ -10,13 +10,6 @@
       >
           거래등록
       </router-link>
-      <router-link
-        :to="{ name: 'purchaselist' }"
-        class="btn btn-primary"
-        style="color: white; background-color: #FF4155"
-      >
-          예매내역
-      </router-link>
     </div>
   </div>
 
@@ -35,4 +28,4 @@ export default {
 
 <style>
 
-</style>'
+</style>

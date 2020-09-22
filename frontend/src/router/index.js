@@ -17,6 +17,8 @@ import DealRegister from "@/views/deal/DealRegister.vue";
 import DealDetail from "@/views/deal/DealDetail.vue";
 //마이페이지
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
+import SellList from "@/views/mypage/SellList.vue";
+import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
 //비밀번호찾기
 import FindPw from "@/views/FindPw.vue";
 Vue.use(VueRouter);
@@ -30,6 +32,16 @@ const routes = [
     path: "/purchaselist",
     name: "purchaselist",
     component: PurchaseList
+  },
+  {
+    path: "/selllist",
+    name: "selllist",
+    component: SellList
+  },
+  {
+    path: "/updateprofile",
+    name: "updateprofile",
+    component: UpdateProfile
   },
   //티켓거래
   {

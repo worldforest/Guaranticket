@@ -2,7 +2,7 @@
   <div>
     <h-nav></h-nav>
       <div class="container" style="text-align: center;">
-        <h3 style="margin-top: 100px;">예매내역 리스트 페이지</h3>
+        <h3 style="margin-top: 100px;">회원정보 수정 페이지</h3>
       </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   },
   created() {
       axios
-        .get(API_BASE_URL + '/api/deal')
+        .get(API_BASE_URL + '/api/')
         .then((res) => {
 
         })
