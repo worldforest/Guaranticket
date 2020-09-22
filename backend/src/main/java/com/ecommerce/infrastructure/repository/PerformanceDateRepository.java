@@ -52,7 +52,7 @@ public class PerformanceDateRepository implements IPerformanceDateRepository
 
 	@Override
 	public List<PerformanceDate> getByPid(long pid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances_date WHERE pid=? ");
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances_date WHERE pid = ? ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
 					new Object[]{ pid }, (rs, rowNum) -> PerformanceDateFactory.create(rs));

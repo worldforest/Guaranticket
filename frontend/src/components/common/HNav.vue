@@ -9,15 +9,15 @@
       >
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link class="nav-link" to="/explorer/dashboard"
+            <router-link class="nav-link" to="/concert"
               >콘서트</router-link
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/shop">뮤지컬</router-link>
+            <router-link class="nav-link" to="/musical">뮤지컬</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/shop">스포츠</router-link>
+            <router-link class="nav-link" to="/sports">스포츠</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/deallist">티켓거래</router-link>
