@@ -17,11 +17,12 @@ function findById(id, success, fail) {
     .catch(fail);
 }
 
-function signup(email, password, name, businessNumer, companyName, representativeName, gender, birth, success, fail) {
+function signup(email, password, name, phone, gender, birth, businessNumer, companyName, representativeName, success, fail) {
   const user = {
     email : email,
     password : password,
     name : name,
+    phone : phone,
     businessNumer : businessNumer,
     companyName : companyName,
     representativeName : representativeName,
@@ -75,4 +76,12 @@ function sendEmail(name, email, success, fail) {
     .then(success)
     .catch(fail)
 }
-export { findByEmail, findById, signup, login, update, findpw, sendEmail };
+
+// SMS 인증
+function sendSMS(phone, success, fail){
+  instance
+    .get("/api/users/sms?phoneNumber=" + phone)
+    .then(success)
+    .catch(fail)
+}
+export { findByEmail, findById, signup, login, update, findpw, sendEmail, sendSMS };

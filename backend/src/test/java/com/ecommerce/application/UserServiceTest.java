@@ -24,6 +24,7 @@ public class UserServiceTest {
     		user.setPassword("password");
     		user.setName("Jo");
     		user.setGender("남");
+    		user.setPhone("010-9378-8047");
     		user.setBusinessNumber("1234567890");
     		user.setCompanyName("삼성전자");
     		user.setRepresentativeName("이건희");
