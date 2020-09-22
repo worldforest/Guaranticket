@@ -19,8 +19,8 @@
               <tbody>
                   <tr v-for="(deal, index) in deal_list" :key="index" :deal_list="deal_list">
                       <td>{{index+1}}</td>
-                      <td>category</td>
-                      <td>title</td>
+                      <td>{{ deal.category }}</td>
+                      <td>{{ deal.title }}</td>
                       <td>{{ deal.date }}</td>
                       <td>{{ deal.time }}</td>
                       <td>{{ deal.grade }}석</td>
