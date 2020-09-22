@@ -4,6 +4,7 @@ import com.ecommerce.application.IDealService;
 import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.IPerformanceSubmissonService;
 import com.ecommerce.domain.Deal;
+import com.ecommerce.domain.DealJoinData;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.PerformancePrice;
@@ -40,8 +41,8 @@ public class DealController
 
 	@ApiOperation(value = "모든 거래 검색")
 	@RequestMapping(value = "/deal", method = RequestMethod.GET)
-	public List<Deal> list() {
-		List<Deal> list = dealService.list();
+	public List<DealJoinData> list() {
+		List<DealJoinData> list = dealService.list();
 
 		if (list == null || list.isEmpty())
 			throw new NotFoundException("거래 정보를 찾을 수 없습니다.");
