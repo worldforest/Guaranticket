@@ -1,8 +1,10 @@
 <template>
-<div class="container">
+<div class="container" style="text-align: center;">
+  <h-nav></h-nav>
     <div class="row">
       <div id="login-form" class="col-md-6 mx-auto bg-white">
-        <router-link to="/">Escrow | STARMIX</router-link>
+        <h3 style="font-weight: bold;">비밀번호 찾기</h3>
+        <h6>회원가입 시 등록한 정보를 입력해주세요.</h6>
         <div class="mt-4">
           <div class="form-group">
             <label for="name">이름</label>
@@ -25,7 +27,7 @@
             />
           </div>
           <button type="button" class="btn btn-primary" v-on:click="findpw">
-            비밀번호 찾기
+            임시비밀번호 발급
           </button>
         </div>
       </div>
@@ -35,8 +37,12 @@
 <script>
 import { findpw } from "../api/user.js";
 import { sendEmail } from "../api/user.js";
+import HNav from "@/components/common/HNav";
 
 export default {
+  components: {
+    HNav
+  },
   data() {
     return {
       user: {
@@ -76,4 +82,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+  label {
+    float: left
+  }
+  button {
+    color: white;
+    background: #FF4155;
+    border: #FF4155
+  }
+</style>
