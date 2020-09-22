@@ -60,15 +60,28 @@ export default {
         .get(API_BASE_URL + '/api/deal')
         .then((res) => {
             this.deal_list = res.data;
+            for (var i in this.deal_list) {
+                // 공연 분류 번호에 따라 문자열로 변환
+                switch(this.deal_list[i].category) {
+                    case "0":
+                        this.deal_list[i].category = '콘서트';
+                        break;
+                    case "1":
+                        this.deal_list[i].category = '뮤지컬';
+                        break;
+                    case "2":
+                        this.deal_list[i].category = '스포츠';
+                        break;
+                }
+                // 가격 (원화 기준으로 콤마 표시)
+                this.deal_list[i].price = Number(this.deal_list[i].price).toLocaleString();
+            }
             console.log(this.deal_list)
         })
         .catch((err) => {
             console.log("created axios get method error!")
         })
   },
-  methods() {
-
-  }
 }
 </script>
 
