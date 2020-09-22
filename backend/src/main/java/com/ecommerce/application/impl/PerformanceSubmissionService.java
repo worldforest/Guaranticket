@@ -21,7 +21,6 @@ public class PerformanceSubmissionService implements IPerformanceSubmissonServic
 	public static final Logger logger = LoggerFactory.getLogger(PerformanceSubmissionService.class);
 
 	private IPerformanceRepository iPerformanceRepository;
-	
 	private IPerformanceSubmissionRepository iPerformanceSubmissionRepository;
 
 	@Autowired
@@ -34,17 +33,21 @@ public class PerformanceSubmissionService implements IPerformanceSubmissonServic
 	@Override
 	public PerformanceSubmission create(Performance performance) {		
 		long sid = this.iPerformanceSubmissionRepository.create(performance.getPid(), performance.getUid());
-//		return this.iPerformanceSubmissionRepository.get(sid);
-		return null;
+		return this.iPerformanceSubmissionRepository.get(sid);
 	}
 
 	@Override
 	public int delete(long sid) {
 		PerformanceSubmission performanceSubmission = this.iPerformanceSubmissionRepository.get(sid);
 		// 공연 테이블의 등록여부 true로 업데이트
-		int num = this.iPerformanceRepository.updatePermission(performanceSubmission.getPid());
-		System.out.println("업데이트 후 값은 = "+ num);
+		this.iPerformanceRepository.updatePermission(performanceSubmission.getPid());
 		return this.iPerformanceSubmissionRepository.delete(sid);
+	}
+
+	@Override
+	public List<PerformanceSubmission> list() {
+		// TODO Auto-generated method stub
+		return this.iPerformanceSubmissionRepository.list();
 	}
 
 

@@ -39,17 +39,16 @@ public class PerformanceSubmissionRepository implements IPerformanceSubmissionRe
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-//	@Override
-//	public List<PerformanceSubmission> list() {
-//		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances"); // where available
-//		try {
-//			return this.jdbcTemplate.query(sbSql.toString(),
-//							   new Object[]{true}, (rs, rowNum) -> PerformanceFactory.create(rs));
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//		return null;
-//	}
+	@Override
+	public List<PerformanceSubmission> list() {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances_submission"); // where available
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{}, (rs, rowNum) -> PerformanceSubmissionFactory.create(rs));
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
 
 
 

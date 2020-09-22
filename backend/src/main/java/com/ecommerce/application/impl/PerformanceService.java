@@ -104,11 +104,10 @@ public class PerformanceService implements IPerformanceService
 //		return null;
 //	}
 //
-//	@Override
-//	public Performance delete(long pid) {
-//		// TODO Auto-generated method stub
-//		this.iPerformanceRepository.delete(pid);
-//		return null;
-//	}
+	@Override
+	public int delete(long pid) {
+		// TODO Auto-generated method stub
+		return this.iPerformanceRepository.delete(pid);
+	}
 
 }
