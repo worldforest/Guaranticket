@@ -1,9 +1,11 @@
 package com.ecommerce.infrastructure.repository;
 
 import com.ecommerce.domain.Deal;
+import com.ecommerce.domain.DealJoinData;
 import com.ecommerce.domain.exception.RepositoryException;
 import com.ecommerce.domain.repository.IDealRepository;
 import com.ecommerce.infrastructure.repository.factory.DealFactory;
+import com.ecommerce.infrastructure.repository.factory.DealJoinDataFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +34,14 @@ public class DealRepository implements IDealRepository
 	}
 
 	@Override
-	public List<Deal> list() {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals "); // where available
+	public List<DealJoinData> list() {
+		StringBuilder sbSql =  new StringBuilder("SELECT * " + 
+				"FROM deals as a " + 
+				"inner join tickets as b on a.tid = b.tid " + 
+				"inner join performances as c on b.pid = c.pid "); // where available
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-							   new Object[]{}, (rs, rowNum) -> DealFactory.create(rs));
+							   new Object[]{}, (rs, rowNum) -> DealJoinDataFactory.create(rs));
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}
