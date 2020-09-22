@@ -43,7 +43,10 @@ public class PerformanceService implements IPerformanceService
 		this.iPerformancePriceRepository = iPerformancePriceRepository;
 		this.iPerformanceDateRepository = iPerformanceDateRepository;
 	}
-
+	@Override
+	public List<Performance> latestList() {
+		return this.iPerformanceRepository.latestList();
+	}
 	@Override
 	public List<Performance> list() {
 		return this.iPerformanceRepository.list();

@@ -47,7 +47,14 @@ public class PerformanceController
 		this.performanceDateService = performanceDateService;
 		this.performancePriceService = performancePriceService;
 	}
-
+	@ApiOperation(value = "카테고리별 최근순 5개씩 총 15개 공연 검색")
+	@RequestMapping(value = "/performance/latest", method = RequestMethod.GET)
+	public List<Performance> latestList() {
+		List<Performance> list = performanceService.latestList();
+		if (list == null || list.isEmpty())
+			throw new EmptyListException("NO DATA");
+		return list;
+	}
 	@ApiOperation(value = "모든 공연 검색")
 	@RequestMapping(value = "/performance", method = RequestMethod.GET)
 	public List<Performance> list() {

@@ -35,6 +35,21 @@ public class PerformanceRepository implements IPerformanceRepository
 	}
 
 	@Override
+	public List<Performance> latestList() {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM " + 
+				"( SELECT *, ROW_NUMBER() OVER (PARTITION BY p.category ORDER BY p.ticketing_start_date desc) AS RN " + 
+				"FROM performances as p " + 
+				") AS a " + 
+				"WHERE a.RN <= 5 ");
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{}, (rs, rowNum) -> PerformanceFactory.create(rs));
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+	
+	@Override
 	public List<Performance> list() {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances "); // where available
 		try {
