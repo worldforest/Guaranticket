@@ -12,7 +12,7 @@
                 <v-row>
                     <div v-for="(concert,i) in Concerts" :key="i">
                         <div v-if="concert.category == 0">
-                        <img :src="concert.poster" height="350" width="250" alt="콘서트">
+                        <img :src="concert.poster" height="350" width="250" @click="performanceDetail(concert)" alt="콘서트">
                         <figcaption>
                             <div class="fig-author">
                                 {{concert.title}}
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { findAll, findById } from "@/api/performance.js";
+import { findAll } from "@/api/performance.js";
 import axios from "axios";
 
 // const perform = getAllPerform();
@@ -43,21 +43,21 @@ export default {
        
     },
     created() {
-        axios
-        .get("http://localhost:8080/api/performance")
-        .then(res => {
-            this.Concerts=res.data
-        })
-        .catch();
-
-        // findAll(
-        //     function(response) {
-        //         console.log(response.request.status)
-        //         console.log(response.data)
-        //         console.log(response.data[1].title)
-        //     }
-        // )
+        findAll(
+            res => {
+                this.Concerts=res.data
+            }
+        )
     },
+    methods: {
+        performanceDetail(performance){
+            var performanceId = performance.pid;
+            this.$router.push({
+                name: 'performanceDetail',
+                params: {pid: performanceId}
+            });
+        },
+    }
 
 }
 </script>
