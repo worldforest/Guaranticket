@@ -40,7 +40,8 @@ public class PerformanceRepository implements IPerformanceRepository
 				"( SELECT *, ROW_NUMBER() OVER (PARTITION BY p.category ORDER BY p.ticketing_start_date desc) AS RN " + 
 				"FROM performances as p " + 
 				") AS a " + 
-				"WHERE a.RN <= 5 ");
+				"WHERE a.RN <= 5 " +
+				"ORDER by a.ticketing_start_date desc");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
 							   new Object[]{}, (rs, rowNum) -> PerformanceFactory.create(rs));

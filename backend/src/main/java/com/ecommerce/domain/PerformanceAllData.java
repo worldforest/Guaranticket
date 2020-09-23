@@ -23,8 +23,9 @@ public class PerformanceAllData
 	private String notice;
 	private String detail;
 	private Boolean permission;
-	
+
 	private List<String> prices;
-	private List<String> dates;
+	private List<String> grades;
+	private List<String> times;
 	private long uid;
 }
