@@ -86,11 +86,14 @@ public class DealRepository implements IDealRepository
 	}
 
 	@Override
-	public List<Deal> getBySeller(long seller) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals where seller = ?"); // where available
+	public List<DealJoinData> getBySeller(long seller) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals as a "); // where available
+		sbSql.append("inner join tickets as b on a.tid = b.tid ");
+		sbSql.append("inner join performances as c on b.pid = c.pid ");
+		sbSql.append("where seller = ? ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-							   new Object[]{seller}, (rs, rowNum) -> DealFactory.create(rs));
+							   new Object[]{seller}, (rs, rowNum) -> DealJoinDataFactory.create(rs));
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}

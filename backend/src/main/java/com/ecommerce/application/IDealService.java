@@ -11,5 +11,5 @@ public interface IDealService {
 	Deal get(long did);
 	@Transactional
 	Deal create(Deal deal);
-	List<Deal> getBySeller(long seller);
+	List<DealJoinData> getBySeller(long seller);
 }

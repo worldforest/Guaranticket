@@ -1,18 +1,11 @@
 package com.ecommerce.infrastructure.repository;
 
-import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.Item;
-import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.Ticket;
+import com.ecommerce.domain.TicketJoinData;
 import com.ecommerce.domain.exception.RepositoryException;
-import com.ecommerce.domain.repository.IDealRepository;
-import com.ecommerce.domain.repository.IItemRepository;
-import com.ecommerce.domain.repository.IPerformanceRepository;
 import com.ecommerce.domain.repository.ITicketRepository;
-import com.ecommerce.infrastructure.repository.factory.DealFactory;
-import com.ecommerce.infrastructure.repository.factory.ItemFactory;
-import com.ecommerce.infrastructure.repository.factory.PerformanceFactory;
 import com.ecommerce.infrastructure.repository.factory.TicketFactory;
+import com.ecommerce.infrastructure.repository.factory.TicketJoinDataFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,11 +45,13 @@ public class TicketRepository implements ITicketRepository
 	}
 
 	@Override
-	public List<Ticket> getByUid(long uid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE uid = ? ");
+	public List<TicketJoinData> getByUid(long uid) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets as a ");
+		sbSql.append("inner join performances as b on a.pid = b.pid ");
+		sbSql.append("where a.uid = ? ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-								new Object[] { uid }, (rs, rowNum) -> TicketFactory.create(rs) );
+								new Object[] { uid }, (rs, rowNum) -> TicketJoinDataFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {
@@ -84,6 +79,9 @@ public class TicketRepository implements ITicketRepository
 			paramMap.put("pid", ticket.getPid());
 			paramMap.put("seat_number",ticket.getSeatNumber());
 			paramMap.put("date",ticket.getDate());
+			paramMap.put("time",ticket.getTime());
+			paramMap.put("grade",ticket.getGrade());
+			paramMap.put("price",ticket.getPrice());
 			
 			this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 					.withTableName("tickets")

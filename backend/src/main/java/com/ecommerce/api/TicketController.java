@@ -1,7 +1,11 @@
 package com.ecommerce.api;
 
+import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.ITicketService;
+import com.ecommerce.application.impl.PerformanceService;
+import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.Ticket;
+import com.ecommerce.domain.TicketJoinData;
 import com.ecommerce.domain.exception.NotFoundException;
 
 import io.swagger.annotations.ApiOperation;
@@ -54,13 +58,10 @@ public class TicketController
 	}
 	@ApiOperation(value = "사용자 예매 내역 검색")
 	@RequestMapping(value = "/ticket/uid/{uid}", method = RequestMethod.GET)
-	public List<Ticket> getByUid(@PathVariable long uid) {
-		
-		List<Ticket> list = ticketService.getByUid(uid);
-
+	public List<TicketJoinData> getByUid(@PathVariable long uid) {
+		List<TicketJoinData> list = ticketService.getByUid(uid);
 		if (list == null || list.isEmpty())
 			throw new NotFoundException(uid + "유저의 예매 내역을 찾을 수 없습니다.");
-
 		return list;
 	}
 	

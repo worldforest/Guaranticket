@@ -69,8 +69,8 @@ public class DealController
 	
 	@ApiOperation(value = "사용자 판매내역 보기")
 	@RequestMapping(value = "/deal/seller/{seller}", method = RequestMethod.GET)
-	public List<Deal> getBySeller(@PathVariable long seller) {
-		List<Deal> list = dealService.getBySeller(seller);
+	public List<DealJoinData> getBySeller(@PathVariable long seller) {
+		List<DealJoinData> list = dealService.getBySeller(seller);
 
 		if (list == null || list.isEmpty())
 			throw new NotFoundException(seller + " 판매 내역 정보를 찾을 수 없습니다.");

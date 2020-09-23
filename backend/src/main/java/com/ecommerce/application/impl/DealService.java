@@ -45,7 +45,7 @@ public class DealService implements IDealService
 	}
 
 	@Override
-	public List<Deal> getBySeller(long seller) {
+	public List<DealJoinData> getBySeller(long seller) {
 		// TODO Auto-generated method stub
 		return this.idealDealRepository.getBySeller(seller);
 	}

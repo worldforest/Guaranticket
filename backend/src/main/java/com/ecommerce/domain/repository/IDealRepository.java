@@ -14,5 +14,5 @@ public interface IDealRepository
 	
 	@Transactional
 	long create(Deal deal);
-	List<Deal> getBySeller(long seller);
+	List<DealJoinData> getBySeller(long seller);
 }
