@@ -10,12 +10,12 @@
             </v-layout>
             <div class="container px-5 py-3">
                 <v-row>
-                    <div v-for="(concert,i) in Concerts" :key="i">
-                        <div v-if="concert.category == 2">
-                        <img :src="concert.poster" height="350" width="250" alt="스포츠">
+                    <div v-for="(sports,i) in Sports" :key="i">
+                        <div v-if="sports.category == 2">
+                        <img :src="sports.poster" height="350" width="250" @click="performanceDetail(sports)" alt="스포츠">
                         <figcaption>
                             <div class="fig-author">
-                                {{concert.title}}
+                                {{sports.title}}
                             </div>
                         </figcaption>
                         </div>
@@ -35,21 +35,28 @@ import axios from "axios";
 export default {
     data() {
         return {
-            Concerts: []
+            Sports: []
         };
     },
     methods: {
        
     },
     created() {
-        axios
-        .get("http://localhost:8080/api/performance")
-        .then(res => {
-            console.log(res.data)
-            this.Concerts=res.data
-        })
-        .catch();
+        findAll(
+            res => {
+                this.Sports=res.data
+            }
+        )
     },
+    methods: {
+        performanceDetail(performance){
+            var performanceId = performance.pid;
+            this.$router.push({
+                name: 'performanceDetail',
+                params: {pid: performanceId}
+            });
+        },
+    }
 
 }
 </script>
