@@ -7,6 +7,7 @@ import com.ecommerce.application.IPerformanceSubmissonService;
 import com.ecommerce.application.impl.PerformanceSubmissionService;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
+import com.ecommerce.domain.PerformanceAllData;
 import com.ecommerce.domain.PerformanceDate;
 import com.ecommerce.domain.PerformancePrice;
 import com.ecommerce.domain.PerformanceSubmission;
@@ -47,7 +48,14 @@ public class PerformanceController
 		this.performanceDateService = performanceDateService;
 		this.performancePriceService = performancePriceService;
 	}
-
+	@ApiOperation(value = "카테고리별 최근순 5개씩 총 15개 공연 검색")
+	@RequestMapping(value = "/performance/latest", method = RequestMethod.GET)
+	public List<Performance> latestList() {
+		List<Performance> list = performanceService.latestList();
+		if (list == null || list.isEmpty())
+			throw new EmptyListException("NO DATA");
+		return list;
+	}
 	@ApiOperation(value = "모든 공연 검색")
 	@RequestMapping(value = "/performance", method = RequestMethod.GET)
 	public List<Performance> list() {
@@ -68,11 +76,11 @@ public class PerformanceController
 		return performance;
 	}
 	
-//	@ApiOperation(value = "공연 등록,(공연등록요청, 공연날짜, 공연가격 테이블 생성")
-//	@RequestMapping(value = "/performance", method = RequestMethod.POST)
-//	public Performance create(@RequestBody Performance performance) {
-//		return performanceService.create(performance);
-//	}
+	@ApiOperation(value = "공연 등록")
+	@RequestMapping(value = "/performance", method = RequestMethod.POST)
+	public Performance create(@RequestBody PerformanceAllData performanceAllData) {
+		return performanceService.create(performanceAllData);
+	}
 	
 	@ApiOperation(value = "공연 삭제")
 	@RequestMapping(value = "/performance//{pid}", method = RequestMethod.DELETE)
