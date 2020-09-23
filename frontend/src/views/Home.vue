@@ -159,18 +159,18 @@ export default {
       var that = this;
       for (let i = 0; i < len; i++) {
         var post = this.poster[i]
-        if(this.poster[i].category==0){
+        if(this.poster[i].category=='0'){
           // this.concert=this.poster[i]
           that.concert.push(post)
           console.log(i)
           console.log(this.concert)
         }
-        else if(this.poster[i].category==1){
+        else if(this.poster[i].category=='1'){
           that.musical.push(this.poster[i])
           console.log(i)
           console.log(this.musical)
         }
-        else if(this.poster[i].category==2){
+        else if(this.poster[i].category=='2'){
           that.sports.push(this.poster[i])
           console.log(i)
           console.log(this.sports)
