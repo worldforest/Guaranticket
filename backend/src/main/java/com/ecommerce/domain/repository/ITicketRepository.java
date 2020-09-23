@@ -10,6 +10,7 @@ public interface ITicketRepository
 {
 	List<Ticket> getByPid(long pid);
 	List<Ticket> getByUid(long uid);
+	List<Ticket> getByPidAndDateAndTime(long pid, String date, String time);
 	@Transactional
 	Ticket get(long tid);
 	@Transactional

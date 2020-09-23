@@ -35,10 +35,9 @@ public class DealRepository implements IDealRepository
 
 	@Override
 	public List<DealJoinData> list() {
-		StringBuilder sbSql =  new StringBuilder("SELECT * " + 
-				"FROM deals as a " + 
-				"inner join tickets as b on a.tid = b.tid " + 
-				"inner join performances as c on b.pid = c.pid "); // where available
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals as a ");
+		sbSql.append("inner join tickets as b on a.tid = b.tid ");
+		sbSql.append("inner join performances as c on b.pid = c.pid ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
 							   new Object[]{}, (rs, rowNum) -> DealJoinDataFactory.create(rs));

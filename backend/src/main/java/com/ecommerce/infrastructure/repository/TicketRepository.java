@@ -97,5 +97,18 @@ public class TicketRepository implements ITicketRepository
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
+
+	@Override
+	public List<Ticket> getByPidAndDateAndTime(long pid, String date, String time) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE pid = ? ");
+		sbSql.append("AND date = ? ");
+		sbSql.append("AND time = ?");
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{pid, date, time}, (rs, rowNum) -> TicketFactory.create(rs));
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
 	
 }

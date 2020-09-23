@@ -53,5 +53,11 @@ public class TicketService implements ITicketService
 		return this.iTicketRepository.get(tid);
 	}
 
+	@Override
+	public List<Ticket> getByPidAndDateAndTime(long pid, String date, String time) {
+		// TODO Auto-generated method stub
+		return this.iTicketRepository.getByPidAndDateAndTime(pid, date, time);
+	}
+
 
 }

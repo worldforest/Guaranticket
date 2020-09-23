@@ -1,20 +1,8 @@
 package com.ecommerce.api;
 
-import com.ecommerce.application.IDealService;
-import com.ecommerce.application.IPerformanceService;
-import com.ecommerce.application.IPerformanceSubmissonService;
 import com.ecommerce.application.ITicketService;
-import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.Item;
-import com.ecommerce.domain.Performance;
-import com.ecommerce.domain.PerformancePrice;
-import com.ecommerce.domain.PerformanceSubmission;
 import com.ecommerce.domain.Ticket;
-import com.ecommerce.domain.User;
-import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
-import com.ecommerce.domain.repository.IPerformanceSubmissionRepository;
-import com.ecommerce.domain.repository.ITicketRepository;
 
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -23,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -41,18 +30,28 @@ public class TicketController
 		this.ticketService = ticketService;
 	}
 
-	@ApiOperation(value = "공연별 모든 예매 검색")
+	@ApiOperation(value = "공연(날짜+시간)별 예매 내역 검색")
+	@RequestMapping(value = "/ticket/pid/{pid}/date/{date}/time/{time}", method = RequestMethod.GET)
+	public List<Ticket> getByPidAndDateAndTime(@PathVariable long pid,
+			@PathVariable String date,
+			@PathVariable String time) {
+		List<Ticket> list = ticketService.getByPidAndDateAndTime(pid,date,time);
+		if (list == null || list.isEmpty()) {
+			throw new NotFoundException(pid + "공연의 "+date+" 날짜의 예매 내역을 찾을 수 없습니다.");
+		}
+		return list;
+	}
+	@ApiOperation(value = "공연별 예매 내역 검색")
 	@RequestMapping(value = "/ticket/pid/{pid}", method = RequestMethod.GET)
 	public List<Ticket> getByPid(@PathVariable long pid) {
+		
 		List<Ticket> list = ticketService.getByPid(pid);
 
-		if (list == null || list.isEmpty()) {
+		if (list == null || list.isEmpty())
 			throw new NotFoundException(pid + "공연의 예매 내역을 찾을 수 없습니다.");
-		}
 
 		return list;
 	}
-	
 	@ApiOperation(value = "사용자 예매 내역 검색")
 	@RequestMapping(value = "/ticket/uid/{uid}", method = RequestMethod.GET)
 	public List<Ticket> getByUid(@PathVariable long uid) {
