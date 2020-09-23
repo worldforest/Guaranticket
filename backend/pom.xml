@@ -19,7 +19,22 @@
 	</properties>
 
 	<dependencies>
+	
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+	
+		<!-- JAVA JSON WEB TOKEN -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.1</version>
+		</dependency>
 
+			
+		<!-- SMS 인증 -->
 		<dependency>
 	    	<groupId>net.nurigo</groupId>
 		    <artifactId>javaSDK</artifactId>
