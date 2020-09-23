@@ -70,27 +70,9 @@ export default {
        startDate: '',
        endDate: ''
       },
-      concert: {
-       pid:'',
-       title: '',
-       poster: '',
-       startDate: '',
-       endDate: ''
-      },
-      musical: {
-       pid:'',
-       title: '',
-       poster: '',
-       startDate: '',
-       endDate: ''
-      },
-      sports: {
-       pid:'',
-       title: '',
-       poster: '',
-       startDate: '',
-       endDate: ''
-      },
+      concert: [],
+      musical: [],
+      sports: [],
       mainPosters:[
         {
           src : 'https://www.gangel.kr/files/attach/images/287/543/397/001/ced86dfc54a61132ac249ea4b051ccaa.jpg',
@@ -141,7 +123,7 @@ export default {
         console.log(this.concert)
       }
       else if(category==1){
-        that.poste=this.musical
+        that.poster=this.musical
         console.log(this.musical)
       }
       else if(category==2){
@@ -154,28 +136,40 @@ export default {
     axios
     .get("http://localhost:8080/api/performance")
     .then(res => {
-      this.poster=res.data
-      var len = this.poster.length;
-      var that = this;
-      for (let i = 0; i < len; i++) {
-        var post = this.poster[i]
-        if(this.poster[i].category=='0'){
-          // this.concert=this.poster[i]
-          that.concert.push(post)
-          console.log(i)
-          console.log(this.concert)
+      this.poster=res.data;
+      // var len = this.poster.length;
+      // var that = this;
+
+      this.poster.forEach(post => {
+        if(post.category=='0'){
+          this.concert.push(post)
         }
-        else if(this.poster[i].category=='1'){
-          that.musical.push(this.poster[i])
-          console.log(i)
-          console.log(this.musical)
+        else if(post.category=='1'){
+          this.musical.push(post)
         }
-        else if(this.poster[i].category=='2'){
-          that.sports.push(this.poster[i])
-          console.log(i)
-          console.log(this.sports)
+        else if(post.category=='2'){
+          this.sports.push(post)
         }
-      }
+      });
+      // for (let i = 0; i < len; i++) {
+      //   var post = this.poster[i]
+      //   if(this.poster[i].category=='0'){
+      //     // this.concert=this.poster[i]
+      //     that.concert.push(post)
+      //     console.log(i)
+      //     console.log(this.concert)
+      //   }
+      //   else if(this.poster[i].category=='1'){
+      //     that.musical.push(this.poster[i])
+      //     console.log(i)
+      //     console.log(this.musical)
+      //   }
+      //   else if(this.poster[i].category=='2'){
+      //     that.sports.push(this.poster[i])
+      //     console.log(i)
+      //     console.log(this.sports)
+      //   }
+      // }
     })
     .catch();
   }

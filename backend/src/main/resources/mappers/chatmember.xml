@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ecommerce.domain.repository.IChatmemberRepository">
+<mapper namespace="com.ecommerce.mapper.ChatMemberMapper">
 	<!-- 나와 상대이름으로 만들어진 방이름으로 번호를 조회해서 그 번호에 나와 상대를 저장 -->
 	<insert id="insert" parameterType="String">
 		insert into chatmember(no, username)

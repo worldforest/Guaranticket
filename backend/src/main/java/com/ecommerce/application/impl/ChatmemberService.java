@@ -7,24 +7,27 @@ import org.springframework.stereotype.Service;
 
 import com.ecommerce.application.IChatmemberService;
 import com.ecommerce.domain.repository.IChatmemberRepository;
+import com.ecommerce.mapper.ChatMemberMapper;
+
 @Service
-public class ChatmemberService implements IChatmemberService{
+public class ChatmemberService implements IChatmemberService {
 
 	@Autowired
-	private IChatmemberRepository chatmemberRepo;
+	private ChatMemberMapper chatmemberMapper;
+
 	@Override
 	public boolean insert(String no, String name) {
-		return chatmemberRepo.insert(no, name);
+		return chatmemberMapper.insert(no, name);
 	}
 
 	@Override
 	public List<String> selectAll(String name) {
-		return chatmemberRepo.selectAll(name);
+		return chatmemberMapper.selectAll(name);
 	}
 
 	@Override
 	public String select(String myname, String yourname) {
-		return chatmemberRepo.select(myname, yourname);
+		return chatmemberMapper.select(myname, yourname);
 	}
 
 }
