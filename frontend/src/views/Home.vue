@@ -141,7 +141,7 @@ export default {
         console.log(this.concert)
       }
       else if(category==1){
-        that.poste=this.musical
+        that.poster=this.musical
         console.log(this.musical)
       }
       else if(category==2){
