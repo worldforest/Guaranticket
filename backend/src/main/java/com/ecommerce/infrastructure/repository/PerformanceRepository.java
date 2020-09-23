@@ -41,7 +41,6 @@ public class PerformanceRepository implements IPerformanceRepository
 				"FROM performances as p " + 
 				") AS a ");
 		sbSql.append("WHERE a.RN <= 5 ");
-		sbSql.append("WHERE a.RN <= 5 ");
 		sbSql.append("ORDER by a.ticketing_start_date desc ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
