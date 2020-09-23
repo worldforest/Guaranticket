@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecommerce.domain.repository.IChatmemberRepository">
+	<!-- 나와 상대이름으로 만들어진 방이름으로 번호를 조회해서 그 번호에 나와 상대를 저장 -->
+	<insert id="insert" parameterType="String">
+		insert into chatmember(no, username)
+		values(#{no},#{username})
+	</insert>
+
+	<!-- username보내면 내가 포함된 채팅방 번호 -->
+	<select id="selectAll" parameterType="String"
+		resultType="String">
+		select no
+		from chatmember
+		where username=#{username}
+	</select>
+
+	
+	<select id="select" parameterType="String" resultType="String">
+		select no
+		from chatmember
+		where (username=#{yourname}
+		and (no in 
+		(select no
+		from chatmember
+		where username=#{myname}))
+		)
+	</select>
+
+</mapper>

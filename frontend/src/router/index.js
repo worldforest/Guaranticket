@@ -25,6 +25,8 @@ import FindPw from "@/views/FindPw.vue";
 import Concert from "@/views/Concert.vue";
 import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
+//채팅
+import Chat from "@/views/Chat.vue";
 
 Vue.use(VueRouter);
 
@@ -118,6 +120,11 @@ const routes = [
     path: "/sports",
     name: "sports",
     component: Sports,
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    component: Chat,
   },
   {
     name: "shop",
@@ -262,7 +269,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports"].includes(to.path) ||
+    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat"].includes(to.path) ||
     to.path.startsWith("/explorer");
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.

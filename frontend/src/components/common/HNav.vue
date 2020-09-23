@@ -25,6 +25,9 @@
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/login">로그인</router-link>
           </li>
+          <li class="nav-item" v-if="!$store.state.isSigned">
+            <router-link class="nav-link" to="/chat">채팅하기</router-link>
+          </li>
           <li class="nav-item" v-if="$store.state.isSigned">
             <div class="text-center">
               <v-menu offset-y>
