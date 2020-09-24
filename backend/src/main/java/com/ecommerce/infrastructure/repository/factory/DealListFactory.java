@@ -1,17 +1,17 @@
 package com.ecommerce.infrastructure.repository.factory;
 
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.DealJoinData;
+import com.ecommerce.domain.DealList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DealJoinDataFactory
+public class DealListFactory
 {
-	public static DealJoinData create(ResultSet rs) throws SQLException
+	public static DealList create(ResultSet rs) throws SQLException
 	{
 		if (rs == null) return null;
-		DealJoinData dealJoinData = new DealJoinData();
+		DealList dealJoinData = new DealList();
 		dealJoinData.setDid(rs.getLong("did"));
 		dealJoinData.setTid(rs.getLong("tid"));
 		dealJoinData.setBuyer(rs.getLong("buyer"));
