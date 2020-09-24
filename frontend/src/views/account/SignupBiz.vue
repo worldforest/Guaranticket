@@ -187,9 +187,9 @@
 </template>
 
 <script>
-import { signup } from "../api/user.js";
-import { findByEmail } from "../api/user.js";
-import { sendSMS } from "../api/user.js";
+import { signup } from "@/api/user.js";
+import { findByEmail } from "@/api/user.js";
+import { sendSMS } from "@/api/user.js";
 
 
 export default {

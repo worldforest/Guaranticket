@@ -1,10 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//계정(로그인,회원가입)
-import Login from "@/views/Login.vue";
-import Signup from "@/views/account/Signup.vue";
-import SignupUser from "@/views/SignupUser.vue";
-import SignupBiz from "@/views/SignupBiz.vue";
+
 import Home from "@/views/Home.vue";
 import store from "@/store";
 import Shop from "@/views/Shop.vue";
@@ -12,6 +8,12 @@ import MyPage from "@/views/MyPage.vue";
 import Item from "@/views/Item.vue";
 import Explorer from "@/views/Explorer.vue";
 import Escrow from "@/views/Escrow.vue";
+//계정(로그인,회원가입,비밀번호찾기)
+import Login from "@/views/account/Login.vue";
+import Signup from "@/views/account/Signup.vue";
+import SignupUser from "@/views/account/SignupUser.vue";
+import SignupBiz from "@/views/account/SignupBiz.vue";
+import FindPw from "@/views/account/FindPw.vue";
 //티켓거래
 import DealList from "@/views/deal/DealList.vue";
 import DealRegister from "@/views/deal/DealRegister.vue";
@@ -20,8 +22,6 @@ import DealDetail from "@/views/deal/DealDetail.vue";
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
 import SellList from "@/views/mypage/SellList.vue";
 import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
-//비밀번호찾기
-import FindPw from "@/views/FindPw.vue";
 //공연
 import Concert from "@/views/Concert.vue";
 import Musical from "@/views/Musical.vue";
