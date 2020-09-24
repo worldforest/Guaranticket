@@ -79,20 +79,18 @@ export default {
         this.user.email,
         this.user.password,
         response => {
-          console.log(response);
-          // scope.$store.commit("setUserId", response.data.id);
           scope.$store.commit("setIsSigned", true);
           storage.setItem("jwt-auth-token", response.data.data);
           // console.log(this.user.email)
 
-          // findByEmail(this.user.email, 
-          //   response => {
-          //     console.log(response);
-          //   },
-          //   error => {
+          findByEmail(this.user.email, 
+            response => {
+              console.log(response);
+            },
+            error => {
 
-          //   }
-          // );
+            }
+          );
 
 
           // findWallet(

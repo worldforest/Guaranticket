@@ -67,6 +67,7 @@ public class UserController {
 			logger.error("NOT FOUND ID: ", id);
 			throw new NotFoundException(id + " 회원 정보를 찾을 수 없습니다.");
 		}
+
 		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		result.put("status", true);
 		result.put("data", user);
@@ -81,6 +82,7 @@ public class UserController {
 			logger.error("NOT FOUND EMAIL: ", email);
 			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
 		}
+		System.out.println(jwtService.get(request.getHeader("jwt-auth-token")));
 		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		result.put("status", true);
 		result.put("data", user);

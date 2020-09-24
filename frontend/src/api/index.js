@@ -7,7 +7,6 @@ function createInstance() {
     baseURL: API_BASE_URL,
     headers: {
       "Content-Type": "application/json",
-      "jwt-auth-token" : "",
     }
   });
   return instance;
