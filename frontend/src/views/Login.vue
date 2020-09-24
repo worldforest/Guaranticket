@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { login } from "../api/user.js";
+import { findByEmail, findById, login } from "../api/user.js";
 import { findByUserId as findWallet } from "../api/wallet.js";
 import HNav from "@/components/common/HNav";
 
@@ -73,34 +73,48 @@ export default {
   methods: {
     login() {
       const scope = this;
+      const storage = window.localStorage;
 
       login(
         this.user.email,
         this.user.password,
-        function(response) {
+        response => {
+          console.log(response);
+          // scope.$store.commit("setUserId", response.data.id);
           scope.$store.commit("setIsSigned", true);
-          scope.$store.commit("setUserId", response.data.id);
+          storage.setItem("jwt-auth-token", response.data.data);
+          // console.log(this.user.email)
 
-          findWallet(
-            response.data.id,
-            function(response) {
-              if (response.status == 200) {
-                scope.$store.commit("setWalletAddress", response.data.address);
-              } else {
-                alert("Unexpected status code: " + response.status);
-              }
-            },
-            function(err) {
-              if (err.response != 404) {
-                console.error(err);
-                //alert("지갑 정보를 찾지 못했습니다.");
-              }
-            }
-          );
+          // findByEmail(this.user.email, 
+          //   response => {
+          //     console.log(response);
+          //   },
+          //   error => {
+
+          //   }
+          // );
+
+
+          // findWallet(
+          //   response.data.id,
+          //   function(response) {
+          //     if (response.status == 200) {
+          //       scope.$store.commit("setWalletAddress", response.data.address);
+          //     } else {
+          //       alert("Unexpected status code: " + response.status);
+          //     }
+          //   },
+          //   function(err) {
+          //     if (err.response != 404) {
+          //       console.error(err);
+          //       //alert("지갑 정보를 찾지 못했습니다.");
+          //     }
+          //   }
+          // );
 
           scope.$router.push("/");
         },
-        function(error) {
+        error => {
           console.error(error);
           alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
         }

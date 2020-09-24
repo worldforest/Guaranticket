@@ -1,6 +1,7 @@
 package com.ecommerce.api;
 
 import com.ecommerce.application.IUserService;
+import com.ecommerce.application.impl.JwtService;
 import com.ecommerce.domain.User;
 import com.ecommerce.domain.exception.DomainException;
 import com.ecommerce.domain.exception.EmptyListException;
@@ -17,12 +18,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,6 +39,9 @@ public class UserController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+
+	@Autowired
+	private JwtService jwtService;
 
 	@Autowired
 	public UserController(IUserService userService) {
@@ -52,33 +60,46 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-	public User get(@PathVariable int id) {
+	public Object get(@PathVariable int id, HttpServletRequest request) {
 		User user = userService.get(id);
-
+		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
 			logger.error("NOT FOUND ID: ", id);
 			throw new NotFoundException(id + " 회원 정보를 찾을 수 없습니다.");
 		}
-
-		return user;
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+		result.put("status", true);
+		result.put("data", user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/email/{email}", method = RequestMethod.GET)
-	public Object get(@PathVariable String email) {
+	public Object get(@PathVariable String email, HttpServletRequest request) {
 		User user = userService.get(email);
+		Map<String, Object> result = new HashMap<>();
+		if (user == null) {
+			logger.error("NOT FOUND EMAIL: ", email);
+			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
+		}
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+		result.put("status", true);
+		result.put("data", user);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
-	public User login(@RequestBody User user) {
+	public Object login(@RequestBody User user, HttpServletResponse response) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		User userFetched = userService.get(user.getEmail());
-		
+		Map<String, Object> result = new HashMap<>();
 		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword()))
 			throw new DomainException("비밀번호가 일치하지 않습니다.");
 
-		userFetched.setPassword("");
-		return userFetched;
+		String token = jwtService.create(userFetched.getId());
+		response.setHeader("jwt-auth-token", token);
+		result.put("status", true);
+		result.put("data", token);
+		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
@@ -90,8 +111,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.PUT)
-	public User update(@RequestBody User user) {
-		return userService.update(user);
+	public Object update(@RequestBody User user,  HttpServletRequest request) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Map<String, Object> result = new HashMap<>();
+		user = userService.update(user);
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+		result.put("status", true);
+		result.put("data", user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
