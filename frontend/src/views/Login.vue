@@ -83,14 +83,14 @@ export default {
           storage.setItem("jwt-auth-token", response.data.data);
           // console.log(this.user.email)
 
-          findByEmail(this.user.email, 
-            response => {
-              console.log(response);
-            },
-            error => {
+          // findByEmail(this.user.email, 
+          //   response => {
+          //     console.log(response);
+          //   },
+          //   error => {
 
-            }
-          );
+          //   }
+          // );
 
 
           // findWallet(
