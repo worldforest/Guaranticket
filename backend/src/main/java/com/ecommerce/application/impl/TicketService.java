@@ -5,6 +5,8 @@ import com.ecommerce.application.ITicketService;
 import com.ecommerce.domain.Deal;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Ticket;
+import com.ecommerce.domain.TicketDetail;
+import com.ecommerce.domain.TicketList;
 import com.ecommerce.domain.exception.ApplicationException;
 import com.ecommerce.domain.repository.IDealRepository;
 import com.ecommerce.domain.repository.IItemRepository;
@@ -30,13 +32,13 @@ public class TicketService implements ITicketService
 	}
 
 	@Override
-	public List<Ticket> getByUid(long uid) {
+	public List<TicketList> getByUid(long uid) {
 		// TODO Auto-generated method stub
 		return this.iTicketRepository.getByUid(uid);
 	}
 
 	@Override
-	public Ticket create(Ticket ticket) {
+	public TicketDetail create(Ticket ticket) {
 		long tid = this.iTicketRepository.create(ticket);
 		return this.iTicketRepository.get(tid);
 	}
@@ -48,9 +50,15 @@ public class TicketService implements ITicketService
 	}
 
 	@Override
-	public Ticket get(long tid) {
+	public TicketDetail get(long tid) {
 		// TODO Auto-generated method stub
 		return this.iTicketRepository.get(tid);
+	}
+
+	@Override
+	public List<Ticket> getByPidAndDateAndTime(long pid, String date, String time) {
+		// TODO Auto-generated method stub
+		return this.iTicketRepository.getByPidAndDateAndTime(pid, date, time);
 	}
 
 

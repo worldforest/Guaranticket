@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,9 +71,10 @@ public class UserController {
 
 	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
 	public User login(@RequestBody User user) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		User userFetched = userService.get(user.getEmail());
-
-		if (!userFetched.getPassword().equals(user.getPassword()))
+		
+		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword()))
 			throw new DomainException("비밀번호가 일치하지 않습니다.");
 
 		userFetched.setPassword("");
@@ -81,6 +83,8 @@ public class UserController {
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
 	public User create(@RequestBody User user) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User newUser = userService.add(user);
 		return newUser;
 	}

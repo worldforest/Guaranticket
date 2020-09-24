@@ -4,7 +4,8 @@ import com.ecommerce.application.IDealService;
 import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.IPerformanceSubmissonService;
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.DealJoinData;
+import com.ecommerce.domain.DealDetail;
+import com.ecommerce.domain.DealList;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.PerformancePrice;
@@ -41,8 +42,8 @@ public class DealController
 
 	@ApiOperation(value = "모든 거래 검색")
 	@RequestMapping(value = "/deal", method = RequestMethod.GET)
-	public List<DealJoinData> list() {
-		List<DealJoinData> list = dealService.list();
+	public List<DealList> list() {
+		List<DealList> list = dealService.list();
 
 		if (list == null || list.isEmpty())
 			throw new NotFoundException("거래 정보를 찾을 수 없습니다.");
@@ -52,25 +53,25 @@ public class DealController
 	
 	@ApiOperation(value = "거래번호별 거래 상세보기")
 	@RequestMapping(value = "/deal/did/{did}", method = RequestMethod.GET)
-	public Deal getByDid(@PathVariable long did) {
-		Deal deal = dealService.get(did);
-		if (deal == null) {
+	public DealDetail getByDid(@PathVariable long did) {
+		DealDetail dealDetail = dealService.get(did);
+		if (dealDetail == null) {
 			logger.error("NOT FOUND ID: ", did);
 			throw new NotFoundException(did + " 거래 정보를 찾을 수 없습니다.");
 		}
-		return deal;
+		return dealDetail;
 	}
 	
 	@ApiOperation(value = "거래 등록")
 	@RequestMapping(value = "/deal", method = RequestMethod.POST)
-	public Deal create(@RequestBody Deal deal) {
+	public DealDetail create(@RequestBody Deal deal) {
 		return dealService.create(deal);
 	}
 	
 	@ApiOperation(value = "사용자 판매내역 보기")
 	@RequestMapping(value = "/deal/seller/{seller}", method = RequestMethod.GET)
-	public List<Deal> getBySeller(@PathVariable long seller) {
-		List<Deal> list = dealService.getBySeller(seller);
+	public List<DealList> getBySeller(@PathVariable long seller) {
+		List<DealList> list = dealService.getBySeller(seller);
 
 		if (list == null || list.isEmpty())
 			throw new NotFoundException(seller + " 판매 내역 정보를 찾을 수 없습니다.");

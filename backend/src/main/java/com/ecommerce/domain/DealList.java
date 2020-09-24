@@ -3,14 +3,17 @@ package com.ecommerce.domain;
 import lombok.Data;
 
 @Data
-public class Ticket
+public class DealList
 {
+	private long did;
 	private long tid;
-	private long pid;
-	private long uid;
-	private int seatNumber;
+	private long buyer;
+	private long seller;
 	private String date;
 	private String time;
 	private String grade;
 	private String price;
+	private String category;
+	private String title;
+	
 }

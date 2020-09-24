@@ -35,6 +35,22 @@ public class PerformanceRepository implements IPerformanceRepository
 	}
 
 	@Override
+	public List<Performance> latestList() {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM " + 
+				"( SELECT *, ROW_NUMBER() OVER (PARTITION BY p.category ORDER BY p.ticketing_start_date desc) AS RN " + 
+				"FROM performances as p " + 
+				") AS a ");
+		sbSql.append("WHERE a.RN <= 5 ");
+		sbSql.append("ORDER by a.ticketing_start_date desc ");
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{}, (rs, rowNum) -> PerformanceFactory.create(rs));
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+	
+	@Override
 	public List<Performance> list() {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances "); // where available
 		try {
@@ -44,18 +60,6 @@ public class PerformanceRepository implements IPerformanceRepository
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
-//
-//	@Override
-//	public List<Performance> getByPid(long pid) {
-//		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid=? ");
-//		try {
-//			return this.jdbcTemplate.query(sbSql.toString(),
-//					new Object[]{ pid }, (rs, rowNum) -> PerformanceFactory.create(rs));
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//	}
-//
 	@Override
 	public Performance get(long pid) {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid = ? ");

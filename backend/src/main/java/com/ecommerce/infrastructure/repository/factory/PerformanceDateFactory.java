@@ -1,7 +1,6 @@
 package com.ecommerce.infrastructure.repository.factory;
 
 import com.ecommerce.domain.PerformanceDate;
-import com.ecommerce.domain.PerformancePrice;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

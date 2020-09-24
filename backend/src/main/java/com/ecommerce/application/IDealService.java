@@ -1,15 +1,16 @@
 package com.ecommerce.application;
 
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.DealJoinData;
+import com.ecommerce.domain.DealDetail;
+import com.ecommerce.domain.DealList;
 
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface IDealService {
-	List<DealJoinData> list();
-	Deal get(long did);
+	List<DealList> list();
+	DealDetail get(long did);
 	@Transactional
-	Deal create(Deal deal);
-	List<Deal> getBySeller(long seller);
+	DealDetail create(Deal deal);
+	List<DealList> getBySeller(long seller);
 }

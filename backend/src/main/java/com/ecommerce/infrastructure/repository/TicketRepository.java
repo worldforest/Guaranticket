@@ -1,18 +1,13 @@
 package com.ecommerce.infrastructure.repository;
 
-import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.Item;
-import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.Ticket;
+import com.ecommerce.domain.TicketDetail;
+import com.ecommerce.domain.TicketList;
 import com.ecommerce.domain.exception.RepositoryException;
-import com.ecommerce.domain.repository.IDealRepository;
-import com.ecommerce.domain.repository.IItemRepository;
-import com.ecommerce.domain.repository.IPerformanceRepository;
 import com.ecommerce.domain.repository.ITicketRepository;
-import com.ecommerce.infrastructure.repository.factory.DealFactory;
-import com.ecommerce.infrastructure.repository.factory.ItemFactory;
-import com.ecommerce.infrastructure.repository.factory.PerformanceFactory;
+import com.ecommerce.infrastructure.repository.factory.TicketDetailFactory;
 import com.ecommerce.infrastructure.repository.factory.TicketFactory;
+import com.ecommerce.infrastructure.repository.factory.TicketListFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,11 +47,13 @@ public class TicketRepository implements ITicketRepository
 	}
 
 	@Override
-	public List<Ticket> getByUid(long uid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE uid = ? ");
+	public List<TicketList> getByUid(long uid) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets as a ");
+		sbSql.append("inner join performances as b on a.pid = b.pid ");
+		sbSql.append("where a.uid = ? ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-								new Object[] { uid }, (rs, rowNum) -> TicketFactory.create(rs) );
+								new Object[] { uid }, (rs, rowNum) -> TicketListFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {
@@ -64,11 +61,13 @@ public class TicketRepository implements ITicketRepository
 		}
 	}
 	@Override
-	public Ticket get(long tid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE tid = ? ");
+	public TicketDetail get(long tid) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets as a ");
+		sbSql.append("inner join performances as b on a.pid = b.pid ");
+		sbSql.append("where a.tid = ? ");
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
-								new Object[] { tid }, (rs, rowNum) -> TicketFactory.create(rs) );
+								new Object[] { tid }, (rs, rowNum) -> TicketDetailFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {
@@ -84,6 +83,9 @@ public class TicketRepository implements ITicketRepository
 			paramMap.put("pid", ticket.getPid());
 			paramMap.put("seat_number",ticket.getSeatNumber());
 			paramMap.put("date",ticket.getDate());
+			paramMap.put("time",ticket.getTime());
+			paramMap.put("grade",ticket.getGrade());
+			paramMap.put("price",ticket.getPrice());
 			
 			this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 					.withTableName("tickets")
@@ -93,6 +95,19 @@ public class TicketRepository implements ITicketRepository
 			log.debug("INSERTED: " + newId.longValue());
 			return newId.longValue();
 
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+
+	@Override
+	public List<Ticket> getByPidAndDateAndTime(long pid, String date, String time) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE pid = ? ");
+		sbSql.append("AND date = ? ");
+		sbSql.append("AND time = ?");
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{pid, date, time}, (rs, rowNum) -> TicketFactory.create(rs));
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}

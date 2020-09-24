@@ -10,12 +10,12 @@
             </v-layout>
             <div class="container px-5 py-3">
                 <v-row>
-                    <div v-for="(concert,i) in Concerts" :key="i">
-                        <div v-if="concert.category == 1">
-                        <img :src="concert.poster" height="350" width="250" alt="뮤지컬">
+                    <div v-for="(musical,i) in Musicals" :key="i">
+                        <div v-if="musical.category == 1">
+                        <img :src="musical.poster" height="350" width="250" @click="performanceDetail(musical)" alt="뮤지컬">
                         <figcaption>
                             <div class="fig-author">
-                                {{concert.title}}
+                                {{musical.title}}
                             </div>
                         </figcaption>
                         </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { findAll, findById } from "@/api/performance.js";
+import { findAll } from "@/api/performance.js";
 import axios from "axios";
 
 // const perform = getAllPerform();
@@ -36,20 +36,28 @@ import axios from "axios";
 export default {
     data() {
         return {
-            Concerts: []
+            Musicals: []
         };
     },
     methods: {
        
     },
     created() {
-        axios
-        .get("http://localhost:8080/api/performance")
-        .then(res => {
-            this.Concerts=res.data
-        })
-        .catch();
+        findAll(
+            res => {
+                this.Musicals=res.data
+            }
+        )
     },
+    methods: {
+        performanceDetail(performance){
+            var performanceId = performance.pid;
+            this.$router.push({
+                name: 'performanceDetail',
+                params: {pid: performanceId}
+            });
+        },
+    }
 
 }
 </script>
