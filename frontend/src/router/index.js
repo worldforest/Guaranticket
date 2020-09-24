@@ -1,10 +1,11 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+//계정(로그인,회원가입)
+import Login from "@/views/Login.vue";
 import Signup from "@/views/Signup.vue";
 import SignupUser from "@/views/SignupUser.vue";
 import SignupBiz from "@/views/SignupBiz.vue";
 import Home from "@/views/Home.vue";
-import Login from "@/views/Login.vue";
 import store from "@/store";
 import Shop from "@/views/Shop.vue";
 import MyPage from "@/views/MyPage.vue";
