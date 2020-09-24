@@ -1,11 +1,13 @@
 package com.ecommerce.infrastructure.repository;
 
 import com.ecommerce.domain.Ticket;
-import com.ecommerce.domain.TicketJoinData;
+import com.ecommerce.domain.TicketDetail;
+import com.ecommerce.domain.TicketList;
 import com.ecommerce.domain.exception.RepositoryException;
 import com.ecommerce.domain.repository.ITicketRepository;
+import com.ecommerce.infrastructure.repository.factory.TicketDetailFactory;
 import com.ecommerce.infrastructure.repository.factory.TicketFactory;
-import com.ecommerce.infrastructure.repository.factory.TicketJoinDataFactory;
+import com.ecommerce.infrastructure.repository.factory.TicketListFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,13 +47,13 @@ public class TicketRepository implements ITicketRepository
 	}
 
 	@Override
-	public List<TicketJoinData> getByUid(long uid) {
+	public List<TicketList> getByUid(long uid) {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets as a ");
 		sbSql.append("inner join performances as b on a.pid = b.pid ");
 		sbSql.append("where a.uid = ? ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-								new Object[] { uid }, (rs, rowNum) -> TicketJoinDataFactory.create(rs) );
+								new Object[] { uid }, (rs, rowNum) -> TicketListFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {
@@ -59,11 +61,13 @@ public class TicketRepository implements ITicketRepository
 		}
 	}
 	@Override
-	public Ticket get(long tid) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets WHERE tid = ? ");
+	public TicketDetail get(long tid) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM tickets as a ");
+		sbSql.append("inner join performances as b on a.pid = b.pid ");
+		sbSql.append("where a.tid = ? ");
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
-								new Object[] { tid }, (rs, rowNum) -> TicketFactory.create(rs) );
+								new Object[] { tid }, (rs, rowNum) -> TicketDetailFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {

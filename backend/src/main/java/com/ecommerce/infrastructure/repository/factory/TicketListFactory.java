@@ -1,16 +1,16 @@
 package com.ecommerce.infrastructure.repository.factory;
 
-import com.ecommerce.domain.TicketJoinData;
+import com.ecommerce.domain.TicketList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TicketJoinDataFactory
+public class TicketListFactory
 {
-	public static TicketJoinData create(ResultSet rs) throws SQLException
+	public static TicketList create(ResultSet rs) throws SQLException
 	{
 		if (rs == null) return null;
-		TicketJoinData ticket = new TicketJoinData();
+		TicketList ticket = new TicketList();
 		ticket.setPid(rs.getLong("pid"));
 		ticket.setSeatNumber(rs.getInt("seat_number"));
 		ticket.setDate(rs.getString("date"));
