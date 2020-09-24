@@ -15,6 +15,18 @@ function findById(pid, success, fail) {
       .then(success)
       .catch(fail);
 }
+function finddateById(pid, success, fail) {
+  instance
+    .get("/api/performance/date/" + pid)
+    .then(success)
+    .catch(fail);
+}
+function findpriceById(pid, success, fail) {
+  instance
+    .get("/api/performance/price/" + pid)
+    .then(success)
+    .catch(fail);
+}
 
 function create(body, success, fail, final) {
     instance
@@ -30,4 +42,4 @@ function submit(sid, success, fail){
         .then(success)
         .catch(fail);
 }
-export{ findAll, findById, create, submit }
+export{ findAll, findById, finddateById, findpriceById, create, submit }
