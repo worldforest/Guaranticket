@@ -26,6 +26,7 @@ export default new Vuex.Store({
       state.isSigned = false;
       state.user.id = 0;
       state.user.walletAddress = null;
+      window.localStorage.setItem("jwt-auth-token", "");
     },
     // getAllPerform(state, response){
     //   state.concert = response;
