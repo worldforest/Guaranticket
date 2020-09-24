@@ -23,12 +23,12 @@ export default {
   },
   created() {
       axios
-        .get(API_BASE_URL + '/api/deal')
+        .get(API_BASE_URL + '/api/purchases/history/')
         .then((res) => {
 
         })
         .catch((err) => {
-
+          console.log("created axios get method error!")
         })
   },
   methods() {
