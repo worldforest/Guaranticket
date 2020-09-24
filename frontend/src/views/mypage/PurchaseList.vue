@@ -18,16 +18,16 @@ export default {
   },
   data: () => {
       return {
-
+        purchase_list: []
       }
   },
   created() {
       axios
-        .get(API_BASE_URL + '/api/purchases/history/')
-        .then((res) => {
+        .get(API_BASE_URL + '/api/purchases/buyer/')
+        .then(res => {
 
         })
-        .catch((err) => {
+        .catch(err => {
           console.log("created axios get method error!")
         })
   },
