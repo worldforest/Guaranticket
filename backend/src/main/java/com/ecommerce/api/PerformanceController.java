@@ -22,9 +22,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -79,11 +86,12 @@ public class PerformanceController
 	@ApiOperation(value = "공연 등록")
 	@RequestMapping(value = "/performance", method = RequestMethod.POST)
 	public Performance create(@RequestBody PerformanceAllData performanceAllData) {
+//		this.uploadFile(performanceAllData.getPoster());
 		return performanceService.create(performanceAllData);
 	}
 	
 	@ApiOperation(value = "공연 삭제")
-	@RequestMapping(value = "/performance//{pid}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.DELETE)
 	public Object delete(@PathVariable long pid) {
 		ResponseEntity<String> result = new ResponseEntity<>("success",HttpStatus.OK);
 		int num = performanceService.delete(pid);
@@ -106,7 +114,7 @@ public class PerformanceController
 	
 	@ApiOperation(value = "공연 날짜,시간 검색")
 	@RequestMapping(value = "/performance/date/{pid}", method = RequestMethod.GET)
-	public List<PerformanceDate> getPerformanceDateBypid(long pid) {
+	public List<PerformanceDate> getPerformanceDateBypid(@PathVariable long pid) {
 		List<PerformanceDate> list = performanceDateService.getByPid(pid);
 		if (list == null || list.isEmpty())
 			throw new EmptyListException("NO DATA");
@@ -115,7 +123,7 @@ public class PerformanceController
 	
 	@ApiOperation(value = "공연 좌석,가격 검색")
 	@RequestMapping(value = "/performance/price/{pid}", method = RequestMethod.GET)
-	public List<PerformancePrice> getPerformancePriceBypid(long pid) {
+	public List<PerformancePrice> getPerformancePriceBypid(@PathVariable long pid) {
 		List<PerformancePrice> list = performancePriceService.getByPid(pid);
 		if (list == null || list.isEmpty())
 			throw new EmptyListException("NO DATA");
@@ -130,4 +138,32 @@ public class PerformanceController
 			throw new EmptyListException("NO DATA");
 		return list;
 	}
+	
+//	@ApiOperation(value = "공연등록시 이미지파일 저장 후 파일 이름 리턴")
+//	@RequestMapping(value = "/performance/img", method = RequestMethod.POST)
+//	public String uploadFile(@RequestBody MultipartFile file){
+//		System.out.println("파일 이름 : " + file.getOriginalFilename());
+//		System.out.println("파일 크기 : " + file.getSize());
+//		StringTokenizer st = new StringTokenizer(file.getOriginalFilename(), ".");
+//		String fileName = st.nextToken();
+//		String extension = st.nextToken();
+//		System.out.println(fileName);
+//		System.out.println(extension);
+//
+//		Date today = new Date();
+//		SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
+//		SimpleDateFormat time = new SimpleDateFormat("hhmmss");
+//
+//		String fileFullName = fileName + "_" + date.format(today) + time.format(today) + "." + extension;
+//		// 서버에서 사용할때
+////		FileCopyUtils.copy(file.getBytes(), new File("/home/ubuntu/deploy/img/user/" + fileFullName));
+//	    try {
+//	    	// 로컬에서 테스트할때
+//			FileCopyUtils.copy(file.getBytes(), new File("C:/"+fileFullName));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return fileFullName;
+//	}
 }
