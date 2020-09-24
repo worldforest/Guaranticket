@@ -15,7 +15,7 @@ import Escrow from "@/views/Escrow.vue";
 import DealList from "@/views/deal/DealList.vue";
 import DealRegister from "@/views/deal/DealRegister.vue";
 import DealDetail from "@/views/deal/DealDetail.vue";
-//마이페이지
+//마이페이지(일반회원)
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
 import SellList from "@/views/mypage/SellList.vue";
 import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
@@ -28,9 +28,6 @@ import Sports from "@/views/Sports.vue";
 
 Vue.use(VueRouter);
 
-/**
- * 아래의 router를 변경하여 구현할 수 있습니다.
- */
 const routes = [
   //마이페이지
   {
@@ -60,11 +57,11 @@ const routes = [
     component: DealRegister
   },
   {
-    path: "/dealdetail",
+    path: "/dealdetail/:did",
     name: "dealdetail",
     component: DealDetail
   },
-  //비밀번호찾기 페이지 추가
+  //비밀번호찾기
   {
     path: "/findpw",
     name: "findpw",
