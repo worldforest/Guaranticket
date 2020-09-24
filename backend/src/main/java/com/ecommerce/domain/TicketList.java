@@ -3,7 +3,7 @@ package com.ecommerce.domain;
 import lombok.Data;
 
 @Data
-public class TicketJoinData
+public class TicketList
 {
 	private long tid;
 	private long pid;

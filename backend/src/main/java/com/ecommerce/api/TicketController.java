@@ -5,7 +5,8 @@ import com.ecommerce.application.ITicketService;
 import com.ecommerce.application.impl.PerformanceService;
 import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.Ticket;
-import com.ecommerce.domain.TicketJoinData;
+import com.ecommerce.domain.TicketDetail;
+import com.ecommerce.domain.TicketList;
 import com.ecommerce.domain.exception.NotFoundException;
 
 import io.swagger.annotations.ApiOperation;
@@ -56,10 +57,10 @@ public class TicketController
 
 		return list;
 	}
-	@ApiOperation(value = "사용자 예매 내역 검색")
+	@ApiOperation(value = "사용자 예매 내역리스트 검색")
 	@RequestMapping(value = "/ticket/uid/{uid}", method = RequestMethod.GET)
-	public List<TicketJoinData> getByUid(@PathVariable long uid) {
-		List<TicketJoinData> list = ticketService.getByUid(uid);
+	public List<TicketList> getByUid(@PathVariable long uid) {
+		List<TicketList> list = ticketService.getByUid(uid);
 		if (list == null || list.isEmpty())
 			throw new NotFoundException(uid + "유저의 예매 내역을 찾을 수 없습니다.");
 		return list;
@@ -67,19 +68,19 @@ public class TicketController
 	
 	@ApiOperation(value = "공연 예매 하기")
 	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
-	public Ticket create(@RequestBody Ticket ticket) {
+	public TicketDetail create(@RequestBody Ticket ticket) {
 		return ticketService.create(ticket);
 	}
 	
-	@ApiOperation(value = "티켓 정보 검색")
+	@ApiOperation(value = "티켓 상세정보 검색")
 	@RequestMapping(value = "/ticket/tid/{tid}", method = RequestMethod.GET)
-	public Ticket getBytid(@PathVariable long tid) {
+	public TicketDetail getBytid(@PathVariable long tid) {
 		
-		Ticket ticket = ticketService.get(tid);
+		TicketDetail ticketDetail = ticketService.get(tid);
 
-		if (ticket == null)
+		if (ticketDetail == null)
 			throw new NotFoundException(tid + "의 티켓 정보를 찾을 수 없습니다.");
 
-		return ticket;
+		return ticketDetail;
 	}
 }
