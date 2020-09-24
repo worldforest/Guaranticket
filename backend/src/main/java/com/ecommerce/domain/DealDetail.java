@@ -3,7 +3,7 @@ package com.ecommerce.domain;
 import lombok.Data;
 
 @Data
-public class DealJoinData
+public class DealDetail
 {
 	private long did;
 	private long tid;
@@ -15,5 +15,7 @@ public class DealJoinData
 	private String price;
 	private String category;
 	private String title;
-	
+	private String place;
+	private String seatNumber;
+	private String poster;
 }

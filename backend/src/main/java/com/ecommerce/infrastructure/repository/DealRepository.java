@@ -1,11 +1,13 @@
 package com.ecommerce.infrastructure.repository;
 
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.DealJoinData;
+import com.ecommerce.domain.DealDetail;
+import com.ecommerce.domain.DealList;
 import com.ecommerce.domain.exception.RepositoryException;
 import com.ecommerce.domain.repository.IDealRepository;
+import com.ecommerce.infrastructure.repository.factory.DealDetailFactory;
 import com.ecommerce.infrastructure.repository.factory.DealFactory;
-import com.ecommerce.infrastructure.repository.factory.DealJoinDataFactory;
+import com.ecommerce.infrastructure.repository.factory.DealListFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,24 +36,27 @@ public class DealRepository implements IDealRepository
 	}
 
 	@Override
-	public List<DealJoinData> list() {
+	public List<DealList> list() {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals as a ");
 		sbSql.append("inner join tickets as b on a.tid = b.tid ");
 		sbSql.append("inner join performances as c on b.pid = c.pid ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-							   new Object[]{}, (rs, rowNum) -> DealJoinDataFactory.create(rs));
+							   new Object[]{}, (rs, rowNum) -> DealListFactory.create(rs));
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
 
 	@Override
-	public Deal get(long did) {
-		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals WHERE did = ? ");
+	public DealDetail get(long did) {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals as a ");
+		sbSql.append("inner join tickets as b on a.tid = b.tid ");
+		sbSql.append("inner join performances as c on b.pid = c.pid ");
+		sbSql.append("where a.did = ? ");
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
-								new Object[] { did }, (rs, rowNum) -> DealFactory.create(rs) );
+								new Object[] { did }, (rs, rowNum) -> DealDetailFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {
@@ -64,8 +69,8 @@ public class DealRepository implements IDealRepository
 		try {
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("tid", deal.getTid());
-			paramMap.put("buy_uid", deal.getBuyer());
-			paramMap.put("sell_uid", deal.getSeller());
+			paramMap.put("buyer", deal.getBuyer());
+			paramMap.put("seller", deal.getSeller());
 			paramMap.put("date", deal.getDate());
 			paramMap.put("time", deal.getTime());
 			paramMap.put("grade", deal.getGrade());
@@ -86,14 +91,14 @@ public class DealRepository implements IDealRepository
 	}
 
 	@Override
-	public List<DealJoinData> getBySeller(long seller) {
+	public List<DealList> getBySeller(long seller) {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM deals as a "); // where available
 		sbSql.append("inner join tickets as b on a.tid = b.tid ");
 		sbSql.append("inner join performances as c on b.pid = c.pid ");
 		sbSql.append("where seller = ? ");
 		try {
 			return this.jdbcTemplate.query(sbSql.toString(),
-							   new Object[]{seller}, (rs, rowNum) -> DealJoinDataFactory.create(rs));
+							   new Object[]{seller}, (rs, rowNum) -> DealListFactory.create(rs));
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}

@@ -2,7 +2,8 @@ package com.ecommerce.application.impl;
 
 import com.ecommerce.application.IDealService;
 import com.ecommerce.domain.Deal;
-import com.ecommerce.domain.DealJoinData;
+import com.ecommerce.domain.DealDetail;
+import com.ecommerce.domain.DealList;
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.exception.ApplicationException;
 import com.ecommerce.domain.repository.IDealRepository;
@@ -27,25 +28,25 @@ public class DealService implements IDealService
 	}
 
 	@Override
-	public Deal get(long did) {
+	public DealDetail get(long did) {
 		// TODO Auto-generated method stub
 		return this.idealDealRepository.get(did);
 	}
 
 	@Override
-	public Deal create(Deal deal) {
+	public DealDetail create(Deal deal) {
 		long did = this.idealDealRepository.create(deal);
 		return this.idealDealRepository.get(did);
 	}
 
 	@Override
-	public List<DealJoinData> list() {
+	public List<DealList> list() {
 		// TODO Auto-generated method stub
 		return this.idealDealRepository.list();
 	}
 
 	@Override
-	public List<DealJoinData> getBySeller(long seller) {
+	public List<DealList> getBySeller(long seller) {
 		// TODO Auto-generated method stub
 		return this.idealDealRepository.getBySeller(seller);
 	}
