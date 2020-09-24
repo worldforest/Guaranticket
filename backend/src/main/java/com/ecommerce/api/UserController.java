@@ -79,14 +79,20 @@ public class UserController {
 		User user = userService.get(email);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
-			logger.error("NOT FOUND EMAIL: ", email);
-			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
+			result.put("status", true);
+			result.put("data", "");
+		} else {
+			result.put("status", false);
+			result.put("data", "isExist");
 		}
-		System.out.println(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.put("status", true);
-		result.put("data", user);
-		return new ResponseEntity<>(user, HttpStatus.OK);
+//		if (user == null) {
+//			logger.error("NOT FOUND EMAIL: ", email);
+//			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
+//		}
+//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+//		result.put("status", true);
+//		result.put("data", user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
@@ -113,7 +119,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.PUT)
-	public Object update(@RequestBody User user,  HttpServletRequest request) {
+	public Object update(@RequestBody User user, HttpServletRequest request) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Map<String, Object> result = new HashMap<>();
 		user = userService.update(user);

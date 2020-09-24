@@ -255,7 +255,7 @@ export default {
             findByEmail(
                 this.user.email1 + '@' + this.user.email2, 
                 response => {
-                    if(!response.data){
+                    if(!response.data.data){
                         alert("사용가능한 이메일입니다.");
                         this.validations.email = true;
                     }
