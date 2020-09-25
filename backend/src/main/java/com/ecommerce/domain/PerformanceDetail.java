@@ -8,11 +8,11 @@ import lombok.Data;
 
 
 @Data
-public class PerformanceAllData
+public class PerformanceDetail
 {
 	private long pid;
 	private String title;
-	private MultipartFile poster;
+	private String poster;
 	private String category;
 	private String location;
 	private String place;
@@ -23,7 +23,7 @@ public class PerformanceAllData
 	private String endDate;
 	private String attendance;
 	private String notice;
-	private MultipartFile detail;
+	private String detail;
 	private Boolean permission;
 
 	private List<String> prices;
