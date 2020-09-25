@@ -23,6 +23,11 @@ import PurchaseList from "@/views/mypage/PurchaseList.vue";
 import PurchaseDetail from "@/views/mypage/PurchaseDetail.vue";
 import SellList from "@/views/mypage/SellList.vue";
 import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
+//마이페이지(기업회원)
+import PerformanceRegister from "@/views/mypage_biz/PerformanceRegister.vue";
+//마이페이지(관리자)
+import ConfirmUser from "@/views/mypage_admin/ConfirmUser.vue";
+import ConfirmPerformance from "@/views/mypage_admin/ConfirmPerformance.vue";
 //공연
 import Concert from "@/views/Concert.vue";
 import Musical from "@/views/Musical.vue";
@@ -36,6 +41,23 @@ import Chat from "@/views/Chat.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  //마이페이지(관리자)
+  {
+    path: "/confirmuser",
+    name: "confirmuser",
+    component: ConfirmUser
+  },
+  {
+    path: "/confirmperformance",
+    name: "confirmperformance",
+    component: ConfirmPerformance
+  },
+  //마이페이지(기업회원)
+  {
+    path: "/performanceregister",
+    name: "performanceregister",
+    component: PerformanceRegister
+  },
   //마이페이지(일반회원)
   {
     path: "/purchaselist",
