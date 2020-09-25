@@ -2,7 +2,7 @@
   <div>
     <h-nav></h-nav>
       <div class="container" style="text-align: center;">
-        <h3>예매내역 리스트 페이지</h3>
+        <h3>예매내역 목록</h3>
         <div>
           <table class="table table-striped" style="width: 100%; margin: auto;">
               <thead class="thead-dark">
@@ -21,7 +21,7 @@
                       <td>{{ index+1 }}</td>
                       <td>{{ item.category }}</td>
                       <!--예매내역 상세보기 페이지로 이동-->
-                      <td>{{ item.title }}</td>
+                      <td><router-link :to="{ name: 'purchasedetail', params: {tid: item.tid}}">{{ item.title }}</router-link></td>
                       <td>{{ item.date }}</td>
                       <td>{{ item.time }}</td>
                       <td>{{ item.grade }}석</td>
