@@ -4,6 +4,7 @@ import { createInstance } from "./index.js";
 const instance = createInstance();
 
 function findByEmail(email, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   instance
     .get("/api/users/email/" + email)
     .then(success)
@@ -11,6 +12,7 @@ function findByEmail(email, success, fail) {
 }
 
 function findById(id, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   instance
     .get("/api/users/" + id)
     .then(success)
@@ -49,6 +51,7 @@ function login(email, password, success, fail) {
 }
 
 function update(user, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   instance
     .put("/api/users", JSON.stringify(user))
     .then(success)

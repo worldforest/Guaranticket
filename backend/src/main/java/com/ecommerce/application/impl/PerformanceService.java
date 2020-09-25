@@ -2,7 +2,7 @@ package com.ecommerce.application.impl;
 
 import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.domain.Performance;
-import com.ecommerce.domain.PerformanceAllData;
+import com.ecommerce.domain.PerformanceDetail;
 import com.ecommerce.domain.PerformanceDate;
 import com.ecommerce.domain.PerformancePrice;
 import com.ecommerce.domain.repository.IPerformanceDateRepository;
@@ -55,17 +55,17 @@ public class PerformanceService implements IPerformanceService
 	}
 
 	@Override
-	public Performance get(long pid) {
+	public PerformanceDetail get(long pid) {
 		// TODO Auto-generated method stub
 		return this.iPerformanceRepository.get(pid);
 	}
 
 	@Override
-	public Performance create(PerformanceAllData performanceAllData) {
+	public PerformanceDetail create(PerformanceDetail performanceAllData) {
 		// TODO Auto-generated method stub
 		Performance performance = new Performance();
 		performance.setTitle(performanceAllData.getTitle());
-//		performance.setPoster(performanceAllData.getPoster());
+		performance.setPoster(performanceAllData.getPoster());
 		performance.setCategory(performanceAllData.getTitle());
 		performance.setLocation(performanceAllData.getTitle());
 		performance.setPlace(performanceAllData.getTitle());
@@ -76,7 +76,7 @@ public class PerformanceService implements IPerformanceService
 		performance.setEndDate(performanceAllData.getEndDate());
 		performance.setAttendance(performanceAllData.getAttendance());
 		performance.setNotice(performanceAllData.getNotice());
-//		performance.setDetail(performanceAllData.getDetail());
+		performance.setDetail(performanceAllData.getDetail());
 		performance.setUid(performanceAllData.getUid());
 		performance.setPermission(performanceAllData.getPermission());
 		long pid = this.iPerformanceRepository.create(performance);
