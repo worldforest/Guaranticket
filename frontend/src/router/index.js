@@ -277,7 +277,10 @@ const routes = [
         path: "Location",
         component: () => import("../views/performanceDetail/Location.vue"),
       }
-    ]
+    ],
+    // redirect: () => {
+    //   return "/performanceDetail/:pid"
+    // }
   }
 ];
 
@@ -291,7 +294,7 @@ router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
     ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat"].includes(to.path) ||
-    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
+    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail/") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
   if (!isSigned && !isAvailableToGuest) {

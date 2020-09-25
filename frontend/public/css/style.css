@@ -67,6 +67,19 @@ a {
     padding: 10px !important;
 }
 
+/* 공연 상세 페이지 */
+#pDetail-overview {
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+#pDetail-overview h1 {
+    font-size: 50px;
+    font-weight: 800;
+    padding-top: 50px;
+}
+
+
 /* 상품 리스트 스타일 시트 */
 #auction-list,
 #artwork-list {

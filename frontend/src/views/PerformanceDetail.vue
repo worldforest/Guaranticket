@@ -1,7 +1,7 @@
 <template>
   <div>
     <h-nav></h-nav>
-    <div id="main-overview" class="container">
+    <div id="pDetail-overview">
       <h1>{{ performance.title }}</h1>
       <v-row style="padding:20px;">
         <img
