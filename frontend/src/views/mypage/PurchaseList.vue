@@ -13,7 +13,7 @@
                       <th>날짜</th>
                       <th>회차(시간대)</th>
                       <th>좌석 등급</th>
-                      <th>가격</th>
+                      <!-- <th>가격</th> -->
                   </tr>
               </thead>
               <tbody>
@@ -25,10 +25,12 @@
                       <td>{{ item.date }}</td>
                       <td>{{ item.time }}</td>
                       <td>{{ item.grade }}석</td>
-                      <td>{{ item.price }}원</td>
+                      <!-- <td>{{ item.price }}원</td> -->
                   </tr>
               </tbody>
           </table>
+          <!--토큰 해결될 때까지 예매내역 상세정보 테스트할 링크-->
+          <td><router-link :to="{ name: 'purchasedetail', params: {tid: 1}}">ㅌㅅㅌ</router-link></td>
           <!--예매내역이 없을 경우 메세지 출력-->
           <!-- <div v-show="msg" id="msg">
             {{ this.msg }}
@@ -65,9 +67,6 @@ export default {
           console.log("created axios get method error!")
         })
   },
-  methods() {
-
-  }
 }
 </script>
 
