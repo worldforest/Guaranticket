@@ -28,6 +28,7 @@
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/chat">채팅하기</router-link>
           </li>
+          <!--마이페이지 메뉴: 로그인 시 활성화-->
           <li class="nav-item" v-if="$store.state.isSigned">
             <div class="text-center">
               <v-menu offset-y>
