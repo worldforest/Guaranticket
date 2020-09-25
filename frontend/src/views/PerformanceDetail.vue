@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <v-container text-xs-center>
     <h-nav></h-nav>
     <div id="pDetail-overview">
       <h1>{{ performance.title }}</h1>
-      <v-row style="padding:20px;">
+      <v-row style="padding:10px;">
         <img
           :src="performance.poster"
           height="400px"
@@ -22,14 +22,13 @@
           </v-col>
           </v-row>
         </figcaption>
-        <v-col cols="12" sm="6" md="4">
+        <v-col>
           <h4>| 날짜 선택 |</h4>
           <v-text-field
                 v-model="date"
                 readonly
                 prepend-icon="📆"
                 style="font-size:23px; width:300px;"
-                no-title scrollable
           ></v-text-field>
           <v-date-picker
             v-model="date"
@@ -40,6 +39,8 @@
             color="#FDDAB4"
             no-title scrollable
             style="font-size:18px;"
+            elevation="15"
+            show-current=min
           ></v-date-picker>
           <!-- <v-menu
             ref="menu"
@@ -67,14 +68,29 @@
             </v-date-picker>
           </v-menu> -->
         </v-col>
+        <v-col style="margin-left:0px;">
+          <h4>| 시간 선택 |</h4>
+          <div v-for="(item,i) in performanceDate" :key="i">
+            <div v-if="date==performanceDate[i].date">
+              <v-btn x-large  block tile class="selectBar" color="#FDDAB4" style="width: 180px;"><h4>{{performanceDate[i].time}}</h4></v-btn>
+            </div>
+          </div>
+        </v-col>
+        <!-- {{performanceDate[0].time}}
+        {{this.date}} -->
       </v-row>
-      <div>
-        <v-btn x-large tile class="selectBar" color="#FF4155"><h4>공연 상세정보</h4></v-btn>
-        <v-btn x-large tile class="selectBar" color="#FF4155"><h4>공연장 정보</h4></v-btn>
-      </div>
+      <v-spacer></v-spacer>
+      <v-layout row>
+        <v-flex xs12>
+        <v-btn-toggle v-model="toggle_exclusive" rounded >
+          <v-btn x-large block tile class="selectBar" color="#FF4155"><h4>공연 상세정보</h4></v-btn>
+          <v-btn x-large block tile class="selectBar" color="#FF4155"><h4>공연장 정보</h4></v-btn>
+        </v-btn-toggle>
+        </v-flex>
+      </v-layout>
     </div>
     <router-view></router-view>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -96,6 +112,7 @@ export default {
       performanceDate: [],
       performancePrice: [],
       pid: '',
+      toggle_exclusive: undefined,
     }
   },
   mounted() {
@@ -137,6 +154,5 @@ export default {
   .selectBar{
     width:50%;
     font-size:23px;
-    color:"#FF4155";
   }
 </style>
