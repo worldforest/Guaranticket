@@ -1,9 +1,6 @@
 package com.ecommerce.api;
 
-import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.ITicketService;
-import com.ecommerce.application.impl.PerformanceService;
-import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.Ticket;
 import com.ecommerce.domain.TicketDetail;
 import com.ecommerce.domain.TicketList;
@@ -16,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
