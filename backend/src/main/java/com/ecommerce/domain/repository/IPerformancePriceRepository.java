@@ -12,5 +12,5 @@ public interface IPerformancePriceRepository
 	long create(PerformancePrice performancePrice);
 	
 	@Transactional
-	List<PerformancePrice> getByPid(final long pid);
+	List<PerformancePrice> getByPid(long pid);
 }

@@ -35,6 +35,22 @@ public class PerformanceRepository implements IPerformanceRepository
 	}
 
 	@Override
+	public List<Performance> latestList() {
+		StringBuilder sbSql =  new StringBuilder("SELECT * FROM " + 
+				"( SELECT *, ROW_NUMBER() OVER (PARTITION BY p.category ORDER BY p.ticketing_start_date desc) AS RN " + 
+				"FROM performances as p " + 
+				") AS a ");
+		sbSql.append("WHERE a.RN <= 5 ");
+		sbSql.append("ORDER by a.ticketing_start_date desc ");
+		try {
+			return this.jdbcTemplate.query(sbSql.toString(),
+							   new Object[]{}, (rs, rowNum) -> PerformanceFactory.create(rs));
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
+	
+	@Override
 	public List<Performance> list() {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances "); // where available
 		try {
@@ -44,18 +60,6 @@ public class PerformanceRepository implements IPerformanceRepository
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
-//
-//	@Override
-//	public List<Performance> getByPid(long pid) {
-//		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid=? ");
-//		try {
-//			return this.jdbcTemplate.query(sbSql.toString(),
-//					new Object[]{ pid }, (rs, rowNum) -> PerformanceFactory.create(rs));
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//	}
-//
 	@Override
 	public Performance get(long pid) {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid = ? ");
@@ -80,7 +84,10 @@ public class PerformanceRepository implements IPerformanceRepository
 			paramMap.put("location", performance.getLocation());
 			paramMap.put("place", performance.getPlace());
 			paramMap.put("running", performance.getRunning());
-			paramMap.put("term", performance.getTerm());
+			paramMap.put("ticketing_start_date", performance.getTicketingStartDate());
+			paramMap.put("ticketing_end_date", performance.getTicketingEndDate());
+			paramMap.put("start_date", performance.getStartDate());
+			paramMap.put("end_date", performance.getEndDate());
 			paramMap.put("attendance", performance.getAttendance());
 			paramMap.put("notice", performance.getNotice());
 			paramMap.put("detail", performance.getDetail());
@@ -107,48 +114,21 @@ public class PerformanceRepository implements IPerformanceRepository
 		sbSql.append("where pid = ?");
 		try {
 			return this.jdbcTemplate.update(sbSql.toString(),
-								new Object[] {
-										true,
-										pid
-								});
+								new Object[] {true,pid});
 		} catch (Exception e) {
 			throw new RepositoryException(e, e.getMessage());
 		}
 	}
 
-//	@Override
-//	public int update(Performance performance) {
-//		StringBuilder sbSql =  new StringBuilder("UPDATE performances ");
-//		sbSql.append("SET name=?, category=?, explanation=?, available=? ");
-//		sbSql.append("where id=?");
-//		try {
-//			return this.jdbcTemplate.update(sbSql.toString(),
-//								new Object[] {
-//										performance.getName(),
-//										performance.getCategory(),
-//										performance.getExplanation(),
-//										performance.getAvailable(),
-//										performance.getId()
-//								});
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//		return 0;
-//	}
-//
-//	@Override
-//	public int delete(final long pid) {
-//		StringBuilder sbSql =  new StringBuilder("UPDATE items ");
-//		sbSql.append("SET available=? ");
-//		sbSql.append("where id=?");
-//
-//		try {
-//			return this.jdbcTemplate.update(sbSql.toString(),
-//								new Object[] { false, id });
-//		} catch (Exception e) {
-//			throw new RepositoryException(e, e.getMessage());
-//		}
-//		return 0;
-//	}
-
+	@Override
+	public int delete(long pid) {
+		StringBuilder sbSql =  new StringBuilder("DELETE FROM performances ");
+		sbSql.append("where pid = ?");
+		try {
+			return this.jdbcTemplate.update(sbSql.toString(),
+					new Object[] { pid });
+		} catch (Exception e) {
+			throw new RepositoryException(e, e.getMessage());
+		}
+	}
 }

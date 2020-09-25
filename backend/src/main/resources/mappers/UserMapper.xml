@@ -68,8 +68,10 @@
 			users
 	</select>
 
-	<insert id="create" parameterType="com.ecommerce.domain.User"
-	useGeneratedKeys="true" keyProperty="uid">
+	<insert id="create" parameterType="com.ecommerce.domain.User">
+	    <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+        	SELECT LAST_INSERT_ID() as id
+    	</selectKey>
 		INSERT INTO users
 		(
 			name,
@@ -78,6 +80,7 @@
 			gender,
 			update_pwd,
 			birth,
+			phone,
 			type,
 			company_name,
 			business_number,
@@ -91,11 +94,13 @@
 			#{gender},
 			#{updatePwd},
 			#{birth},
+			#{phone},
 			#{type},
 			#{companyName},
 			#{businessNumber},
 			#{representativeName}
 		)
+
 	</insert>
 	
 	<update id="update" parameterType="com.ecommerce.domain.User">

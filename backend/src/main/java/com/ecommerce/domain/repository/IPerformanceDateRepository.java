@@ -12,5 +12,5 @@ public interface IPerformanceDateRepository
 	long create(PerformanceDate performancedate);
 	
 	@Transactional
-	List<PerformanceDate> getByPid(final long pid);
+	List<PerformanceDate> getByPid(long pid);
 }

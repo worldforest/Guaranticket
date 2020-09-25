@@ -1,25 +1,73 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+//계정(로그인,회원가입)
+import Login from "@/views/Login.vue";
 import Signup from "@/views/Signup.vue";
 import SignupUser from "@/views/SignupUser.vue";
 import SignupBiz from "@/views/SignupBiz.vue";
 import Home from "@/views/Home.vue";
-import Login from "@/views/Login.vue";
 import store from "@/store";
 import Shop from "@/views/Shop.vue";
 import MyPage from "@/views/MyPage.vue";
 import Item from "@/views/Item.vue";
 import Explorer from "@/views/Explorer.vue";
 import Escrow from "@/views/Escrow.vue";
+//티켓거래
+import DealList from "@/views/deal/DealList.vue";
+import DealRegister from "@/views/deal/DealRegister.vue";
+import DealDetail from "@/views/deal/DealDetail.vue";
+//마이페이지(일반회원)
+import PurchaseList from "@/views/mypage/PurchaseList.vue";
+import SellList from "@/views/mypage/SellList.vue";
+import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
 //비밀번호찾기
 import FindPw from "@/views/FindPw.vue";
+//공연
+import Concert from "@/views/Concert.vue";
+import Musical from "@/views/Musical.vue";
+import Sports from "@/views/Sports.vue";
+//공연 상세
+import PerformanceDetail from "@/views/PerformanceDetail";
+//채팅
+import Chat from "@/views/Chat.vue";
+// import { component } from "vue/types/umd";
+
 Vue.use(VueRouter);
 
-/**
- * 아래의 router를 변경하여 구현할 수 있습니다.
- */
 const routes = [
-  //비밀번호찾기 페이지 추가
+  //마이페이지
+  {
+    path: "/purchaselist",
+    name: "purchaselist",
+    component: PurchaseList
+  },
+  {
+    path: "/selllist",
+    name: "selllist",
+    component: SellList
+  },
+  {
+    path: "/updateprofile",
+    name: "updateprofile",
+    component: UpdateProfile
+  },
+  //티켓거래
+  {
+    path: "/deallist",
+    name: "deallist",
+    component: DealList
+  },
+  {
+    path: "/dealregister",
+    name: "dealregister",
+    component: DealRegister
+  },
+  {
+    path: "/dealdetail/:did",
+    name: "dealdetail",
+    component: DealDetail
+  },
+  //비밀번호찾기
   {
     path: "/findpw",
     name: "findpw",
@@ -58,6 +106,26 @@ const routes = [
       alert("로그아웃 되었습니다.");
       next("/");
     },
+  },
+  {
+    path: "/concert",
+    name: "concert",
+    component: Concert,
+  },
+  {
+    path: "/musical",
+    name: "musical",
+    component: Musical,
+  },
+  {
+    path: "/sports",
+    name: "sports",
+    component: Sports,
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    component: Chat,
   },
   {
     name: "shop",
@@ -191,6 +259,24 @@ const routes = [
       },
     ],
   },
+  {
+    name:"performanceDetail",
+    path: "/performanceDetail/:pid",
+    component: PerformanceDetail,
+    // props: (route) => ({pid: route.pis}),
+    children: [
+      {
+        name: "performanceDetail.Detail",
+        path: "Detail",
+        component: () => import("../views/performanceDetail/Detail.vue"),
+      },
+      {
+        name: "performanceDetail.Location",
+        path: "Location",
+        component: () => import("../views/performanceDetail/Location.vue"),
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({
@@ -202,8 +288,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz"].includes(to.path) ||
-    to.path.startsWith("/explorer");
+    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat"].includes(to.path) ||
+    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
   if (!isSigned && !isAvailableToGuest) {

@@ -1,7 +1,5 @@
 package com.ecommerce.domain;
 
-import java.sql.Date;
-import java.sql.Time;
 import lombok.Data;
 
 
@@ -9,7 +7,7 @@ import lombok.Data;
 public class PerformanceDate
 {
 	private long pid;
-	private Date date;
-	private Time time;
+	private String date;
+	private String time;
 }
 

@@ -3,19 +3,34 @@ import { createInstance } from "./index.js";
 
 const instance = createInstance();
 
+function findByEmail(email, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
+  instance
+    .get("/api/users/email/" + email)
+    .then(success)
+    .catch(fail);
+}
+
 function findById(id, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   instance
     .get("/api/users/" + id)
     .then(success)
     .catch(fail);
 }
 
-function signup(email, name, password, success, fail) {
+function signup(email, password, name, phone, gender, birth, businessNumer, companyName, representativeName, success, fail) {
   const user = {
-    email: email,
-    name: name,
-    password: password
-  };
+    email : email,
+    password : password,
+    name : name,
+    phone : phone,
+    businessNumer : businessNumer,
+    companyName : companyName,
+    representativeName : representativeName,
+    gender : gender,
+    birth : birth,
+  }
 
   instance
     .post("/api/users", JSON.stringify(user))
@@ -36,6 +51,7 @@ function login(email, password, success, fail) {
 }
 
 function update(user, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   instance
     .put("/api/users", JSON.stringify(user))
     .then(success)
@@ -63,4 +79,12 @@ function sendEmail(name, email, success, fail) {
     .then(success)
     .catch(fail)
 }
-export { findById, signup, login, update, findpw, sendEmail };
+
+// SMS 인증
+function sendSMS(phone, success, fail){
+  instance
+    .get("/api/users/sms?phoneNumber=" + phone)
+    .then(success)
+    .catch(fail)
+}
+export { findByEmail, findById, signup, login, update, findpw, sendEmail, sendSMS };

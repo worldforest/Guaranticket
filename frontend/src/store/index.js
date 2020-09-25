@@ -10,6 +10,7 @@ export default new Vuex.Store({
       id: 0, // 사용자 아이디 저장
       walletAddress: null
     },
+    allPerform: [],
   },
   mutations: {
     setIsSigned(state, isSigned) {
@@ -25,7 +26,13 @@ export default new Vuex.Store({
       state.isSigned = false;
       state.user.id = 0;
       state.user.walletAddress = null;
-    }
+      window.localStorage.setItem("jwt-auth-token", "");
+    },
+    // getAllPerform(state, response){
+    //   state.concert = response;
+    //   allPerform=response;
+    //   console.log(response)
+    // }
   },
   actions: {},
   modules: {}

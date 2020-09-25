@@ -11,6 +11,7 @@ public class User {
 	private LocalDateTime signupDate;
 	private String password;
 	private String gender;
+	private String phone;
 	private int updatePwd;
 	private String birth;
 	private int type;

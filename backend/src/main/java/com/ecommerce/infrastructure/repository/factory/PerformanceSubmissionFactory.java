@@ -11,6 +11,7 @@ public class PerformanceSubmissionFactory
 	{
 		if (rs == null) return null;
 		PerformanceSubmission performanceSubmission = new PerformanceSubmission();
+		performanceSubmission.setSid(rs.getLong("sid"));
 		performanceSubmission.setPid(rs.getLong("pid"));
 		performanceSubmission.setUid(rs.getLong("uid"));
 		performanceSubmission.setSubmissionDate(rs.getTimestamp("submit_date").toLocalDateTime());
