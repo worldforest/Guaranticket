@@ -2,10 +2,12 @@ package com.ecommerce.infrastructure.repository;
 
 import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
+import com.ecommerce.domain.PerformanceDetail;
 import com.ecommerce.domain.exception.RepositoryException;
 import com.ecommerce.domain.repository.IItemRepository;
 import com.ecommerce.domain.repository.IPerformanceRepository;
 import com.ecommerce.infrastructure.repository.factory.ItemFactory;
+import com.ecommerce.infrastructure.repository.factory.PerformanceDetailFactory;
 import com.ecommerce.infrastructure.repository.factory.PerformanceFactory;
 
 import org.slf4j.Logger;
@@ -61,11 +63,11 @@ public class PerformanceRepository implements IPerformanceRepository
 		}
 	}
 	@Override
-	public Performance get(long pid) {
+	public PerformanceDetail get(long pid) {
 		StringBuilder sbSql =  new StringBuilder("SELECT * FROM performances WHERE pid = ? ");
 		try {
 			return this.jdbcTemplate.queryForObject(sbSql.toString(),
-								new Object[] { pid }, (rs, rowNum) -> PerformanceFactory.create(rs) );
+								new Object[] { pid }, (rs, rowNum) -> PerformanceDetailFactory.create(rs) );
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		} catch (Exception e) {
