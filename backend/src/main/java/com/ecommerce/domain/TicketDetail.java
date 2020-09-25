@@ -17,4 +17,5 @@ public class TicketDetail
 	private String title;
 	private String place;
 	private String poster;
+	private boolean trading;
 }
