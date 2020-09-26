@@ -81,7 +81,7 @@ public class PerformanceRepository implements IPerformanceRepository
 			log.debug(performance.toString());
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("title", performance.getTitle());
-			paramMap.put("poster", performance.getPoster());
+			paramMap.put("poster", "test");
 			paramMap.put("category", performance.getCategory());
 			paramMap.put("location", performance.getLocation());
 			paramMap.put("place", performance.getPlace());
@@ -92,15 +92,17 @@ public class PerformanceRepository implements IPerformanceRepository
 			paramMap.put("end_date", performance.getEndDate());
 			paramMap.put("attendance", performance.getAttendance());
 			paramMap.put("notice", performance.getNotice());
-			paramMap.put("detail", performance.getDetail());
+			paramMap.put("detail", "test");
 			paramMap.put("uid", performance.getUid());
 			paramMap.put("permission", false);
 			
+			System.out.println(paramMap);
 			this.simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
 					.withTableName("performances")
 					.usingGeneratedKeyColumns("pid");
 
 			Number newId = simpleJdbcInsert.executeAndReturnKey(paramMap);
+			System.out.println(newId);
 			log.debug("INSERTED: " + newId.longValue());
 			return newId.longValue();
 

@@ -69,6 +69,7 @@ public class PerformanceService implements IPerformanceService
 	@Override
 	public PerformanceDetail create(PerformanceDetail performanceAllData) {
 		// TODO Auto-generated method stub
+		
 		Performance performance = new Performance();
 		performance.setTitle(performanceAllData.getTitle());
 		performance.setPoster(performanceAllData.getPoster());
@@ -133,9 +134,9 @@ public class PerformanceService implements IPerformanceService
 			// 하루 증가
 			startDate.add(Calendar.DATE, 1);
 		}
+		System.out.println(performanceAllData);
 //		// 공연 등록 요청 정보 저장
 		this.iPerformanceSubmissionRepository.create(pid, performanceAllData.getUid());
-		
         return this.iPerformanceRepository.get(pid);
 	}
 
