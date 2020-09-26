@@ -28,6 +28,8 @@ import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
+import PDetail from "@/views/performanceDetail/Detail";
+import PLocation from "@/views/performanceDetail/Location";
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";
@@ -268,17 +270,14 @@ const routes = [
       {
         name: "performanceDetail.Detail",
         path: "Detail",
-        component: () => import("../views/performanceDetail/Detail.vue"),
+        component: PDetail
       },
       {
         name: "performanceDetail.Location",
         path: "Location",
-        component: () => import("../views/performanceDetail/Location.vue"),
+        component: PLocation
       }
     ],
-    // redirect: () => {
-    //   return "/performanceDetail/:pid"
-    // }
   }
 ];
 

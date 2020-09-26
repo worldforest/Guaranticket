@@ -1,11 +1,11 @@
 <template>
     <div>
         <h-nav></h-nav>
-        <div id="main-overview" class="container">
+        <div id="performance-overview" class="container">
         <v-container>
             <v-layout>
                 <v-flex>
-                    <h2>콘서트</h2>
+                    <h1>콘서트</h1>
                 </v-flex>
             </v-layout>
             <div class="container px-5 py-3">

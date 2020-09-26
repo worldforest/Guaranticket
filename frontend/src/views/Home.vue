@@ -3,7 +3,7 @@
     <h-nav></h-nav>
     <!-- main 중앙 광고 -->
     <div id="main-overview" class="container">
-      <div class="row">
+      <div class="row" style="width:100%;">
         <div class="col-md-12">
           <v-carousel
             cycle
@@ -24,26 +24,29 @@
     <!-- top 5 공연 포스터 -->
     <div class="container px-5 py-3">
       <div style="width:100%;">
-      <h3 style="float:left; width:60%; height:50px;">인기있는 공연 top5</h3>
-      <div style="margin-bottom:8px;float:right; width:40%;height:50px; padding-top:20px;text-align: right; ">
-        <button @click="topFive(0)" style="float:left; font-size:15px;margin: 0px 15px;">콘서트</button>
-        <button @click="topFive(1)" style="float:left; font-size:15px;margin: 0px 15px;">뮤지컬</button>
-        <button @click="topFive(2)" style="float:left; font-size:15px;margin: 0px 15px;">스포츠</button>
+        <h2 style="float:left; width:60%; height:50px;">인기있는 공연 top5</h2>
+        <div style="margin-bottom:8px;float:right; width:40%;height:50px; padding-top:20px;text-align: right; ">
+          <button @click="topFive(0)" style="float:left; font-size:15px;margin: 0px 15px;">콘서트</button>
+          <button @click="topFive(1)" style="float:left; font-size:15px;margin: 0px 15px;">뮤지컬</button>
+          <button @click="topFive(2)" style="float:left; font-size:15px;margin: 0px 15px;">스포츠</button>
         </div>
       </div>
-      <div class="flex-container" style="max-width:100%;">
+      <div id="main-poster" class="flex-container" style="max-width:100%; height:auto;">
         <v-row>
-        <figure v-for="(item, i) in poster" :key="i">
+        <v-card v-for="(item, i) in poster" :key="i">
           <img
             :src="item.poster"
-            height="300px"
+            width="100%"
+            height="auto"
             alt="인기 공연"
             @click="performanceDetail(item)"/>
-          <figcaption>
+          <v-card-title style="width:200px">
             <div class="fig-author">{{ item.title }}</div>
+          </v-card-title>
+          <v-card-text>
             <div class="fig-author">{{ item.startDate }} ~ {{ item.endDate }}</div>
-          </figcaption>
-        </figure>
+          </v-card-text>
+        </v-card>
         </v-row>
       </div>
     </div>

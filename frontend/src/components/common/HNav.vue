@@ -25,21 +25,18 @@
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/login">로그인</router-link>
           </li>
-          <li class="nav-item" v-if="!$store.state.isSigned">
-            <router-link class="nav-link" to="/chat">채팅하기</router-link>
-          </li>
           <!--마이페이지 메뉴: 로그인 시 활성화-->
           <li class="nav-item" v-if="$store.state.isSigned">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text
+                  <li text
                     v-bind="attrs"
                     v-on="on"
-                    style="color: white; font-weight: bold; margin-top: 2px;"
+                    class="nav-link"
                   >
                   마이페이지
-                  </v-btn>
+                  </li>
                 </template>
                 <v-list>
                   <v-list-item
@@ -81,5 +78,7 @@ export default {
   #nav-icon {
     height: 40px;
     padding-right: 0.5rem;
+    margin: 0px;
+    padding: 0px;
   }
 </style>
