@@ -19,7 +19,7 @@ public class TicketFactory
 		ticket.setTid(rs.getLong("tid"));
 		ticket.setPrice(rs.getString("price"));
 		ticket.setGrade(rs.getString("grade"));
-		
+		ticket.setTrading(rs.getBoolean("trading"));
 		return ticket;
 	}
 }

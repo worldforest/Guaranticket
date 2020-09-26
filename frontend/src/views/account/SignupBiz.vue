@@ -2,7 +2,7 @@
     <div class="text-center">
         <h-nav></h-nav>
         <v-container style="width:600px; margin-top:8rem;">
-        <h2 class="mb-10">일반회원가입</h2>
+        <h2 class="mb-10">기업회원가입</h2>
         <v-form ref="form" v-model="validations.form">
             <v-row>
                 <v-col class="pr-0 pb-0" cols="4">
@@ -62,6 +62,30 @@
             ></v-text-field>
 
             <v-text-field
+                v-model="user.businessNumber"
+                :rules="[() => !!user.businessNumber || '사업자 번호를 입력해주세요.']"
+                placeholder="사업자 번호를 입력해주세요."
+                required
+                outlined
+            ></v-text-field>
+
+            <v-text-field
+                v-model="user.companyName"
+                :rules="[() => !!user.companyName || '상호를 입력해주세요.']"
+                placeholder="상호를 입력해주세요."
+                required
+                outlined
+            ></v-text-field>
+
+            <v-text-field
+                v-model="user.representativeName"
+                :rules="[() => !!user.representativeName || '대표자명을 입력해주세요.']"
+                placeholder="대표자명을 입력해주세요."
+                required
+                outlined
+            ></v-text-field>
+
+            <v-text-field
                 v-model="user.phone"
                 :rules="[() => !!user.phone || '휴대폰 번호를 입력해주세요.']"
                 placeholder="휴대폰 번호를 입력해주세요."
@@ -99,6 +123,7 @@
                                         <v-btn style="top:-6px;" 
                                         class="pa-0 white--text"
                                         color="#FF4155"
+                                        :disabled="enterAuthNumber!=authNumber"
                                         @click="authValid"
                                     >
                                     확인
@@ -154,7 +179,6 @@
                 ></v-date-picker>
             </v-menu>
 
-           
             <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
             <v-btn @click="doJoin" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">가입하기</v-btn>
             </v-form>
@@ -163,9 +187,10 @@
 </template>
 
 <script>
-import { signup } from "../api/user.js";
-import { findByEmail } from "../api/user.js";
-import { sendSMS } from "../api/user.js";
+import { signup } from "@/api/user.js";
+import { findByEmail } from "@/api/user.js";
+import { sendSMS } from "@/api/user.js";
+
 
 export default {
   data() {
@@ -186,14 +211,13 @@ export default {
 
         authNumber : "",
         enterAuthNumber : "",
-
+    
         user: {
             email1: "",
             email2: "",
             password: "",
             passwordConfirm: "",
             name: "",
-            phone : "",
             gender : "",
             birth : "",
 
@@ -201,7 +225,6 @@ export default {
             companyName : "",
             representativeName : "",
         },
-
         rules: {
             password : {
                 required: value => !!value || '비밀번호를 입력해주세요.',

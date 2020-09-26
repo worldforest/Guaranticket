@@ -24,7 +24,7 @@ public class TicketDetailFactory
 		ticketDetail.setTitle(rs.getString("title"));
 		ticketDetail.setPoster(rs.getString("poster"));
 		ticketDetail.setPlace(rs.getString("place"));
-		
+		ticketDetail.setTrading(rs.getBoolean("trading"));
 		return ticketDetail;
 	}
 }

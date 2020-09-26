@@ -15,4 +15,5 @@ public class TicketList
 	private String price;
 	private String category;
 	private String title;
+	private boolean trading;
 }

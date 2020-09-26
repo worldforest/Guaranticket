@@ -35,8 +35,8 @@
   </div>
 </template>
 <script>
-import { findpw } from "../api/user.js";
-import { sendEmail } from "../api/user.js";
+import { findpw } from "@/api/user.js";
+import { sendEmail } from "@/api/user.js";
 import HNav from "@/components/common/HNav";
 
 export default {

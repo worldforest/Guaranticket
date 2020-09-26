@@ -21,6 +21,7 @@ public class TicketListFactory
 		ticket.setPrice(rs.getString("price"));
 		ticket.setCategory(rs.getNString("category"));
 		ticket.setTitle(rs.getString("title"));
+		ticket.setTrading(rs.getBoolean("trading"));
 		return ticket;
 	}
 }

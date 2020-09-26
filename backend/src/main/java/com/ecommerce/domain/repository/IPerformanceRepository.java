@@ -1,6 +1,7 @@
 package com.ecommerce.domain.repository;
 
 import com.ecommerce.domain.Performance;
+import com.ecommerce.domain.PerformanceDetail;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface IPerformanceRepository
 	List<Performance> latestList();
 	List<Performance> list();
 //	List<Performance> getByPid(final long pid);
-	Performance get(long pid);
+	PerformanceDetail get(long pid);
 	
 	@Transactional
 	long create(Performance performance);
