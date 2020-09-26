@@ -9,6 +9,8 @@ import com.ecommerce.domain.repository.IPerformanceDateRepository;
 import com.ecommerce.domain.repository.IPerformancePriceRepository;
 import com.ecommerce.domain.repository.IPerformanceRepository;
 import com.ecommerce.domain.repository.IPerformanceSubmissionRepository;
+import com.ecommerce.mapper.PerformanceMapper;
+import com.ecommerce.mapper.UserMapper;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -45,19 +47,23 @@ public class PerformanceService implements IPerformanceService
 		this.iPerformancePriceRepository = iPerformancePriceRepository;
 		this.iPerformanceDateRepository = iPerformanceDateRepository;
 	}
+
+	@Autowired
+	private PerformanceMapper performanceMapper;
+
 	@Override
 	public List<Performance> latestList() {
-		return this.iPerformanceRepository.latestList();
+		return this.performanceMapper.latestList();
 	}
 	@Override
 	public List<Performance> list() {
-		return this.iPerformanceRepository.list();
+		return this.performanceMapper.list();
 	}
 
 	@Override
-	public PerformanceDetail get(long pid) {
+	public Performance get(long pid) {
 		// TODO Auto-generated method stub
-		return this.iPerformanceRepository.get(pid);
+		return this.performanceMapper.get(pid);
 	}
 
 	@Override
@@ -79,7 +85,9 @@ public class PerformanceService implements IPerformanceService
 		performance.setDetail(performanceAllData.getDetail());
 		performance.setUid(performanceAllData.getUid());
 		performance.setPermission(performanceAllData.getPermission());
-		long pid = this.iPerformanceRepository.create(performance);
+		
+		long pid = this.performanceMapper.create(performance);
+		
 //		// 등록요청 db생성
 		List<String> grades = performanceAllData.getGrades();
 		List<String> prices = performanceAllData.getPrices();
@@ -141,7 +149,7 @@ public class PerformanceService implements IPerformanceService
 	@Override
 	public int delete(long pid) {
 		// TODO Auto-generated method stub
-		return this.iPerformanceRepository.delete(pid);
+		return this.performanceMapper.delete(pid);
 	}
 
 }

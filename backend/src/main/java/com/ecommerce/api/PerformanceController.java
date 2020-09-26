@@ -78,13 +78,13 @@ public class PerformanceController
 	
 	@ApiOperation(value = "공연 상세 검색")
 	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.GET)
-	public PerformanceDetail get(@PathVariable long pid) {
-		PerformanceDetail performanceDetail = performanceService.get(pid);
-		if (performanceDetail == null) {
+	public Performance get(@PathVariable long pid) {
+		Performance performance = performanceService.get(pid);
+		if (performance == null) {
 			logger.error("NOT FOUND ID: ", pid);
 			throw new NotFoundException(pid + " 공연 정보를 찾을 수 없습니다.");
 		}
-		return performanceDetail;
+		return performance;
 	}
 	
 	@ApiOperation(value = "공연 등록")
