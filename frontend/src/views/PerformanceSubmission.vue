@@ -3,7 +3,7 @@
     <h-nav></h-nav>
      <v-container style="width:600px; margin-top:8rem;">
         <h2 class="mb-10">공연 등록</h2>
-        <v-form>
+        <v-form ref="form">
                 <v-row>
                     <v-col cols="3">
                         <v-subheader>타이틀</v-subheader>
@@ -12,7 +12,8 @@
                         <v-text-field 
                             v-model="performance.title"
                             placeholder="공연제목을 입력해주세요"
-                            outlined clearable
+                            :rules="[() => !!performance.title]"
+                            outlined  dense
                         ></v-text-field>
                     </v-col>
                 </v-row>
@@ -24,10 +25,11 @@
                         <v-select
                         v-model="performance.category"
                         placeholder="카테고리를 선택해주세요"
+                        :rules="[() => !!performance.category]"
                         :items="items"
                         item-text="category"
                         item-value="value"
-                        outlined
+                        outlined dense
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -41,7 +43,8 @@
                                 <v-text-field
                                 v-model="performance.location"
                                 placeholder="공연위치를 입력해주세요"
-                                outlined readonly
+                                :rules="[() => !!performance.location]"
+                                outlined readonly dense
                                 v-bind="attrs" v-on="on"
                                 ></v-text-field>
                             </template>
@@ -57,7 +60,7 @@
                                     <v-text-field
                                         class="mt-10"
                                         v-model="keyword"
-                                        outlined
+                                        outlined dense
                                         placeholder="공연장소를 검색하세요."
                                         append-icon="mdi-magnify"
                                         @keyup.enter="searchPlace"
@@ -106,21 +109,34 @@
                         <v-text-field
                             v-model="performance.place"
                             placeholder="공연장소를 입력해주세요"
-                            outlined clearable
+                            :rules="[() => !!performance.place]"
+                            outlined  dense
                         ></v-text-field>
                     </v-col>
                 </v-row>
 
                 <v-row>
                     <v-col cols="3">
-                        <v-subheader>러닝타임</v-subheader>
+                        <v-subheader>공연정보</v-subheader>
                     </v-col>
-                    <v-col cols="9">
+                    <v-col cols="4.5">
                         <v-text-field
                             type="number"
                             v-model="performance.running"
-                            placeholder="러닝타임을 입력해주세요"
-                            outlined clearable
+                            label="러닝타임"
+                            :rules="[() => !!performance.running]"
+                            suffix="분"
+                            outlined  dense
+                        ></v-text-field>
+                    </v-col>
+                    <v-col cols="4.5">
+                        <v-text-field
+                            type="number"
+                            v-model="performance.attendance"
+                            label="수용인원"
+                            :rules="[() => !!performance.attendance]"
+                            suffix="명"
+                            outlined  dense
                         ></v-text-field>
                     </v-col>
                 </v-row>
@@ -136,15 +152,16 @@
                             :close-on-content-click="false"
                             :return-value.sync="dates"
                             transition="scale-transition"
-                            offset-y
+                            offset-y 
                             min-width="290px"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="performance.startDate"
+                                    :rules="[() => !!performance.startDate]"
                                     label="공연시작일"
-                                    outlined clearable
-                                    readonly
+                                    outlined 
+                                    readonly dense
                                     v-bind="attrs" v-on="on"
                                 ></v-text-field>
                             </template>
@@ -162,14 +179,93 @@
                     <v-col cols="4.5">
                         <v-text-field
                             v-model="performance.endDate"
-                            label="공연종료일"
-                            outlined clearable readonly
+                            :rules="[() => !!performance.endDate]"
+                            label="공연종료일" dense
+                            outlined  readonly
                         ></v-text-field>
                     </v-col>
                 </v-row>
-
+                <v-row>
+                    <v-col cols="3">
+                        <v-subheader>공연시간</v-subheader>
+                    </v-col>
+                    <v-col cols="9">
+                        <v-combobox
+                        v-model="performance.times"
+                        :rules="[() => performance.times.length!=0]"
+                        :items="times"
+                        multiple outlined
+                        chips dense
+                        @change="sortTimes"
+                        ></v-combobox>
+                    </v-col>
+                </v-row>
 
                 <v-row>
+                    <v-col cols="3">
+                        <v-subheader>공지내용</v-subheader>
+                    </v-col>
+                    <v-col class="" cols="9">
+                        <v-textarea
+                        v-model="performance.notice"
+                        outlined
+                        ></v-textarea>
+                    </v-col>
+                </v-row>
+                <v-divider></v-divider>
+
+                <v-row>
+                    <v-col cols="3">
+                        <v-subheader>티켓등급</v-subheader>
+                    </v-col>
+                    <v-col class="" cols="9">
+                        <v-combobox
+                        v-model="performance.grades"
+                        :items="grades"
+                        :rules="[() => performance.grades.length!=0]"
+                        multiple chips outlined dense
+                        >
+                        <template v-slot:selection="data">
+                            <v-chip
+                            :key="JSON.stringify(data.item)"
+                            v-bind="data.attrs"
+                            :input-value="data.selected"
+                            :disabled="data.disabled"
+                            @click:close="data.parent.selectItem(data.item)"
+                            >
+                            <v-avatar
+                                class="accent white--text"
+                                left
+                                v-text="data.item.slice(0, 1).toUpperCase()"
+                            ></v-avatar>
+                            {{ data.item }}
+                            </v-chip>
+                        </template>
+                        </v-combobox>
+                    </v-col>
+                </v-row>
+                <v-row v-if="performance.grades.length>0">
+                    <v-col cols="3">
+                        <v-subheader>티켓가격</v-subheader>
+                    </v-col>
+                    <v-col cols="4.5" v-for="(grade, index) in performance.grades" :key="grade">
+                        <v-text-field
+                            v-model="performance.prices[index]"
+                            :rules="[() => !!performance.prices[index]]"
+                            suffix="원"
+                            outlined dense
+                        >
+                            <template v-slot:prepend-inner>
+                                <v-avatar
+                                    size="20"
+                                    class="accent mt-0 mr-2 white--text"
+                                    v-text="grade"
+                                ></v-avatar>
+                            </template>
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                 <v-row>
                     <v-col cols="3">
                         <v-subheader>티켓판매기간</v-subheader>
                     </v-col>
@@ -180,15 +276,16 @@
                             :close-on-content-click="false"
                             :return-value.sync="dates"
                             transition="scale-transition"
-                            offset-y
+                            offset-y 
                             min-width="290px"
                         >
                             <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="performance.ticketStartDate"
+                                    v-model="performance.ticketingStartDate"
+                                    :rules="[() => !!performance.ticketingStartDate]"
                                     label="티켓판매시작일"
-                                    outlined clearable
-                                    readonly
+                                    outlined 
+                                    readonly dense
                                     v-bind="attrs" v-on="on"
                                 ></v-text-field>
                             </template>
@@ -205,34 +302,33 @@
                     </v-col>
                     <v-col cols="4.5">
                         <v-text-field
-                            v-model="performance.ticketEndDate"
-                            label="티켓판매종료일"
-                            outlined clearable readonly
+                            v-model="performance.ticketingEndDate"
+                            :rules="[() => !!performance.ticketingEndDate]"
+                            label="티켓판매종료일" dense
+                            outlined  readonly
                         ></v-text-field>
                     </v-col>
                 </v-row>
 
-                <v-subheader>티켓판매기간</v-subheader>
-                <v-row>
-                    <v-col class="pt-0" cols="12">
-                        <v-textarea
-                        v-model="performance.notice"
-                        outlined
-                        ></v-textarea>
-                    </v-col>
-                </v-row>
+                
+                <v-divider></v-divider>
+                <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
+                <v-btn @click="submit" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">등록하기</v-btn>
 
         </v-form>
-        <div v-text="performance">
-        </div>
 
      </v-container>
   </div>
 </template>
 <script>
 import HNav from "@/components/common/HNav";
+import { create } from "../api/performance.js";
+
 
 export default {
+    components: {
+        HNav
+    },
     data() {
         return {
             performance : {
@@ -249,6 +345,12 @@ export default {
                 endDate : "",
                 attendance : "",
                 notice : "",
+
+                    grades : [],
+                    prices : [],
+                    times : [],
+
+                    uid : 74
             },
 
             items : [
@@ -262,22 +364,59 @@ export default {
             keyword  : "",
             places : [],
             dates : [],
-            
+
+            grades : ['R', 'S'],
+            times : ['09:00','10:00','11:00','12:00','13:00','14:00',
+            '15:00','16:00','17:00','18:00','19:00',
+            '20:00','21:00','22:00','23:00'],
             ps : "",
         }
     },
+    computed : {
+    },
+    watch : {
+        performance : {
+            deep : true,
+            handler() {
+                if(this.performance.grades.length == 2){
+                    if(this.performance.grades[0] == 'S'){
+                        var temp = this.performance.grades[0];
+                        this.performance.grades[0] = this.performance.grades[1];
+                        this.performance.grades[1] = temp;
+                    }
+                }
+            },
+        },
+    },
     mounted() {
-      if (window.kakao && window.kakao.maps) {
-        this.initKakaoAPI();
-      } else {
-        const script = document.createElement("script");
-        script.onload = () => kakao.maps.load(this.initKakaoAPI);
-        script.src =
-          "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=9108903d91a007c3d4302e91cee2bd6a&libraries=services";
-        document.head.appendChild(script);
-      }
+        const API_KEY = "9108903d91a007c3d4302e91cee2bd6a";
+        if (window.kakao && window.kakao.maps) {
+            this.initKakaoAPI();
+        } else {
+            const script = document.createElement("script");
+            script.onload = () => kakao.maps.load(this.initKakaoAPI);
+            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${API_KEY}&libraries=services`;
+            document.head.appendChild(script);
+        }
     },
     methods : {
+        sortTimes(){
+            this.performance.times.sort();
+        },
+        submit(){
+            if(this.$refs.form.validate()){
+                console.log(this.performance);
+                create(this.performance, 
+                    response => {
+                        alert("공연이 등록되었습니다.");
+                        this.$router.push("/");
+                    },
+                    error => {
+                        console.error(error)
+                    }
+                );
+            }
+        },
         setDates(type){
             if(this.dates.length == 1)
                 this.dates.push(this.dates[0]);
@@ -330,7 +469,10 @@ export default {
 }
 </script>
 <style scoped>
+.v-chip--select{
+    margin-bottom : 1px;
+}
 .row{
-    margin-bottom : -40px;
+    margin-bottom : -35px;
 }
 </style>

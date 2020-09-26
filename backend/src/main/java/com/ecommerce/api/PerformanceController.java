@@ -87,6 +87,7 @@ public class PerformanceController
 	@RequestMapping(value = "/performance", method = RequestMethod.POST)
 	public Performance create(@RequestBody PerformanceAllData performanceAllData) {
 //		this.uploadFile(performanceAllData.getPoster());
+		System.out.println(performanceAllData);
 		return performanceService.create(performanceAllData);
 	}
 	

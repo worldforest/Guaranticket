@@ -16,8 +16,6 @@ public class Application implements WebMvcConfigurer{
 		SpringApplication.run(Application.class, args);
 	}
 	
-	@Autowired
-	private JwtInterceptor jwtInterceptor;
 
 //	@Override
 //	public void addInterceptors(InterceptorRegistry registry) {

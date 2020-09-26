@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,39 +94,39 @@ public class UserController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
-	public Object login(@RequestBody User user, HttpServletResponse response) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		User userFetched = userService.get(user.getEmail());
-		Map<String, Object> result = new HashMap<>();
-		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword()))
-			throw new DomainException("비밀번호가 일치하지 않습니다.");
-
-		String token = jwtService.create(userFetched.getId());
-		response.setHeader("jwt-auth-token", token);
-		result.put("status", true);
-		result.put("data", token);
-		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/users", method = RequestMethod.POST)
-	public User create(@RequestBody User user) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		User newUser = userService.add(user);
-		return newUser;
-	}
-
-	@RequestMapping(value = "/users", method = RequestMethod.PUT)
-	public Object update(@RequestBody User user, HttpServletRequest request) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		Map<String, Object> result = new HashMap<>();
-		user = userService.update(user);
-		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.put("status", true);
-		result.put("data", user);
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
+//	@RequestMapping(value = "/users/login", method = RequestMethod.POST)
+//	public Object login(@RequestBody User user, HttpServletResponse response) {
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		User userFetched = userService.get(user.getEmail());
+//		Map<String, Object> result = new HashMap<>();
+//		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword()))
+//			throw new DomainException("비밀번호가 일치하지 않습니다.");
+//
+//		String token = jwtService.create(userFetched.getId());
+//		response.setHeader("jwt-auth-token", token);
+//		result.put("status", true);
+//		result.put("data", token);
+//		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+//	}
+//
+//	@RequestMapping(value = "/users", method = RequestMethod.POST)
+//	public User create(@RequestBody User user) {
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		User newUser = userService.add(user);
+//		return newUser;
+//	}
+//
+//	@RequestMapping(value = "/users", method = RequestMethod.PUT)
+//	public Object update(@RequestBody User user, HttpServletRequest request) {
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		Map<String, Object> result = new HashMap<>();
+//		user = userService.update(user);
+//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+//		result.put("status", true);
+//		result.put("data", user);
+//		return new ResponseEntity<>(result, HttpStatus.OK);
+//	}
 
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable long id) {
