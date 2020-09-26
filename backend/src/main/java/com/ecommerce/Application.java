@@ -10,14 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.ecommerce.api.handler.JwtInterceptor;
 
 @SpringBootApplication
-public class Application implements WebMvcConfigurer{
+public class Application{
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 	
-	@Autowired
-	private JwtInterceptor jwtInterceptor;
+//	@Autowired
+//	private JwtInterceptor jwtInterceptor;
 
 //	@Override
 //	public void addInterceptors(InterceptorRegistry registry) {
@@ -26,12 +26,12 @@ public class Application implements WebMvcConfigurer{
 //				.excludePathPatterns("api/users/**"); // 적용 제외 경로
 //	}
 //	
-	@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-				.allowedOrigins("*")
-				.allowedMethods("*")
-				.allowedHeaders("*")
-				.exposedHeaders("jwt-auth-token");
-	}
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/**")
+//				.allowedOrigins("*")
+//				.allowedMethods("*")
+//				.allowedHeaders("*")
+//				.exposedHeaders("jwt-auth-token");
+//	}
 }
