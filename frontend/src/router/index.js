@@ -34,6 +34,7 @@ import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
+import PerformanceSubmission from "@/views/PerformanceSubmission";
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";
@@ -304,6 +305,11 @@ const routes = [
         component: () => import("../views/performanceDetail/Location.vue"),
       }
     ]
+  },
+  {
+    name : "performanceSubmission",
+    path : "/performance/submission",
+    component : PerformanceSubmission,
   }
 ];
 
@@ -316,7 +322,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat"].includes(to.path) ||
+    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat", "/performance/submission"].includes(to.path) ||
     to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
