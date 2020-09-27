@@ -380,7 +380,7 @@
 </template>
 <script>
 import HNav from "@/components/common/HNav";
-import { create } from "../api/performance.js";
+import { create, imgUpload } from "../api/performance.js";
 import axios from "axios";
 
 export default {
@@ -525,15 +525,14 @@ export default {
                 this.places = places;
             }       
         },
-        upload(uploadFile, type){
-            if(!uploadFile){
+        upload(uploadFile, type) {
+            if(!uploadFile)
                 return;
-            }
+            
             const file = new FormData();
             file.append('file',uploadFile);
-            axios
-                .post(`http://localhost:8080/api/file`,file)
-                .then(response => {
+            imgUpload(file, 
+                response => {
                     switch (type) {
                         case 'DETAIL':
                             this.performance.detail = response.data;
@@ -542,11 +541,12 @@ export default {
                             this.performance.poster = response.data;
                             break;
                     }
-                    var uploadImg = "http://localhost:8080/api/file/"+response.data;
-                })
-                .catch(error => {
+                    var uploadImg = `http://localhost:8080/api/file/${response.data}`;
+                },
+                error => {
                     alert("이미지 전송 실패");
-                })
+                }
+            )
         },
     }
 }
