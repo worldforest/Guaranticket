@@ -1,6 +1,7 @@
 package com.ecommerce.api;
 
 import com.ecommerce.application.IFileService;
+import com.ecommerce.application.IJwtService;
 import com.ecommerce.application.IPerformanceDateService;
 import com.ecommerce.application.IPerformancePriceService;
 import com.ecommerce.application.IPerformanceService;
@@ -21,6 +22,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -34,18 +38,22 @@ public class PerformanceController
 	private IPerformanceDateService performanceDateService;
 	private IPerformancePriceService performancePriceService;
 	private IFileService fileService;
+	private IJwtService jwtService;
+	
 	@Autowired
 	public PerformanceController(IPerformanceService performanceService,
 			IPerformanceSubmissonService performanceSubmissonService,
 			IPerformanceDateService performanceDateService,
 			IPerformancePriceService performancePriceService,
-			IFileService fileService) {
+			IFileService fileService,
+			IJwtService jwtService) {
 		
 		this.performanceService = performanceService;
 		this.performanceSubmissonService = performanceSubmissonService;
 		this.performanceDateService = performanceDateService;
 		this.performancePriceService = performancePriceService;
 		this.fileService = fileService;
+		this.jwtService = jwtService;
 	}
 	@ApiOperation(value = "카테고리별 최근순 5개씩 총 15개 공연 검색")
 	@RequestMapping(value = "/performance/latest", method = RequestMethod.GET)
@@ -77,7 +85,11 @@ public class PerformanceController
 	
 	@ApiOperation(value = "공연 등록")
 	@RequestMapping(value = "/performance", method = RequestMethod.POST)
-	public Performance create(@RequestBody PerformanceDetail performanceDetail) {
+	public Performance create(@RequestBody PerformanceDetail performanceDetail, HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String,Object>userinfo = jwtService.get(token);
+		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+		performanceDetail.setUid(uid);
 		return performanceService.create(performanceDetail);
 	}
 	
