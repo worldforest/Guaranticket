@@ -13,7 +13,7 @@ public interface IPerformanceService {
 	Performance get(long pid);
 
 	@Transactional
-	PerformanceDetail create(PerformanceDetail performanceAllData);
+	Performance create(PerformanceDetail performanceAllData);
 	@Transactional
 	int delete(long pid);
 }

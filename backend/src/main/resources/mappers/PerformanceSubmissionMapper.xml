@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ecommerce.mapper.PerformanceSubmissionMapper">
+
+	<select id="list" resultType="com.ecommerce.domain.PerformanceSubmission">
+		SELECT
+			pid,
+			sid,
+			uid,
+			submit_date as submitDate
+		FROM 
+			performances_submission
+	</select>
+	
+	<select id="get" parameterType="long" resultType="com.ecommerce.domain.PerformanceSubmission">
+		SELECT
+			pid,
+			sid,
+			uid,
+			submit_date as submitDate
+		FROM 
+			performances_submission
+		WHERE
+			sid = #{sid}
+	</select>
+	
+	<insert id="create" parameterType="com.ecommerce.domain.PerformanceSubmission">
+		INSERT INTO performances_date
+		(
+			pid, uid, submit_date
+		)
+		VALUES
+		(
+			#{pid}, #{uid}, #{submitDate}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="long" >
+		DELETE 
+		FROM
+			performances_submission
+		where 
+			sid = #{sid}
+	</delete>
+	
+</mapper>

@@ -1,19 +1,10 @@
 package com.ecommerce.api;
 
 import com.ecommerce.application.IDealService;
-import com.ecommerce.application.IPerformanceService;
-import com.ecommerce.application.IPerformanceSubmissonService;
 import com.ecommerce.domain.Deal;
 import com.ecommerce.domain.DealDetail;
 import com.ecommerce.domain.DealList;
-import com.ecommerce.domain.Item;
-import com.ecommerce.domain.Performance;
-import com.ecommerce.domain.PerformancePrice;
-import com.ecommerce.domain.PerformanceSubmission;
-import com.ecommerce.domain.User;
-import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
-import com.ecommerce.domain.repository.IPerformanceSubmissionRepository;
 
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -21,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ecommerce.mapper.PerformancePriceMapper">
+
+	<insert id="create" parameterType="com.ecommerce.domain.PerformancePrice">
+		INSERT INTO performances_price
+		(
+			pid, price, grade
+		)
+		VALUES
+		(
+			#{pid}, #{price}, #{grade}
+		)
+	</insert>
+	
+	<select id="getByPid" parameterType="Long" resultType="com.ecommerce.domain.PerformancePrice">
+		SELECT
+			*
+		FROM 
+			performances_price
+		WHERE 
+			pid = #{pid}
+	</select>
+	
+</mapper>

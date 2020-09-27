@@ -2,24 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.ecommerce.mapper.PerformanceMapper">
+
+	<update id="updatePermission" parameterType="Long">
+		UPDATE
+			performances
+		SET
+			permission = true
+		WHERE
+			pid = #{pid}
+	</update>
 	
 	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.Performance">
 		SELECT
-			pid,
-			title,
-			poster,
-			category,
-			location,
-			place,
-			running,
-			ticketing_start_date AS ticketingStartDate,
-			ticketing_end_date AS ticketingEndDate,
-			start_date AS startDate,
-			end_date AS endDate,
-			attendance,
-			notice,
-			detail,
-			permission
+			*
 		FROM 
 			performances
 		WHERE 
@@ -29,42 +24,14 @@
 	
 	<select id="list" resultType="com.ecommerce.domain.Performance">
 		SELECT 
-			pid,
-			title,
-			poster,
-			category,
-			location,
-			place,
-			running,
-			ticketing_start_date AS ticketingStartDate,
-			ticketing_end_date AS ticketingEndDate,
-			start_date AS startDate,
-			end_date AS endDate,
-			attendance,
-			notice,
-			detail,
-			permission
+			*
 		FROM 
 			performances 
 	</select>
 	
 	<select id="latestList" resultType="com.ecommerce.domain.Performance">
 		SELECT 
-			pid,
-			title,
-			poster,
-			category,
-			location,
-			place,
-			running,
-			ticketing_start_date AS ticketingStartDate,
-			ticketing_end_date AS ticketingEndDate,
-			start_date AS startDate,
-			end_date AS endDate,
-			attendance,
-			notice,
-			detail,
-			permission
+			*
 		FROM  
 			(SELECT 
 			 	*, 

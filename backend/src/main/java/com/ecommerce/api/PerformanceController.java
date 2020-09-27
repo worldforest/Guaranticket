@@ -5,8 +5,6 @@ import com.ecommerce.application.IPerformanceDateService;
 import com.ecommerce.application.IPerformancePriceService;
 import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.IPerformanceSubmissonService;
-import com.ecommerce.application.impl.PerformanceSubmissionService;
-import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.PerformanceDetail;
 import com.ecommerce.domain.PerformanceDate;
@@ -16,23 +14,13 @@ import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
 
 import io.swagger.annotations.ApiOperation;
-
-import org.apache.http.message.BasicHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -89,7 +77,7 @@ public class PerformanceController
 	
 	@ApiOperation(value = "공연 등록")
 	@RequestMapping(value = "/performance", method = RequestMethod.POST)
-	public PerformanceDetail create(@RequestBody PerformanceDetail performanceDetail) {
+	public Performance create(@RequestBody PerformanceDetail performanceDetail) {
 		return performanceService.create(performanceDetail);
 	}
 	
