@@ -39,6 +39,7 @@ function signup(email, password, name, phone, gender, birth, businessNumer, comp
 }
 
 function login(email, password, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   const body = {
     email: email,
     password: password

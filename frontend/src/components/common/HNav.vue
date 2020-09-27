@@ -123,7 +123,7 @@ export default {
       { title: '로그아웃', to: '/logout' }
     ],
     biz_items: [
-      { title: '공연등록', to: '/performanceregister' },
+      { title: '공연등록', to: '/performance/submission' },
       { title: '로그아웃', to: '/logout' }
     ],
     admin_items: [
