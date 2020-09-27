@@ -5,9 +5,7 @@ import java.util.Map;
 import com.ecommerce.domain.User;
 
 public interface IJwtService {
-	
-	public String create(final long uid);
-	public void checkValid(final String jwt);
-	public Map<String, Object> get(final String jwt);
-
+	public String create(long uid);
+	public void checkValid(String jwt);
+	public Map<String, Object> get(String jwt);
 }

@@ -74,7 +74,7 @@ export default {
     login() {
       const scope = this;
       const storage = window.localStorage;
-
+      storage.setItem("jwt-auth-token", "");
       login(
         this.user.email,
         this.user.password,
