@@ -33,8 +33,8 @@ function imgUpload(file, success, fail){
 
 function submit(sid, success, fail){
     instance
-        .delete("/api/performanceSubmission/"+sid)
-        .then(success)
-        .catch(fail);
+      .delete("/api/performanceSubmission/"+sid)
+      .then(success)
+      .catch(fail);
 }
 export{ findAll, findById, create, submit, imgUpload }
