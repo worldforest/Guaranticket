@@ -195,7 +195,7 @@
                         :rules="[() => performance.times.length!=0]"
                         :items="times"
                         multiple outlined
-                        chips dense
+                        small-chips dense
                         @change="sortTimes"
                         ></v-combobox>
                     </v-col>
@@ -203,7 +203,7 @@
 
                 <v-row>
                     <v-col cols="3">
-                        <v-subheader>공지내용</v-subheader>
+                        <v-subheader>공지사항</v-subheader>
                     </v-col>
                     <v-col class="" cols="9">
                         <v-textarea
@@ -267,7 +267,7 @@
                 </v-row>
                  <v-row>
                     <v-col cols="3">
-                        <v-subheader>티켓판매기간</v-subheader>
+                        <v-subheader>판매기간</v-subheader>
                     </v-col>
                     <v-col cols="4.5">
                         <v-menu
@@ -309,21 +309,79 @@
                         ></v-text-field>
                     </v-col>
                 </v-row>
-
-                
                 <v-divider></v-divider>
-                <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
-                <v-btn @click="submit" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">등록하기</v-btn>
+                <v-row>
+                    <v-col cols="3">
+                        <v-subheader>
+                            메인이미지
+                        </v-subheader>
+                    </v-col>
+                    <v-col cols="9">
+                        <v-file-input
+                            ref="file1"
+                            v-model="poster"
+                            :rules="[() => !!poster]"
+                            placeholder="메인이미지를 업로드해주세요"
+                            prepend-icon=""
+                            prepend-inner-icon="mdi-paperclip"
+                            @click:prepend-inner="$refs.file1.$refs.input.click()"
+                            @change="upload(poster,'POSTER')"
+                            outlined dense
+                            :show-size="1000"
+                        >
+                            <template v-slot:selection="{ text }">
+                                <v-chip small label color="primary">
+                                    {{ text }}
+                                </v-chip>
+                            </template>
+                        </v-file-input>
+                    </v-col>
+                </v-row>
+
+                <v-row>
+                    <v-col cols="3">
+                        <v-subheader>
+                            상세이미지
+                        </v-subheader>
+                    </v-col>
+                    <v-col cols="9">
+                        <v-file-input
+                            ref="file2"
+                            v-model="detail"
+                            :rules="[() => !!detail]"
+                            placeholder="상세이미지를 업로드해주세요"
+                            prepend-icon=""
+                            prepend-inner-icon="mdi-paperclip"
+                            @click:prepend-inner="$refs.file2.$refs.input.click()"
+                            @change="upload(detail,'DETAIL')"
+                            outlined dense
+                            :show-size="1000"
+                        >
+                            <template v-slot:selection="{ text }">
+                                <v-chip small label color="primary">
+                                    {{ text }}
+                                </v-chip>
+                            </template>
+                        </v-file-input>
+                    </v-col>
+                </v-row>
+
+                <v-divider></v-divider>
+                <v-row justify="center">
+                    <v-col>
+                        <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
+                        <v-btn @click="submit" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">등록하기</v-btn>
+                    </v-col>
+                </v-row>
 
         </v-form>
-
      </v-container>
   </div>
 </template>
 <script>
 import HNav from "@/components/common/HNav";
 import { create } from "../api/performance.js";
-
+import axios from "axios";
 
 export default {
     components: {
@@ -333,25 +391,27 @@ export default {
         return {
             performance : {
                 title : "",
-                poster : "",
-                detail : "",
+                poster : [],
+                detail : [],
                 category : "",
                 location : "",
                 place : "",
                 running : "",
-                ticketStartDate : "",
-                ticketEndDate : "",
+                ticketingStartDate : "",
+                ticketingEndDate : "",
                 startDate : "",
                 endDate : "",
                 attendance : "",
                 notice : "",
 
-                    grades : [],
-                    prices : [],
-                    times : [],
+                grades : [],
+                prices : [],
+                times : [],
 
-                    uid : 74
+                uid : 74
             },
+            poster : [],
+            detail : [],
 
             items : [
                 { category : '콘서트', value : 0 },
@@ -404,8 +464,8 @@ export default {
             this.performance.times.sort();
         },
         submit(){
+            this.upload();
             if(this.$refs.form.validate()){
-                console.log(this.performance);
                 create(this.performance, 
                     response => {
                         alert("공연이 등록되었습니다.");
@@ -424,8 +484,8 @@ export default {
                 this.swap(this.dates);
             switch (type) {
                 case "TICKET":
-                    this.performance.ticketStartDate = this.dates[0];
-                    this.performance.ticketEndDate = this.dates[1];
+                    this.performance.ticketingStartDate = this.dates[0];
+                    this.performance.ticketingEndDate = this.dates[1];
                     this.ticketMenu = false;
                     break;
                 case "PERFORMANCE":
@@ -465,6 +525,29 @@ export default {
                 this.places = places;
             }       
         },
+        upload(uploadFile, type){
+            if(!uploadFile){
+                return;
+            }
+            const file = new FormData();
+            file.append('file',uploadFile);
+            axios
+                .post(`http://localhost:8080/api/file`,file)
+                .then(response => {
+                    switch (type) {
+                        case 'DETAIL':
+                            this.performance.detail = response.data;
+                            break;
+                        case 'POSTER':
+                            this.performance.poster = response.data;
+                            break;
+                    }
+                    var uploadImg = "http://localhost:8080/api/file/"+response.data;
+                })
+                .catch(error => {
+                    alert("이미지 전송 실패");
+                })
+        },
     }
 }
 </script>
@@ -473,6 +556,6 @@ export default {
     margin-bottom : 1px;
 }
 .row{
-    margin-bottom : -35px;
+    margin-bottom : -30px;
 }
 </style>
