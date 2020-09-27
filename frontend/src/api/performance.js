@@ -37,4 +37,5 @@ function submit(sid, success, fail){
       .then(success)
       .catch(fail);
 }
+
 export{ findAll, findById, create, submit, imgUpload }
