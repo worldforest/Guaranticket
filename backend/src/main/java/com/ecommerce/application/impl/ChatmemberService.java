@@ -26,8 +26,8 @@ public class ChatmemberService implements IChatmemberService {
 	}
 
 	@Override
-	public String select(String myname, String yourname) {
-		return chatmemberMapper.select(myname, yourname);
+	public String select(String myName, String yourName) {
+		return chatmemberMapper.select(myName, yourName);
 	}
 
 }
