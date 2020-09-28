@@ -15,5 +15,6 @@ public interface ITicketService {
 	TicketDetail get(long tid);
 	@Transactional
 	TicketDetail create(Ticket ticket);
-	
+	@Transactional
+	TicketDetail update(long tid, long uid);
 }

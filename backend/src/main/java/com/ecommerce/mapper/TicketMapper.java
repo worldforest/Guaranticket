@@ -12,4 +12,5 @@ public interface TicketMapper {
 	List<Ticket> getByPidAndDateAndTime(long pid, String date, String time);
 	TicketDetail get(long tid);
 	long create(Ticket ticket);
+	int update(long tid, long uid);
 }

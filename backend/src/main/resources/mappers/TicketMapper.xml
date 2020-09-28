@@ -65,4 +65,14 @@
 		WHERE 
 			a.uid = #{uid}
 	</select>
+	
+	<update id="update" parameterType="long">
+		UPDATE
+			tickets
+		SET
+			trading = true,
+			uid = #{uid}
+		WHERE
+			tid = #{tid}
+	</update>
 </mapper>

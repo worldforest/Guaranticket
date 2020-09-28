@@ -13,4 +13,5 @@ public interface IDealService {
 	@Transactional
 	DealDetail create(Deal deal);
 	List<DealList> getBySeller(long seller);
+	DealDetail update(long did, long buyer);
 }
