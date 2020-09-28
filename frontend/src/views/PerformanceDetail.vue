@@ -84,7 +84,7 @@
               </div>
             </div>
             <div style="margin:50px;">
-              <v-btn x-large block color="#FF4155"><h4 style="font-size:23px;">예매하기</h4></v-btn>
+              <v-btn @click="ticket()" x-large block color="#FF4155"><h4 style="font-size:23px;">예매하기</h4></v-btn>
             </div>
           </div>
       </v-row>
@@ -138,7 +138,7 @@
 
 <script>
 import { findById,finddateById,findpriceById } from "@/api/performance.js";
-import HNav from "../components/common/HNav";
+import HNav from "@/components/common/HNav";
 
 
 export default {
@@ -162,10 +162,10 @@ export default {
       tabs: true
     }
   },
-  mounted() {
-    var scope = this;
-    var pid = this.$route.params.pid;
-  },
+  // mounted() {
+  //   var scope = this;
+  //   var pid = this.$route.params.pid;
+  // },
   created() {
     var scope = this;
     var pid = this.$route.params.pid;
@@ -225,6 +225,16 @@ export default {
     },
     selecttab(select) {
       this.tabs=select
+    },
+    ticket(){
+      this.$router.push({
+        name: 'selectSeat',
+        params: {
+          pid: this.pid,
+          date: this.selectDate,
+          time: this.selectTime
+        }
+      })
     }
   }
 }
