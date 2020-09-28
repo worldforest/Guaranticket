@@ -2,7 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.ecommerce.mapper.PerformanceMapper">
-
+	
+	<resultMap type="com.ecommerce.domain.Performance" id="PerformanceSelectRM">
+		<result property="ticketingStartDate" column="ticketing_start_date"/>
+		<result property="ticketingEndDate" column="ticketing_end_date"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+	</resultMap>
+	
 	<update id="updatePermission" parameterType="Long">
 		UPDATE
 			performances
@@ -12,7 +19,7 @@
 			pid = #{pid}
 	</update>
 	
-	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.Performance">
+	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
 		SELECT
 			*
 		FROM 
@@ -22,14 +29,14 @@
 	</select>
 	
 	
-	<select id="list" resultType="com.ecommerce.domain.Performance">
+	<select id="list" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
 		SELECT 
 			*
 		FROM 
 			performances 
 	</select>
 	
-	<select id="latestList" resultType="com.ecommerce.domain.Performance">
+	<select id="latestList" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
 		SELECT 
 			*
 		FROM  
