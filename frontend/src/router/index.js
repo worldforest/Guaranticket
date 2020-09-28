@@ -34,8 +34,6 @@ import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
-import PDetail from "@/views/performanceDetail/Detail";
-import PLocation from "@/views/performanceDetail/Location";
 import PerformanceSubmission from "@/views/PerformanceSubmission";
 //채팅
 import Chat from "@/views/Chat.vue";
@@ -294,19 +292,6 @@ const routes = [
     name:"performanceDetail",
     path: "/performanceDetail/:pid",
     component: PerformanceDetail,
-    // props: (route) => ({pid: route.pis}),
-    children: [
-      {
-        name: "performanceDetail.Detail",
-        path: "Detail",
-        component: PDetail
-      },
-      {
-        name: "performanceDetail.Location",
-        path: "Location",
-        component: PLocation
-      }
-    ]
   },
   {
     name : "performanceSubmission",
