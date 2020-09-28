@@ -9,6 +9,6 @@ public class PerformanceSubmission{
 	private long sid;
 	private long uid;
 	private long pid;
-	private LocalDateTime submissionDate;
+	private LocalDateTime submitDate;
 	
 }

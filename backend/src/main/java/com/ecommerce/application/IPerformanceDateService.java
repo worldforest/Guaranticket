@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface IPerformanceDateService {
 	List<PerformanceDate> getByPid(long pid);
-
 }

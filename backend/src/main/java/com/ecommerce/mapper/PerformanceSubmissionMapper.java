@@ -1,13 +1,12 @@
-package com.ecommerce.domain.repository;
-
-import com.ecommerce.domain.PerformanceSubmission;
+package com.ecommerce.mapper;
 
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-public interface IPerformanceSubmissionRepository
-{
+import com.ecommerce.domain.PerformanceSubmission;
+
+public interface PerformanceSubmissionMapper {
 	List<PerformanceSubmission> list();
 	
 	PerformanceSubmission get(long sid);
@@ -15,9 +14,6 @@ public interface IPerformanceSubmissionRepository
 	@Transactional
 	long create(long pid, long uid);
 
-//	@Transactional
-//	int update(PerformanceSubmission performancesubmission);
-//
 	@Transactional
 	int delete(long sid);
 }

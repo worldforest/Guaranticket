@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 public interface IPerformanceService {
 	List<Performance> latestList();
 	List<Performance> list();
-	PerformanceDetail get(long pid);
+	Performance get(long pid);
 
 	@Transactional
-	PerformanceDetail create(PerformanceDetail performanceAllData);
+	Performance create(PerformanceDetail performanceAllData);
 	@Transactional
 	int delete(long pid);
 }
