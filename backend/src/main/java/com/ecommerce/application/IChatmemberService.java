@@ -7,5 +7,5 @@ public interface IChatmemberService {
 
 	public List<String> selectAll(String name);
 
-	public String select(String myname, String yourname);
+	public String select(String myName, String yourName);
 }
