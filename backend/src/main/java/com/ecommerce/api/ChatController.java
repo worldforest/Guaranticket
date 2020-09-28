@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ecommerce.application.IChatlistService;
 import com.ecommerce.application.IChatmemberService;
+import com.ecommerce.application.IUserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,31 +28,32 @@ public class ChatController {
 
 	@Autowired
 	private IChatlistService chatlistService;
-
+	@Autowired
+	private IUserService userService;
+	
 	// 이름으로 채팅방 만들기
 	@ApiOperation(value = "1:1방 이름 설정", notes = "1:1방 가져오기 했는데 없으면 만들고 있으면 채팅방이름 반환")
 	@PostMapping("privateCaht")
-	public ResponseEntity<String> privateCaht(@RequestParam("myname") String myname,
-			@RequestParam("yourname") String yourname) {
+	public ResponseEntity<String> privateChat(@RequestParam("myname") String myName,
+			@RequestParam("yourname") String yourName) {
 
-		String roomname = null;
+		String roomName = null;
 		// 채팅방이 없으면
 		// myname인 사람이 있는 방에서 상대가 yourname인 방번호가 없으면
-		if (chatmemberService.select(myname, yourname) == null) {
+		if (chatmemberService.select(myName, yourName) == null) {
 			// 새로 만들기
-			System.out.println("새로 만들기");
-			roomname = myname.concat(",").concat(yourname);
-			chatlistService.insert(roomname);
-			String roomnum = chatlistService.selectno(roomname);
-			chatmemberService.insert(roomnum, myname);
-			chatmemberService.insert(roomnum, yourname);
-			System.out.println("roomname: " + roomname);
+			roomName = myName.concat(",").concat(yourName);
+			chatlistService.insert(roomName);
+			
+			String roomnum = chatlistService.selectno(roomName);
+			chatmemberService.insert(roomnum, myName);
+			chatmemberService.insert(roomnum, yourName);
+			
 		}
 		// 있으면
-		String roomno = chatmemberService.select(myname, yourname);
-		roomname = chatlistService.select(roomno);
-		System.out.println("roomno: " + roomno);
-		return new ResponseEntity<String>(roomname, HttpStatus.OK);
+		String roomno = chatmemberService.select(myName, yourName);
+		roomName = chatlistService.select(roomno);
+		return new ResponseEntity<String>(roomName, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "내가 속한 채팅방 이름 목록", notes = "name보내면 방 이름 목록")
