@@ -187,9 +187,9 @@
 </template>
 
 <script>
-import { signup } from "../api/user.js";
-import { findByEmail } from "../api/user.js";
-import { sendSMS } from "../api/user.js";
+import { signup } from "@/api/user.js";
+import { findByEmail } from "@/api/user.js";
+import { sendSMS } from "@/api/user.js";
 
 
 export default {
@@ -270,7 +270,7 @@ export default {
                 }
             )
         },
-         duplicationValid(){
+        duplicationValid(){
             if(!this.user.email1 || !this.user.email2){
                 alert("이메일을 입력해주세요.");
                 return;

@@ -39,7 +39,7 @@ public class UserController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-
+	
 	@Autowired
 	private JwtService jwtService;
 
@@ -85,13 +85,13 @@ public class UserController {
 			result.put("status", false);
 			result.put("data", "isExist");
 		}
-//		if (user == null) {
-//			logger.error("NOT FOUND EMAIL: ", email);
-//			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
-//		}
-//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-//		result.put("status", true);
-//		result.put("data", user);
+		if (user == null) {
+			logger.error("NOT FOUND EMAIL: ", email);
+			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
+		}
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+		result.put("status", true);
+		result.put("data", user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

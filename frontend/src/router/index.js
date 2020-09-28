@@ -1,10 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//계정(로그인,회원가입)
-import Login from "@/views/Login.vue";
-import Signup from "@/views/Signup.vue";
-import SignupUser from "@/views/SignupUser.vue";
-import SignupBiz from "@/views/SignupBiz.vue";
+
 import Home from "@/views/Home.vue";
 import store from "@/store";
 import Shop from "@/views/Shop.vue";
@@ -12,24 +8,38 @@ import MyPage from "@/views/MyPage.vue";
 import Item from "@/views/Item.vue";
 import Explorer from "@/views/Explorer.vue";
 import Escrow from "@/views/Escrow.vue";
+//계정(로그인,회원가입,비밀번호찾기)
+import Login from "@/views/account/Login.vue";
+import Signup from "@/views/account/Signup.vue";
+import SignupUser from "@/views/account/SignupUser.vue";
+import SignupBiz from "@/views/account/SignupBiz.vue";
+import FindPw from "@/views/account/FindPw.vue";
 //티켓거래
 import DealList from "@/views/deal/DealList.vue";
 import DealRegister from "@/views/deal/DealRegister.vue";
 import DealDetail from "@/views/deal/DealDetail.vue";
 //마이페이지(일반회원)
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
+import PurchaseDetail from "@/views/mypage/PurchaseDetail.vue";
 import SellList from "@/views/mypage/SellList.vue";
 import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
-//비밀번호찾기
-import FindPw from "@/views/FindPw.vue";
+//마이페이지(기업회원)
+import PerformanceRegister from "@/views/mypage_biz/PerformanceRegister.vue";
+//마이페이지(관리자)
+import ConfirmUser from "@/views/mypage_admin/ConfirmUser.vue";
+import ConfirmPerformance from "@/views/mypage_admin/ConfirmPerformance.vue";
 //공연
 import Concert from "@/views/Concert.vue";
 import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
+<<<<<<< HEAD
 import PDetail from "@/views/performanceDetail/Detail";
 import PLocation from "@/views/performanceDetail/Location";
+=======
+import PerformanceSubmission from "@/views/PerformanceSubmission";
+>>>>>>> ca2843ebd8f1ecd4458107de101d505e1115cd6c
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";
@@ -37,11 +47,33 @@ import Chat from "@/views/Chat.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  //마이페이지
+  //마이페이지(관리자)
+  {
+    path: "/confirmuser",
+    name: "confirmuser",
+    component: ConfirmUser
+  },
+  {
+    path: "/confirmperformance",
+    name: "confirmperformance",
+    component: ConfirmPerformance
+  },
+  //마이페이지(기업회원)
+  {
+    path: "/performanceregister",
+    name: "performanceregister",
+    component: PerformanceRegister
+  },
+  //마이페이지(일반회원)
   {
     path: "/purchaselist",
     name: "purchaselist",
     component: PurchaseList
+  },
+  {
+    path: "/purchasedetail/:tid",
+    name: "purchasedetail",
+    component: PurchaseDetail
   },
   {
     path: "/selllist",
@@ -277,7 +309,12 @@ const routes = [
         path: "Location",
         component: PLocation
       }
-    ],
+    ]
+  },
+  {
+    name : "performanceSubmission",
+    path : "/performance/submission",
+    component : PerformanceSubmission,
   }
 ];
 
@@ -290,8 +327,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat"].includes(to.path) ||
-    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail/") ;
+    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat", "/performance/submission"].includes(to.path) ||
+    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
   if (!isSigned && !isAvailableToGuest) {

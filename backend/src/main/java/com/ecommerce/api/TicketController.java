@@ -1,9 +1,7 @@
 package com.ecommerce.api;
 
-import com.ecommerce.application.IPerformanceService;
+import com.ecommerce.application.IJwtService;
 import com.ecommerce.application.ITicketService;
-import com.ecommerce.application.impl.PerformanceService;
-import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.Ticket;
 import com.ecommerce.domain.TicketDetail;
 import com.ecommerce.domain.TicketList;
@@ -16,9 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -28,11 +27,14 @@ public class TicketController
 	public static final Logger logger = LoggerFactory.getLogger(TicketController.class);
 
 	private ITicketService ticketService;
-
+	private IJwtService jwtService;
+	
 	@Autowired
-	public TicketController(ITicketService ticketService) {
+	public TicketController(ITicketService ticketService,
+			IJwtService jwtService) {
 		Assert.notNull(ticketService, "dealService 개체가 반드시 필요!");
 		this.ticketService = ticketService;
+		this.jwtService = jwtService;
 	}
 
 	@ApiOperation(value = "공연(날짜+시간)별 예매 내역 검색")
@@ -58,8 +60,12 @@ public class TicketController
 		return list;
 	}
 	@ApiOperation(value = "사용자 예매 내역리스트 검색")
-	@RequestMapping(value = "/ticket/uid/{uid}", method = RequestMethod.GET)
-	public List<TicketList> getByUid(@PathVariable long uid) {
+	@RequestMapping(value = "/ticket/uid", method = RequestMethod.GET)
+	public List<TicketList> getByUid(HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String,Object>userinfo = jwtService.get(token);
+		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+		
 		List<TicketList> list = ticketService.getByUid(uid);
 		if (list == null || list.isEmpty())
 			throw new NotFoundException(uid + "유저의 예매 내역을 찾을 수 없습니다.");
@@ -68,7 +74,11 @@ public class TicketController
 	
 	@ApiOperation(value = "공연 예매 하기")
 	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
-	public TicketDetail create(@RequestBody Ticket ticket) {
+	public TicketDetail create(@RequestBody Ticket ticket, HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String,Object>userinfo = jwtService.get(token);
+		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+		ticket.setUid(uid);
 		return ticketService.create(ticket);
 	}
 	

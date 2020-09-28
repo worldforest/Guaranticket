@@ -36,10 +36,17 @@ function create(body, success, fail, final) {
       .finally(final);
 }
 
+function imgUpload(file, success, fail){
+    instance
+      .post("/api/file", file)
+      .then(success)
+      .catch(fail)
+}
+
 function submit(sid, success, fail){
     instance
-        .delete("/api/performanceSubmission/"+sid)
-        .then(success)
-        .catch(fail);
+      .delete("/api/performanceSubmission/"+sid)
+      .then(success)
+      .catch(fail);
 }
 export{ findAll, findById, finddateById, findpriceById, create, submit }

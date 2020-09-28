@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import { findByEmail, findById, login } from "../api/user.js";
-import { findByUserId as findWallet } from "../api/wallet.js";
+import { findByEmail, findById, login } from "@/api/user.js";
+import { findByUserId as findWallet } from "@/api/wallet.js";
 import HNav from "@/components/common/HNav";
 
 export default {
@@ -74,7 +74,7 @@ export default {
     login() {
       const scope = this;
       const storage = window.localStorage;
-
+      storage.setItem("jwt-auth-token", "");
       login(
         this.user.email,
         this.user.password,
