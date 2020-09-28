@@ -12,12 +12,10 @@
                 <v-row>
                     <div v-for="(musical,i) in Musicals" :key="i">
                         <div v-if="musical.category == 1">
-                        <img :src="musical.poster" height="350" width="250" @click="performanceDetail(musical)" alt="뮤지컬">
-                        <figcaption>
-                            <div class="fig-author">
+                            <img :src="musical.poster" height="auto" max-width="100%" @click="performanceDetail(musical)" alt="뮤지컬">
+                            <div style="width:50%;">
                                 {{musical.title}}
                             </div>
-                        </figcaption>
                         </div>
                     </div>
                 </v-row>

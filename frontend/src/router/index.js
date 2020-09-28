@@ -34,12 +34,9 @@ import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
-<<<<<<< HEAD
 import PDetail from "@/views/performanceDetail/Detail";
 import PLocation from "@/views/performanceDetail/Location";
-=======
 import PerformanceSubmission from "@/views/PerformanceSubmission";
->>>>>>> ca2843ebd8f1ecd4458107de101d505e1115cd6c
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";

@@ -36,7 +36,6 @@
         <v-card v-for="(item, i) in poster" :key="i">
           <img
             :src="item.poster"
-            width="100%"
             height="auto"
             alt="인기 공연"
             @click="performanceDetail(item)"/>

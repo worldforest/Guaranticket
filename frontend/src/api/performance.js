@@ -49,4 +49,4 @@ function submit(sid, success, fail){
       .then(success)
       .catch(fail);
 }
-export{ findAll, findById, finddateById, findpriceById, create, submit }
+export{ findAll, findById, finddateById, findpriceById, create, imgUpload, submit }
