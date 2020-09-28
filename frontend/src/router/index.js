@@ -292,19 +292,6 @@ const routes = [
     name:"performanceDetail",
     path: "/performanceDetail/:pid",
     component: PerformanceDetail,
-    // props: (route) => ({pid: route.pis}),
-    children: [
-      {
-        name: "performanceDetail.Detail",
-        path: "Detail",
-        component: () => import("../views/performanceDetail/Detail.vue"),
-      },
-      {
-        name: "performanceDetail.Location",
-        path: "Location",
-        component: () => import("../views/performanceDetail/Location.vue"),
-      }
-    ]
   },
   {
     name : "performanceSubmission",
