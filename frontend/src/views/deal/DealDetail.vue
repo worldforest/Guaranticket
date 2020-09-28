@@ -82,8 +82,9 @@ export default {
             this.deal_detail.category = "스포츠";
             break;
         }
+        // 좌석 등급 대문자로 표기
+        this.deal_detail.grade = this.deal_detail.grade.toUpperCase();
         // 좌석의 행,열 구하기
-        // console.log("처리 전:" + this.deal_detail.seatNumber)
         if(this.deal_detail.seatNumber > 18) {
           this.deal_detail.seatNumber -= 18;
         }

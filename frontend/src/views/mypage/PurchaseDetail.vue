@@ -83,6 +83,8 @@ export default {
                 this.purchase_detail.category = "스포츠";
                 break;
             }
+            // 좌석 등급 대문자로 표기
+            this.purchase_detail.grade = this.purchase_detail.grade.toUpperCase();
             // 좌석의 행,열 구하기
             if(this.purchase_detail.seatNumber > 18) {
             this.purchase_detail.seatNumber -= 18;
@@ -93,7 +95,7 @@ export default {
             this.seat = parseInt(this.purchase_detail.seatNumber/6)+1 + "행 " + (this.purchase_detail.seatNumber%6) + "열";
             }
             // 가격 (원화 기준으로 콤마 표시)
-            this.purchase_detail.price = Number(this.purchase_detail.price).toLocaleTimeString();
+            this.purchase_detail.price = Number(this.purchase_detail.price).toLocaleString();
         })
         .catch(err => {
             console.log("created axios get method error!")
