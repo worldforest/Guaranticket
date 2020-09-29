@@ -39,7 +39,7 @@ public class UserController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private JwtService jwtService;
 
@@ -57,6 +57,17 @@ public class UserController {
 			throw new EmptyListException("NO DATA");
 
 		return userList;
+	}
+
+	@RequestMapping(value = "/users/info", method = RequestMethod.GET)
+	public Object get(HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String, Object> userInfo = jwtService.get(token);
+		long uid = Long.parseLong(userInfo.get("USER").toString());
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", true);
+		result.put("data", uid);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
