@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ecommerce.mapper.TicketMapper">
+
+	<resultMap type="com.ecommerce.domain.Ticket" id="TicketSelectRM">
+		<result property="seatNumber" column="seat_number"/>
+	</resultMap>
+	
+	<resultMap type="com.ecommerce.domain.TicketDetail" id="TicketDeatilSelectRM">
+		<result property="seatNumber" column="seat_number"/>
+	</resultMap>
+	
+	<insert id="create" parameterType="com.ecommerce.domain.Ticket">
+		INSERT INTO tickets
+		(
+			tid, pid, seat_number, date, time, uid, grade, price, trading
+		)
+		VALUES
+		(
+			#{tid},#{pid},#{seatNumber},#{date},#{time},#{uid},#{grade},#{price},#{trading}
+		)
+	</insert>
+	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.TicketDetail" resultMap="TicketDeatilSelectRM">
+		SELECT
+			*
+		FROM 
+			tickets as a
+		INNER JOIN
+			performances as b on a.pid = b.pid 
+		WHERE 
+			a.tid = #{tid}
+	</select>
+	
+	<select id="getByPidAndDateAndTime" parameterType="map" 
+		resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
+		SELECT
+			*
+		FROM 
+			tickets
+		WHERE 
+			pid = #{pid}
+		AND 
+			time = #{time}
+		AND
+			date = #{date}
+	</select>
+	
+	<select id="getByPid" parameterType="Long" resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
+		SELECT
+			*
+		FROM 
+			tickets
+		WHERE 
+			pid = #{pid}
+	</select>
+	
+	<select id="getByUid" parameterType="Long" resultType="com.ecommerce.domain.TicketList" resultMap="TicketSelectRM">
+		SELECT
+			*
+		FROM 
+			tickets as a
+		INNER JOIN 
+			performances as b on a.pid = b.pid 
+		WHERE 
+			a.uid = #{uid}
+	</select>
+</mapper>

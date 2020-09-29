@@ -1,5 +1,5 @@
 <template>
-  <h3>Location</h3>
+  <h3>티켓 확인</h3>
 </template>
 
 <script>

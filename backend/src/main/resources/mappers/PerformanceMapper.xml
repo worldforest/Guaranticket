@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ecommerce.mapper.PerformanceMapper">
+	
+	<resultMap type="com.ecommerce.domain.Performance" id="PerformanceSelectRM">
+		<result property="ticketingStartDate" column="ticketing_start_date"/>
+		<result property="ticketingEndDate" column="ticketing_end_date"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+	</resultMap>
+	
+	<update id="updatePermission" parameterType="Long">
+		UPDATE
+			performances
+		SET
+			permission = true
+		WHERE
+			pid = #{pid}
+	</update>
+	
+	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
+		SELECT
+			*
+		FROM 
+			performances
+		WHERE 
+			pid = #{pid}
+	</select>
+	
+	
+	<select id="list" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
+		SELECT 
+			*
+		FROM 
+			performances 
+	</select>
+	
+	<select id="latestList" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
+		SELECT 
+			*
+		FROM  
+			(SELECT 
+			 	*, 
+			 	ROW_NUMBER() OVER (PARTITION BY p.category ORDER BY p.ticketing_start_date desc) RN
+			FROM 
+				performances p) a
+		WHERE 
+			a.RN <![CDATA[ <= ]]> 5
+		ORDER BY a.ticketing_start_date desc
+	</select>
+	
+	<delete id="delete" parameterType="long" >
+		DELETE 
+		FROM
+			performances
+		where 
+			pid = #{pid}
+	</delete>
+	
+	<insert id="create" parameterType="com.ecommerce.domain.Performance">
+		INSERT INTO performances
+		(
+			pid,
+			title,
+			poster,
+			category,
+			location,
+			place,
+			running,
+			ticketing_start_date,
+			ticketing_end_date,
+			start_date,
+			end_date,
+			attendance,
+			notice,
+			detail,
+			permission
+		)
+		VALUES
+		(
+			#{pid},
+			#{title},
+			#{poster},
+			#{category},
+			#{location},
+			#{place},
+			#{running},
+			#{ticketingStartDate},
+			#{ticketingEndDate},
+			#{startDate},
+			#{endDate},
+			#{attendance},
+			#{notice},
+			#{detail},
+			#{permission}
+		)
+	</insert>
+</mapper>

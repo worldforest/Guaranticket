@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ecommerce.mapper.DealMapper">
+	
+	<insert id="create" parameterType="com.ecommerce.domain.Deal">
+		INSERT INTO deals
+		(
+			tid, buyer, seller, date, time, grade, price
+		)
+		VALUES
+		(
+			#{tid}, #{buyer}, #{seller}, #{date}, #{time}, #{grade}, #{price}
+		)
+	</insert>
+	
+	<select id="list" resultType="com.ecommerce.domain.DealList">
+		SELECT
+			*
+		FROM
+			deals as a
+		INNER JOIN
+			tickets as b on a.tid = b.tid
+		INNER JOIN
+			performances as c on b.pid = c.pid
+	</select>
+	
+	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.DealDetail">
+		SELECT
+			*
+		FROM 
+			deals as a
+		INNER JOIN
+			tickets as b on a.tid = b.tid
+		INNER JOIN
+			performances as c on b.pid = c.pid 
+		WHERE 
+			a.did = #{did} 
+	</select>
+	
+	<select id="getBySeller" parameterType="long" 
+		resultType="com.ecommerce.domain.DealList">
+		SELECT
+			*
+		FROM 
+			deals as a
+		INNER JOIN
+			tickets as b on a.tid = b.tid 
+		INNER JOIN
+			performances as c on b.pid = c.pid
+		WHERE
+			a.seller = #{seller}
+	</select>
+</mapper>

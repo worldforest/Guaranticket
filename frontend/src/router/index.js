@@ -37,6 +37,11 @@ import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
 import PerformanceSubmission from "@/views/PerformanceSubmission";
+//티켓 예매
+import SelectSeat from "@/views/Ticket/SelectSeat";
+import CheckTicket from "@/views/Ticket/CheckTicket";
+import PayTicket from "@/views/Ticket/PayTicket";
+
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";
@@ -300,25 +305,27 @@ const routes = [
     name:"performanceDetail",
     path: "/performanceDetail/:pid",
     component: PerformanceDetail,
-    // props: (route) => ({pid: route.pis}),
-    children: [
-      {
-        name: "performanceDetail.Detail",
-        path: "Detail",
-        component: () => import("../views/performanceDetail/Detail.vue"),
-      },
-      {
-        name: "performanceDetail.Location",
-        path: "Location",
-        component: () => import("../views/performanceDetail/Location.vue"),
-      }
-    ]
   },
   {
     name : "performanceSubmission",
     path : "/performance/submission",
     component : PerformanceSubmission,
-  }
+  },
+  {
+    name : "selectSeat",
+    path : "/selectSeat/:date/:time",
+    component : SelectSeat,
+  },
+  {
+    name : "checkTicket",
+    path : "/checkTicket/:date/:time/:seat",
+    component : CheckTicket,
+  },
+  {
+    name : "payTicket",
+    path : "/payTicket",
+    component : PayTicket,
+  },
 ];
 
 const router = new VueRouter({
@@ -332,7 +339,7 @@ router.beforeEach((to, from, next) => {
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
     ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat", "/performance/submission"].includes(to.path) ||
-    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
+    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail")||to.path.startsWith("/selectSeat") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
   if (!token && !isSigned && !isAvailableToGuest) {
