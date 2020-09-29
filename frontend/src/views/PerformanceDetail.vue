@@ -89,12 +89,12 @@
           </div>
       </v-row>
       <v-spacer></v-spacer>
-      <v-layout row style="margin-top:50px;">
-        <v-btn-toggle v-model="toggle_exclusive" >
-          <v-btn v-on:click="selecttab(true)" x-large block color="#FDDAB4"><h4 style="font-size:23px;">🔎 공연 상세정보</h4></v-btn>
-          <v-btn v-on:click="selecttab(false)" x-large block color="#FDDAB4"><h4 style="font-size:23px;">🚩 공연장 정보</h4></v-btn>
-        </v-btn-toggle>
-      </v-layout>
+      <v-row wrap style="margin-top:50px;">
+          <v-btn-toggle v-model="toggle_exclusive" align="center">
+            <v-btn v-on:click="selecttab(true)" x-large block color="#FDDAB4"><h4 style="font-size:23px;">🔎 공연 상세정보</h4></v-btn>
+            <v-btn v-on:click="selecttab(false)" x-large block color="#FDDAB4"><h4 style="font-size:23px;">🚩 공연장 정보</h4></v-btn>
+          </v-btn-toggle>
+      </v-row>
       <div>
         <div v-if="this.tabs==true">
           <div>
