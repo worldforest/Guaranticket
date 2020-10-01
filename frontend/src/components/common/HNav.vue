@@ -117,6 +117,7 @@ export default {
       { title: '예매내역 확인', to: '/purchaselist' },
       { title: '판매내역 관리', to: '/selllist' },
       { title: '회원정보 수정', to: '/updateprofile' },
+      { title: '비밀번호 변경', to: '/update/password' },
       { title: '로그아웃', to: '/logout' }
     ],
     biz_items: [

@@ -128,7 +128,8 @@ public class UserController {
 		User newUser = userService.add(user);
 		return newUser;
 	}
-
+	
+	// 회원정보 수정 (비밀번호 미포함)
 	@RequestMapping(value = "/users", method = RequestMethod.PUT)
 	public Object update(@RequestBody User user, HttpServletRequest request) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -137,6 +138,41 @@ public class UserController {
 		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		result.put("status", true);
 		result.put("data", user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	// 비밀번호 변경
+	@RequestMapping(value = "/users/pw", method = RequestMethod.PUT)
+	public Object update(@RequestBody Map<String, String> params, HttpServletRequest request) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Map<String, Object> result = new HashMap<>();
+		
+		String token = request.getHeader("jwt-auth-token");
+		Map<String, Object> userInfo = jwtService.get(token);
+		long uid = Long.parseLong(userInfo.get("USER").toString());
+		User user = userService.get(uid);
+
+		String originPassword = params.get("originPassword");
+		String newPassword = params.get("newPassword");
+		
+		// 입력한 현재 비밀번호와 DB에 저장된 비밀번호가 다르면
+		if(!passwordEncoder.matches(originPassword, user.getPassword())) {
+			result.put("status", false);
+			result.put("data", "INVALID_PASSWORD");
+		}
+		// 입력한 새 비밀번호와 DB에 저장된 비밀먼호가 같으면
+		else if(passwordEncoder.matches(newPassword, user.getPassword())) {
+			result.put("status", false);
+			result.put("data", "SAME_PASSWORD");
+		}
+		// 유효하면
+		else {
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user = userService.update(user);
+			result.put("status", true);
+			result.put("data", user);
+		}
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

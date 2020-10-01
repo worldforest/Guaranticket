@@ -177,7 +177,6 @@
             <v-btn @click="$router.go(-1)" class="mx-3 mb-3 action_btn" large width="30%" color="grey lighten-2">취소</v-btn>
             <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">가입하기</v-btn>
             </v-form>
-            <div v-for="(value, key) in user" :key="key">{{key}} : {{value}}</div>
       </div>
   </div>
 </template>
