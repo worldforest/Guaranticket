@@ -7,7 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.ecommerce.application.impl.JwtService;
 
-public class JwtInterCeptor implements HandlerInterceptor {
+public class JwtInterceptor implements HandlerInterceptor {
 
 	private JwtService jwtService;
 
