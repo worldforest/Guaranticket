@@ -175,7 +175,7 @@
             </v-row>
 
             <v-btn @click="$router.go(-1)" class="mx-3 mb-3 action_btn" large width="30%" color="grey lighten-2">취소</v-btn>
-            <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">가입하기</v-btn>
+            <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">변경하기</v-btn>
             </v-form>
       </div>
   </div>
@@ -184,7 +184,7 @@
 <script>
 import HNav from "@/components/common/HNav";
 import axios from "axios";
-import { findById, update } from "@/api/user.js";
+import { dispatch, findById, update } from "@/api/user.js";
 import { API_BASE_URL } from "@/config";
 
 export default {
@@ -244,10 +244,9 @@ export default {
     };
   },
   created() {
-      axios
-        .get(API_BASE_URL + '/api/users/info', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token") }})
-        .then((res) => {
-          var uid = res.data.data;
+      dispatch(
+        response => {
+          var uid = response.data.data;
           findById(uid,
             response => {
               this.user = response.data.data;
@@ -258,16 +257,18 @@ export default {
             error => {
               console.log(error)
             })
-        })
-        .catch((err) => {
-
-        })
+        },
+        error => {
+          console.log(error)
+        }
+      )
   },
   methods : {
     update() {
       update(this.user,
         response => {
           alert("변경되었습니다.");
+          this.$router.push("/");
         },
         error => {
           console.log(error);
