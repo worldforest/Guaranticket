@@ -18,6 +18,8 @@ import FindPw from "@/views/account/FindPw.vue";
 import DealList from "@/views/deal/DealList.vue";
 import DealRegister from "@/views/deal/DealRegister.vue";
 import DealDetail from "@/views/deal/DealDetail.vue";
+//비밀번호변경
+import UpdatePassword from "@/views/mypage/UpdatePassword.vue";
 //마이페이지(일반회원)
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
 import PurchaseDetail from "@/views/mypage/PurchaseDetail.vue";
@@ -35,6 +37,11 @@ import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
 import PerformanceSubmission from "@/views/PerformanceSubmission";
+//티켓 예매
+import SelectSeat from "@/views/Ticket/SelectSeat";
+import CheckTicket from "@/views/Ticket/CheckTicket";
+import PayTicket from "@/views/Ticket/PayTicket";
+
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";
@@ -42,6 +49,12 @@ import Chat from "@/views/Chat.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  //비민번호변경
+  {
+    path : "/update/password",
+    name : "updatepassword",
+    component : UpdatePassword
+  },
   //마이페이지(관리자)
   {
     path: "/confirmuser",
@@ -297,7 +310,22 @@ const routes = [
     name : "performanceSubmission",
     path : "/performance/submission",
     component : PerformanceSubmission,
-  }
+  },
+  {
+    name : "selectSeat",
+    path : "/selectSeat/:date/:time",
+    component : SelectSeat,
+  },
+  {
+    name : "checkTicket",
+    path : "/checkTicket/:date/:time/:seat",
+    component : CheckTicket,
+  },
+  {
+    name : "payTicket",
+    path : "/payTicket",
+    component : PayTicket,
+  },
 ];
 
 const router = new VueRouter({
@@ -307,13 +335,14 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem("jwt-auth-token");
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
     ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat", "/performance/submission"].includes(to.path) ||
-    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
+    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail")||to.path.startsWith("/selectSeat") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
-  if (!isSigned && !isAvailableToGuest) {
+  if (!token && !isSigned && !isAvailableToGuest) {
     alert("로그인을 하신 뒤에 사용이 가능합니다.");
     next("/login");
   } else {

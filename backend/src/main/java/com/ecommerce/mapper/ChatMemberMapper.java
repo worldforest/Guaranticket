@@ -3,7 +3,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ChatMemberMapper {
 	public boolean insert(String no, String userName);
 
