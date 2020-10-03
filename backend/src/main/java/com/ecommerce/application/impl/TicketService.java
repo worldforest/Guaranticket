@@ -50,5 +50,12 @@ public class TicketService implements ITicketService
 		return this.TicketMapper.getByPidAndDateAndTime(pid, date, time);
 	}
 
+	@Override
+	public TicketDetail update(long tid, long uid) {
+		// TODO Auto-generated method stub
+		int res = this.TicketMapper.update(tid, uid);
+		return this.get(tid);
+	}
+
 
 }

@@ -72,15 +72,15 @@ public class TicketController
 		return list;
 	}
 	
-	@ApiOperation(value = "공연 예매 하기")
-	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
-	public TicketDetail create(@RequestBody Ticket ticket, HttpServletRequest request) {
-		String token = request.getHeader("jwt-auth-token");
-		Map<String,Object>userinfo = jwtService.get(token);
-		long uid = (Long.parseLong(userinfo.get("USER").toString()));
-		ticket.setUid(uid);
-		return ticketService.create(ticket);
-	}
+//	@ApiOperation(value = "공연 예매 하기")
+//	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
+//	public TicketDetail create(@RequestBody Ticket ticket, HttpServletRequest request) {
+//		String token = request.getHeader("jwt-auth-token");
+//		Map<String,Object>userinfo = jwtService.get(token);
+//		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+//		ticket.setUid(uid);
+//		return ticketService.create(ticket);
+//	}
 	
 	@ApiOperation(value = "티켓 상세정보 검색")
 	@RequestMapping(value = "/ticket/tid/{tid}", method = RequestMethod.GET)
