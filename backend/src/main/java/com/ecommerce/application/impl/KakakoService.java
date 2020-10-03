@@ -60,16 +60,14 @@ public class KakakoService implements IKakakoService
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", "GUARANTICKET");
-//        params.add("partner_user_id", String.valueOf(ticket.getUid()));
         params.add("partner_user_id", "user");
         params.add("item_name", performance.getTitle()+"("+ticket.getDate()+" "+ticket.getTime()+" "+ticket.getGrade()+" "+ticket.getSeatNumber()+"석)");
         params.add("quantity", "1");
-//        params.add("total_amount", ticket.getPrice());
         params.add("total_amount", ticket.getPrice());
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
-        params.add("cancel_url", "http://localhost:8080/api/kakaoPayCancel");
-        params.add("fail_url", "http://localhost:8080/api/kakaoPaySuccessFail");
+        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
+//        params.add("cancel_url", "https://j3b101.p.ssafy.io/kakaoPayCancel");
+//        params.add("fail_url", "https://j3b101.p.ssafy.io/kakaoPaySuccessFail");
  
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
  

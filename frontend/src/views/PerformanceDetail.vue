@@ -222,7 +222,9 @@ export default {
           grade : "R",
           price : "15000"
         };
-        axios.post("http://localhost:8080/api/kakaoPay",ticket)
+        const API_BASE_URL = "https://j3b101.p.ssafy.io";
+        // const API_BASE_URL = "http://localhost:8080"; 
+        axios.post(API_BASE_URL+"/api/kakaoPay",ticket)
         .then(res =>{
             // let payUrl = res.data.next_redirect_pc_url
             console.log("hj")

@@ -57,7 +57,7 @@ public class KakakoController
     	logger.info("kakaoPaySuccess get............................................");
         logger.info("kakaoPaySuccess pg_token : " + pg_token);
         model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token));
-        ModelAndView mav = new ModelAndView("redirect:http://localhost:8081");
+        ModelAndView mav = new ModelAndView("redirect:http://j3b101.p.ssafy.io/");
         return mav;
     }
 }
