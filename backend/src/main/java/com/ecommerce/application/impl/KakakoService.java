@@ -47,9 +47,11 @@ public class KakakoService implements IKakakoService
 	@Override
 	public String kakaoPayReady(Ticket tickets) {
 		RestTemplate restTemplate = new RestTemplate();
-		
+		System.out.println("여기왔는디??");
+		System.out.println(tickets.toString());
 		ticket = tickets;
 		Performance performance = performanceMapper.get(ticket.getPid());
+		System.out.println(performance.toString());
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "KakaoAK " + "c400fcd2965f6b8ab5a7161d409e43de");
@@ -65,15 +67,17 @@ public class KakakoService implements IKakakoService
         params.add("quantity", "1");
         params.add("total_amount", ticket.getPrice());
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
-//        params.add("cancel_url", "https://j3b101.p.ssafy.io/kakaoPayCancel");
-//        params.add("fail_url", "https://j3b101.p.ssafy.io/kakaoPaySuccessFail");
- 
+//        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
+//        params.add("cancel_url", "https://j3b101.p.ssafy.io/api/kakaoPayCancel");
+//        params.add("fail_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccessFail");
+        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
+        params.add("cancel_url", "https://localhost:8080/api/kakaoPayCancel");
+        params.add("fail_url", "https://localhost:8080/api/kakaoPaySuccessFail");
+        
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
- 
+        
         try {
         	kakaoPayReady = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReady.class);
-            
             logger.info("" + kakaoPayReady);
             return kakaoPayReady.getNext_redirect_pc_url();
  
