@@ -44,11 +44,11 @@ public class KakakoController
 	
 	@ApiOperation(value = "거래 진행")
 	@RequestMapping(value ="/kakaoPay", method = RequestMethod.POST)
-    public String kakaoPay(@RequestBody Ticket ticket) {
-//		String token = request.getHeader("jwt-auth-token");
-//		Map<String,Object>userinfo = jwtService.get(token);
-//		long uid = (Long.parseLong(userinfo.get("USER").toString()));
-//		ticket.setUid(uid);
+    public String kakaoPay(@RequestBody Ticket ticket, HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String,Object>userinfo = jwtService.get(token);
+		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+		ticket.setUid(uid);
         return kakakoService.kakaoPayReady(ticket);
     }
 	
@@ -57,7 +57,8 @@ public class KakakoController
     	logger.info("kakaoPaySuccess get............................................");
         logger.info("kakaoPaySuccess pg_token : " + pg_token);
         model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token));
-        ModelAndView mav = new ModelAndView("redirect:http://j3b101.p.ssafy.io/");
+        ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist");
+//      ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist");
         return mav;
     }
 }

@@ -1,6 +1,9 @@
 import { createInstance } from "./index.js";
 
 const instance = createInstance();
+const config = { 
+    headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")
+}};
 
 function findAll(pid,date,time,success,fail){
     instance
@@ -9,9 +12,17 @@ function findAll(pid,date,time,success,fail){
     .catch(fail);
 }
 
-function create(body, success, fail){
+function pay(pid,seatNumber,date,time,grade,price, success, fail){
+    const ticket = {
+        pid : pid,
+        seatNumber : seatNumber,
+        date : date,
+        time : time,
+        grade : grade,
+        price : price
+    };
     instance
-    .post("/api/ticket",JSON.stringify(body))
+    .post("/api/kakaoPay",JSON.stringify(ticket),config)
     .then(success)
     .catch(fail);
 }
@@ -22,4 +33,4 @@ function ticketDetail(tid, success,fail){
     .then(success)
     .catch(fail);
 }
-export{ findAll,create,ticketDetail }
+export{ findAll,pay,ticketDetail }

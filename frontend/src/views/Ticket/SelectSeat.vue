@@ -86,9 +86,9 @@
         </div>
         <v-btn
           color="#FF4155"
-          @click="e1 = 1"
+          @click="pay"
         >
-          다음단계
+          결제하기
         </v-btn>
         <v-btn @click="e1 = 2">
           뒤로가기
@@ -100,9 +100,12 @@
 </template>
 
 <script>
-import { findAll, create } from "@/api/ticket.js";
+import { findAll, pay } from "@/api/ticket.js";
 import { findById, findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
+
+import axios from 'axios'
+
 
 export default {
   components: {
@@ -158,6 +161,22 @@ export default {
     )
   },
   methods: {
+    pay(){
+        pay(
+          this.pid,
+          (this.row-1)*6+(this.col-1)+1,
+           this.date,
+          this.time,
+          this.grade,
+          this.price,
+          response => {
+            window.location.href = response.data;
+          },
+          error => {
+              console.log(error);
+          }
+      )
+    },
     selectSeat(row, col){
       this.row=row;
       this.col=col;

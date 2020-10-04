@@ -86,9 +86,7 @@
             <div style="margin:50px;">
               <v-btn @click="ticket()" x-large block color="#FF4155"><h4 style="font-size:23px;">예매하기</h4></v-btn>
             </div>
-            <div style="margin:50px;">
-              <v-btn x-large block color="#FF4155" @click="pay"><h4 style="font-size:23px;">결제하기(값은 일단 지정한값이 들어감)</h4></v-btn>
-            </div>
+            
           </div>
       </v-row>
       <v-spacer></v-spacer>
@@ -142,9 +140,6 @@
 <script>
 import { findById,finddateById,findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
-
-import axios from 'axios'
-
 
 export default {
   components: {
@@ -212,31 +207,6 @@ export default {
     
 //   },
   methods: {
-    pay(){
-        const ticket = {
-          pid: 2,
-          uid : 8,
-          seatNumber : 10,
-          date : "2020-10-11",
-          time : "15:00",
-          grade : "R",
-          price : "15000"
-        };
-        const API_BASE_URL = "https://j3b101.p.ssafy.io";
-        // const API_BASE_URL = "http://localhost:8080"; 
-        axios.post(API_BASE_URL+"/api/kakaoPay",ticket)
-        .then(res =>{
-            // let payUrl = res.data.next_redirect_pc_url
-            console.log("hj")
-            console.log(res)
-            window.location.href = res.data;
-            // this.$router.push(res.data);
-        })
-        .catch(e =>{
-            alert("에러가 발생했습니다. 다시 시도해주세요")
-            this.$router.push('/')
-        })
-    },
     formatDate (date) {
       if (!date) return null
 
