@@ -39,9 +39,8 @@ public class FileController {
 	
 	@GetMapping(value = "/file/{imgname}", produces = MediaType.IMAGE_PNG_VALUE)
 	public @ResponseBody byte[] getImage(@PathVariable final String imgname) throws IOException {
-//		InputStream in = new FileInputStream("/home/ubuntu/dev/deploy/img/"+imgname);
-		System.out.println(imgname);
-		InputStream in = new FileInputStream("/C:/"+imgname);
+		InputStream in = new FileInputStream("/home/ubuntu/dev/deploy/img/"+imgname);
+//		InputStream in = new FileInputStream("/C:/"+imgname);
 		return IOUtils.toByteArray(in);
 	}
 	

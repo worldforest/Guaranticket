@@ -2,11 +2,13 @@ package com.ecommerce.api;
 
 import com.ecommerce.application.IDealService;
 import com.ecommerce.application.IJwtService;
+import com.ecommerce.application.IKakakoService;
 import com.ecommerce.application.ITicketService;
 import com.ecommerce.application.impl.JwtService;
 import com.ecommerce.domain.Deal;
 import com.ecommerce.domain.DealDetail;
 import com.ecommerce.domain.DealList;
+import com.ecommerce.domain.Ticket;
 import com.ecommerce.domain.TicketDetail;
 import com.ecommerce.domain.User;
 import com.ecommerce.domain.exception.NotFoundException;
@@ -17,8 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +43,8 @@ public class DealController
 	private IJwtService jwtService;
 	@Autowired
 	private ITicketService tiketService;
-	
+	@Autowired
+	private IKakakoService kakakoService;
 //	@Autowired
 //	public DealController(IDealService dealService,
 //			JwtService jwtService) {
@@ -94,7 +99,28 @@ public class DealController
 		return list;
 	}
 	
-	@ApiOperation(value = "거래 성사")
+	
+//	@ApiOperation(value = "양도하는거 구매절차 진행")
+//	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
+//    public String kakaoPay(@RequestBody Ticket ticket, HttpServletRequest request) {
+//		String token = request.getHeader("jwt-auth-token");
+//		Map<String,Object>userinfo = jwtService.get(token);
+//		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+//		ticket.setUid(uid);
+//        return kakakoService.kakaoPayReady(ticket, );
+//    }
+	
+//    @GetMapping("/kakaoPaySuccess")
+//    public ModelAndView kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
+//    	logger.info("kakaoPaySuccess get............................................");
+//        logger.info("kakaoPaySuccess pg_token : " + pg_token);
+//        model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token));
+//        ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist");
+////      ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist");
+//        return mav;
+//    }
+//    
+	@ApiOperation(value = "거래 성사(양도 진행)")
 	@RequestMapping(value = "/deal/did/{did}/buyer/{buyer}", method = RequestMethod.POST)
 	public TicketDetail success(@PathVariable long did, @PathVariable long buyer) {
 		// deal 테이블의 buyer 등록
