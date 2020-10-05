@@ -12,6 +12,8 @@ import com.ecommerce.mapper.TicketMapper;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +49,6 @@ public class KakakoService implements IKakakoService
 	@Override
 	public String kakaoPayReady(Ticket tickets) {
 		RestTemplate restTemplate = new RestTemplate();
-		System.out.println("여기왔는디??");
-		System.out.println(tickets.toString());
 		ticket = tickets;
 		Performance performance = performanceMapper.get(ticket.getPid());
 		System.out.println(performance.toString());
@@ -67,12 +67,12 @@ public class KakakoService implements IKakakoService
         params.add("quantity", "1");
         params.add("total_amount", ticket.getPrice());
         params.add("tax_free_amount", "100");
-//        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
-//        params.add("cancel_url", "https://j3b101.p.ssafy.io/api/kakaoPayCancel");
-//        params.add("fail_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccessFail");
-        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
-        params.add("cancel_url", "https://localhost:8080/api/kakaoPayCancel");
-        params.add("fail_url", "https://localhost:8080/api/kakaoPaySuccessFail");
+        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
+        params.add("cancel_url", "https://j3b101.p.ssafy.io");
+        params.add("fail_url", "https://j3b101.p.ssafy.io");
+//        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
+//        params.add("cancel_url", "https://localhost:8081");
+//        params.add("fail_url", "https://localhost:8081");
         
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         

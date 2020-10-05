@@ -22,7 +22,7 @@ function pay(pid,seatNumber,date,time,grade,price, success, fail){
         price : price
     };
     instance
-    .post("/api/kakaoPay",JSON.stringify(ticket),config)
+    .post("/api/ticket",JSON.stringify(ticket),config)
     .then(success)
     .catch(fail);
 }
