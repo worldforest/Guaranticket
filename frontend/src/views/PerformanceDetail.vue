@@ -22,78 +22,59 @@
             </div>
             </v-row>
           </figcaption>
-          <div style="margin-left:30px;">
-            <h4>| 날짜 선택 |</h4>
-            <v-text-field
-                  v-model="computedDateFormatted"
-                  hint="공연관람 날짜를 선택해주세요."
-                  readonly
-                  prepend-icon="📆"
-                  style="font-size:23px; width:300px;"
-            ></v-text-field>
-            <v-date-picker
-              v-model="date"
-              width="350"
-              class="mt-4"
-              :min= min
-              :max= max
-              :first-day-of-week="1"
-              color="#FDDAB4"
-              no-title
-              style="font-size:18px;"
-              elevation="15"
-            ></v-date-picker>
-            <!-- <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            :return-value.sync="date"
-            transition="scale-transition"
-            offset-y
-            min-width="290px"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="date"
-                prepend-icon="📆"
+      </v-row>
+      <v-row style="padding:10px;">
+        <div style="margin-left:30px;">
+          <h4>| 날짜 선택 |</h4>
+          <v-text-field
+                v-model="computedDateFormatted"
+                hint="공연관람 날짜를 선택해주세요."
                 readonly
-                v-bind="attrs"
-                v-on="on"
-                style="font-size:23px;"
-              ></v-text-field>
-            </template>
-            <v-date-picker v-model="date" :min=min :max=max color="#FDDAB4" no-title scrollable>
+                prepend-icon="📆"
+                style="font-size:23px; width:300px;"
+          ></v-text-field>
+          <v-date-picker
+            v-model="date"
+            width="350"
+            class="mt-4"
+            :min= min
+            :max= max
+            :first-day-of-week="1"
+            color="#FDDAB4"
+            no-title
+            style="font-size:18px;"
+            elevation="15"
+          ></v-date-picker>
+        </div>
+        <div style="margin-left:40px;">
+          <h4>| 시간 선택 |</h4>
+          <v-text-field
+                v-model="computedTimeFormatted"
+                hint="공연관람 시간을 선택해주세요."
+                readonly
+                prepend-icon="⌚"
+                style="font-size:23px; width:300px;"
+          ></v-text-field>
+          <div v-for="(item,i) in performanceDate" :key="i">
+            <div v-if="date==performanceDate[i].date">
+                <v-btn @click="selecttime(i)" x-large block color="#FDDAB4" style="width: 180px;"><h4>{{performanceDate[i].time}}</h4></v-btn>
+            </div>
+          </div>
+          <div style="margin:50px;">
+            <v-btn @click="ticket" x-large block color="#FF4155"><h4>예매하기</h4></v-btn>
+          </div>
 
-              <v-btn text  @click="menu = false">취소</v-btn>
-              <v-btn text color="#FF4155" @click="$refs.menu.save(date)">선택</v-btn>
-            </v-date-picker>
-          </v-menu> -->
-          </div>
-          <div style="margin-left:40px;">
-            <h4>| 시간 선택 |</h4>
-            <v-text-field
-                  v-model="computedTimeFormatted"
-                  hint="공연관람 시간을 선택해주세요."
-                  readonly
-                  prepend-icon="⌚"
-                  style="font-size:23px; width:300px;"
-            ></v-text-field>
-            <div v-for="(item,i) in performanceDate" :key="i">
-              <div v-if="date==performanceDate[i].date">
-                  <v-btn @click="selecttime(i)" x-large block color="#FDDAB4" style="width: 180px;"><h4 style="font-size:23px;">{{performanceDate[i].time}}</h4></v-btn>
-              </div>
-            </div>
-            <div style="margin:50px;">
-              <v-btn @click="ticket()" x-large block color="#FF4155"><h4 style="font-size:23px;">예매하기</h4></v-btn>
-            </div>
+          <v-dialog v-model="modal" max-width="80%">
+            <SelectSeat :modalData="modalData"></SelectSeat>
+          </v-dialog>
             
-          </div>
+        </div>
       </v-row>
       <v-spacer></v-spacer>
       <v-row wrap style="margin-top:50px;">
           <v-btn-toggle v-model="toggle_exclusive" align="center">
-            <v-btn v-on:click="selecttab(true)" x-large block color="#FDDAB4"><h4 style="font-size:23px;">🔎 공연 상세정보</h4></v-btn>
-            <v-btn v-on:click="selecttab(false)" x-large block color="#FDDAB4"><h4 style="font-size:23px;">🚩 공연장 정보</h4></v-btn>
+            <v-btn v-on:click="selecttab(true)" x-large block color="#FDDAB4"><h4>🔎 공연 상세정보</h4></v-btn>
+            <v-btn v-on:click="selecttab(false)" x-large block color="#FDDAB4"><h4>🚩 공연장 정보</h4></v-btn>
           </v-btn-toggle>
       </v-row>
       <div>
@@ -143,17 +124,18 @@
   </div>
 </template>
 <script>
+import SelectSeat from '@/views/Ticket/SelectSeat.vue'
 import { findById,finddateById,findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
 
 export default {
   components: {
     HNav,
+    SelectSeat
   },
   data() {
     return {
       date: '',
-      // dateFormatted: formatDate(new Date().toISOString().substr(0, 10)),
       min: '',
       max: '',
       menu: false,
@@ -165,6 +147,12 @@ export default {
       selectTime: '',
       selectDate: '',
       tabs: true,
+      modal: false,
+      modalData: {
+        pid: "",
+        date: "",
+        time: "",
+      },
     }
   },
   mounted() {
@@ -209,12 +197,6 @@ export default {
       return this.formatTime(this.selectTime)
     },
   },
-//  watch: {
-  //     date (val) {
-    //       this.dateFormatted = this.formatDate(this.date)
-//     },
-    
-//   },
   methods: {
     initMap() {
       var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
@@ -271,21 +253,33 @@ export default {
       }  
     },
     ticket(){
-      this.$router.push({
-        name: 'selectSeat',
-        params: {
-          pid: this.pid,
-          date: this.selectDate,
-          time: this.selectTime
-        }
-      })
+      if(this.selectTime==''){
+        alert("시간을 선택해주세요.")
+      }
+      else{
+        this.modal=true;
+        this.modalData.pid=this.pid;
+        this.modalData.date=this.selectDate;
+        this.modalData.time=this.selectTime;
+        console.log(this.modalData)
+
+      }
+      // this.$router.push({
+      //   name: 'selectSeat',
+      //   params: {
+      //     pid: this.pid,
+      //     date: this.selectDate,
+      //     time: this.selectTime
+      //   }
+      // })
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
   h4{
     padding: 10px;
+    font-size:23px;
   }
 </style>
