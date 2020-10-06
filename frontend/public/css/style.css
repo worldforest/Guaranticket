@@ -61,8 +61,8 @@ a {
 
 #main-poster {
     margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
     padding: 20px;
 }
 
@@ -97,6 +97,7 @@ a {
     margin-left: 50px;
     margin-right: 50px;
     padding-left: 80px;
+    text-justify: center;
 }
 #pDetail-overview h1 {
     font-size: 50px;

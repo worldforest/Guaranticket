@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand fixed-top navbar-dark basic-color">
     <div class="container">
       <img id="nav-icon" src="../../../public/images/guaranticket.svg">
-      <router-link class="navbar-brand" to="/">GuaranTicket</router-link>
+      <router-link id="navbar-brand" class="navbar-brand" to="/"> GuaranTicket</router-link>
       <div
         class="navbar-collapse offcanvas-collapse"
         id="navbarsExampleDefault"
@@ -19,9 +19,10 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/sports">스포츠</router-link>
           </li>
-          <li class="nav-item">
+          <!--티켓거래 기능 제거하기로 함... bye...-->
+          <!-- <li class="nav-item">
             <router-link class="nav-link" to="/deallist">티켓거래</router-link>
-          </li>
+          </li> -->
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/login">로그인</router-link>
           </li>
@@ -33,7 +34,7 @@
             2-기업
             3-관리자
           -->
-          <li class="nav-item" v-if="$store.state.isSigned&&user.type==0">
+          <li class="nav-item" v-if="$store.state.isSigned && user.type==0">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -59,17 +60,17 @@
           </li>
 
           <!--마이페이지(기업회원): 로그인 시 활성화-->
-          <li class="nav-item" v-if="$store.state.isSigned&&user.type==2">
+          <li class="nav-item" v-if="$store.state.isSigned && user.type==2">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text
+                  <li text
                     v-bind="attrs"
                     v-on="on"
-                    style="color: white; font-weight: bold; margin-top: 2px;"
+                    class="nav-link"
                   >
                   기업회원
-                  </v-btn>
+                  </li>
                 </template>
                 <v-list>
                   <v-list-item
@@ -85,17 +86,17 @@
           </li>
 
           <!--마이페이지(관리자): 로그인 시 활성화-->
-          <li class="nav-item" v-if="$store.state.isSigned&&user.type==3">
+          <li class="nav-item" v-if="$store.state.isSigned && user.type==3">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text
+                  <li text
                     v-bind="attrs"
                     v-on="on"
-                    style="color: white; font-weight: bold; margin-top: 2px;"
+                    class="nav-link"
                   >
                   관리자
-                  </v-btn>
+                  </li>
                 </template>
                 <v-list>
                   <v-list-item
@@ -110,6 +111,7 @@
             </div>
           </li>
         </ul>
+        <br>
         <v-btn @click="deployContract">스마트컨트랙트 배포</v-btn>
         <v-btn @click="getContract">컨트랙트 값 가져오기</v-btn>
       </div>
@@ -130,7 +132,6 @@ export default {
     user : {},
     user_items: [
       { title: '예매내역 확인', to: '/purchaselist' },
-      { title: '판매내역 관리', to: '/selllist' },
       { title: '회원정보 수정', to: '/updateprofile' },
       { title: '비밀번호 변경', to: '/update/password' },
       { title: '로그아웃', to: '/logout' }
@@ -142,7 +143,6 @@ export default {
       { title: '로그아웃', to: '/logout' }
     ],
     admin_items: [
-      { title: '가입신청 관리', to: '/confirmuser' },
       { title: '공연등록 관리', to: '/confirmperformance' },
       { title: '회원정보 수정', to: '/updateprofile' },
       { title: '비밀번호 변경', to: '/update/password' },
@@ -213,6 +213,10 @@ export default {
 </script>
 
 <style>
+  #navbar-brand{
+    font-family: 'Sansita Swashed', cursive;
+    padding-left: 10px;
+  }
   #nav-icon {
     height: 40px;
     padding-right: 0.5rem;

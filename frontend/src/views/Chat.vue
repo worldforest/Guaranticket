@@ -100,7 +100,9 @@ export default {
 }
 </script>
 <style scoped>
-   *{ font-family: 'Jua', sans-serif;}
+   *{ 
+      font-family: 'Poor Story', cursive;
+    }
    
   .container{max-width:1170px; margin:auto;}
   img{ max-width:100%;}

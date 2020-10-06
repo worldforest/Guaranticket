@@ -77,9 +77,9 @@ public class TicketController
 			@PathVariable String date,
 			@PathVariable String time) {
 		List<Ticket> list = ticketService.getByPidAndDateAndTime(pid,date,time);
-		if (list == null || list.isEmpty()) {
-			throw new NotFoundException(pid + "공연의 "+date+" 날짜의 예매 내역을 찾을 수 없습니다.");
-		}
+//		if (list == null || list.isEmpty()) {
+//			throw new NotFoundException(pid + "공연의 "+date+" 날짜의 예매 내역을 찾을 수 없습니다.");
+//		}
 		return list;
 	}
 	@ApiOperation(value = "공연별 예매 내역 검색")
