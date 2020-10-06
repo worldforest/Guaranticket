@@ -27,7 +27,13 @@
           </li>
           <!--마이페이지(일반회원): 로그인 시 활성화-->
           <!--추후 user type=0,1,2으로 구분해서 네비바 구성 다르게 띄울 것!!-->
-          <li class="nav-item" v-if="$store.state.isSigned">
+          <!--
+            0-일반
+            1-기업승인중
+            2-기업
+            3-관리자
+          -->
+          <li class="nav-item" v-if="$store.state.isSigned&&user.type==0">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -53,7 +59,7 @@
           </li>
 
           <!--마이페이지(기업회원): 로그인 시 활성화-->
-          <li class="nav-item" v-if="$store.state.isSigned">
+          <li class="nav-item" v-if="$store.state.isSigned&&user.type==2">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -79,7 +85,7 @@
           </li>
 
           <!--마이페이지(관리자): 로그인 시 활성화-->
-          <li class="nav-item" v-if="$store.state.isSigned">
+          <li class="nav-item" v-if="$store.state.isSigned&&user.type==3">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -103,16 +109,25 @@
               </v-menu>
             </div>
           </li>
-
         </ul>
+        <v-btn @click="deployContract">스마트컨트랙트 배포</v-btn>
+        <v-btn @click="getContract">컨트랙트 값 가져오기</v-btn>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import { dispatch, findById } from "@/api/user.js";
+
+import Web3 from "web3";
+
+import { ADMIN_ACCOUNT, ADMIN_ACCOUNT_PRIVATE_KEY, KEY_VALUE_DATA, BLOCKCHAIN_URL } from '../../config';
+import { KEY_VALUE_ABI } from '../../config/ABIs.js';
+
 export default {
   data: () => ({
+    user : {},
     user_items: [
       { title: '예매내역 확인', to: '/purchaselist' },
       { title: '판매내역 관리', to: '/selllist' },
@@ -122,15 +137,74 @@ export default {
     ],
     biz_items: [
       { title: '공연등록', to: '/performance/submission' },
+      { title: '회원정보 수정', to: '/updateprofile' },
+      { title: '비밀번호 변경', to: '/update/password' },
       { title: '로그아웃', to: '/logout' }
     ],
     admin_items: [
       { title: '가입신청 관리', to: '/confirmuser' },
       { title: '공연등록 관리', to: '/confirmperformance' },
+      { title: '회원정보 수정', to: '/updateprofile' },
+      { title: '비밀번호 변경', to: '/update/password' },
       { title: '로그아웃', to: '/logout' }
     ]
   }),
+  created() {
+    if(this.$store.state.isSigned){
+      dispatch(
+        response => {
+          var uid = response.data.data;
+          findById(uid,
+            response => {
+              this.user = response.data.data;
+              var email = this.user.email;
+              this.email1 = email.split('@')[0];
+              this.email2 = email.split('@')[1];
+            },
+            error => {
+              console.log(error)
+            })
+        },
+        error => {
+          console.log(error)
+        }
+      )
+    }
+  },
   methods: {
+    getContract(){
+      var address = "0x8F7f2E88F2Df00c44ca83adF32661c92CC93655b";
+      var web3 = new Web3(BLOCKCHAIN_URL);
+      var contract = new web3.eth.Contract(KEY_VALUE_ABI, address);
+      contract.methods.getValue1(0).call().then(console.log)
+      contract.methods.getValue2(0).call().then(console.log)
+      
+    },
+    async deployContract(){
+      var web3 = new Web3(BLOCKCHAIN_URL);
+      var keyvaluestoreContract = new web3.eth.Contract(KEY_VALUE_ABI);
+      var keyvaluestore = keyvaluestoreContract.deploy({data:KEY_VALUE_DATA});
+      var options = {
+        data : keyvaluestore.encodeABI(),
+        gas : await keyvaluestore.estimateGas(),
+      }
+      var signedTransaction = await web3.eth.accounts.signTransaction(options, ADMIN_ACCOUNT_PRIVATE_KEY);
+      var hash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
+      keyvaluestoreContract.options.address = hash.contractAddress;
+      keyvaluestoreContract.methods.setValue("티켓아이디", "유저아이디").send(
+        {from : ADMIN_ACCOUNT}
+      ).then(
+        response => {
+          console.log(response)
+          keyvaluestoreContract.methods.getValue1(0).call(
+            {from : ADMIN_ACCOUNT}
+          ).then(console.log)
+          keyvaluestoreContract.methods.getValue2(0).call(
+            {from : ADMIN_ACCOUNT}
+          ).then(console.log)
+        }
+      )
+    },
     movePages(link){
       this.$router.push(link);
     }

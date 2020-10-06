@@ -2,8 +2,32 @@
   <div>
     <h-nav></h-nav>
     <div class="container" style="text-align: center;">
-        <h3>관리자 공연등록 관리 페이지</h3>
-        
+        <h3>관리자 공연등록 관리(승인) 페이지</h3>
+        <div>
+          <table class="table table-striped" style="width: 100%; margin: auto;">
+              <thead class="thead-dark">
+                  <tr>
+                      <th>신청번호</th>
+                      <th>공연명</th>
+                      <th>신청일</th>
+                      <th>uid</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="(item, index) in submission_list" :key="index" :submission_list="submission_list">
+                      <td>{{ item.sid }}</td>
+                      <td><router-link :to="{ name: 'confirmperformancedetail',
+                           params: {pid: item.pid, sid: item.sid}}">{{ performance_list[index].title }}</router-link></td>
+                      <td>{{ item.submitDate }}</td>
+                      <td>{{ item.uid }}</td>
+                  </tr>
+              </tbody>
+          </table>
+          <!--승인요청 중인 공연목록이 없을 경우 메세지 출력-->
+          <div v-show="msg" id="msg">
+            {{ this.msg }}
+          </div>
+      </div>       
     </div>
 
   </div>
@@ -20,7 +44,37 @@ export default {
   },
   data: () => {
       return {
+        submission_list: [],
+        performance_list: [],
+        msg: "",
+        title: ""
       }
+  },
+  created() {
+      axios
+        .get(API_BASE_URL + '/api/performance/submission')
+        .then(res => {
+          // console.log(res.data)
+          this.submission_list = res.data;
+          if(this.submission_list.length == 0) {
+            this.msg = "승인을 요청 중인 공연이 없습니다.";
+          } else {
+            for (var i in this.submission_list) {
+              axios
+                .get(API_BASE_URL + '/api/performance/' + this.submission_list[i].pid)
+                .then(res => {
+                  this.performance_list.push(res.data);
+                })
+                .catch(err => {
+                  console.log("공연상세정보 찾는 중 에러")
+                })
+            }
+          }
+          // console.log(this.performance_list)
+        })
+        .catch(err => {
+          console.log("created axios get method error!")
+        })
   },
 }
 </script>
@@ -30,5 +84,9 @@ export default {
      margin-top: 100px;
      font-weight: bold;
      margin-bottom: 10px;
+ }
+ #msg {
+     padding: 30px 0;
+     background: #f2f2f2;
  }
 </style>
