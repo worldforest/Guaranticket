@@ -30,6 +30,7 @@
           <button type="submit" class="btn btn-primary" @click="login">
             로그인
           </button>
+          <br>
           <!--비밀번호 찾기, 회원가입 페이지로 이동-->
           <div id="links">
             <router-link
