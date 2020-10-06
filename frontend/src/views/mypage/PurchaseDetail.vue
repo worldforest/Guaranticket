@@ -43,7 +43,7 @@
       <!--버튼-->
       <div id="buttons" style="margin-top: 50px;">
         <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="15%" color="grey lighten-2">목록으로</v-btn>
-        <v-btn @click="dealRegister()" class="mx-3 mb-3 white--text" large width="15%" color="#FF4155">거래 등록</v-btn>
+        <!-- <v-btn @click="dealRegister()" class="mx-3 mb-3 white--text" large width="15%" color="#FF4155">거래 등록</v-btn> -->
       </div>
     </div>
 
@@ -69,7 +69,7 @@ export default {
       axios
         .get(API_BASE_URL + '/api/ticket/tid/' + this.tid)
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             this.purchase_detail = res.data;
             // 공연 분류 번호에 따라 문자열로 변환
             switch(this.purchase_detail.category) {
@@ -102,18 +102,6 @@ export default {
   computed: {
     tid: function() {
       return this.$route.params.tid;
-    }
-  },
-  methods: {
-    dealRegister() {
-      // 티켓 거래 등록 전 한 번 더 의사를 물어보기
-      var answer = confirm("해당 티켓의 거래를 등록하시겠습니까?");
-      if(answer) { // true
-        console.log("거래 등록 완료!")
-        // deals 테이블에 해당 티켓 내용 추가
-        // 거래 등록 버튼 비활성화 (거래 중!!)
-        // 판매내역 리스트에도 추가
-      }
     }
   }
 }
