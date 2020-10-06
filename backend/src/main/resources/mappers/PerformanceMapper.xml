@@ -33,7 +33,11 @@
 		SELECT 
 			*
 		FROM 
-			performances 
+			performances
+		WHERE
+			permission = true
+		AND
+			date(ticketing_end_date) <![CDATA[ <= ]]> date(now())
 	</select>
 	
 	<select id="latestList" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
@@ -44,7 +48,12 @@
 			 	*, 
 			 	ROW_NUMBER() OVER (PARTITION BY p.category ORDER BY p.ticketing_start_date desc) RN
 			FROM 
-				performances p) a
+				performances p 
+			where 
+				p.permission = true
+			AND
+				date(p.ticketing_end_date) <![CDATA[ <= ]]> date(now())
+			) a
 		WHERE 
 			a.RN <![CDATA[ <= ]]> 5
 		ORDER BY a.ticketing_start_date desc
