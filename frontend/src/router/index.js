@@ -30,6 +30,7 @@ import PerformanceRegister from "@/views/mypage_biz/PerformanceRegister.vue";
 //마이페이지(관리자)
 import ConfirmUser from "@/views/mypage_admin/ConfirmUser.vue";
 import ConfirmPerformance from "@/views/mypage_admin/ConfirmPerformance.vue";
+import ConfirmPerformanceDetail from "@/views/mypage_admin/ConfirmPerformanceDetail.vue";
 //공연
 import Concert from "@/views/Concert.vue";
 import Musical from "@/views/Musical.vue";
@@ -65,6 +66,11 @@ const routes = [
     path: "/confirmperformance",
     name: "confirmperformance",
     component: ConfirmPerformance
+  },
+  {
+    path: "/confirmperformancedetail/:pid/:sid",
+    name: "confirmperformancedetail",
+    component: ConfirmPerformanceDetail
   },
   //마이페이지(기업회원)
   {
