@@ -100,27 +100,7 @@ public class DealController
 	}
 	
 	
-//	@ApiOperation(value = "양도하는거 구매절차 진행")
-//	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
-//    public String kakaoPay(@RequestBody Ticket ticket, HttpServletRequest request) {
-//		String token = request.getHeader("jwt-auth-token");
-//		Map<String,Object>userinfo = jwtService.get(token);
-//		long uid = (Long.parseLong(userinfo.get("USER").toString()));
-//		ticket.setUid(uid);
-//        return kakakoService.kakaoPayReady(ticket, );
-//    }
-	
-//    @GetMapping("/kakaoPaySuccess")
-//    public ModelAndView kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
-//    	logger.info("kakaoPaySuccess get............................................");
-//        logger.info("kakaoPaySuccess pg_token : " + pg_token);
-//        model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token));
-//        ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist");
-////      ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist");
-//        return mav;
-//    }
-//    
-	@ApiOperation(value = "거래 성사(양도 진행)")
+	@ApiOperation(value = "양도 하기")
 	@RequestMapping(value = "/deal/did/{did}/buyer/{buyer}", method = RequestMethod.POST)
 	public TicketDetail success(@PathVariable long did, @PathVariable long buyer) {
 		// deal 테이블의 buyer 등록
