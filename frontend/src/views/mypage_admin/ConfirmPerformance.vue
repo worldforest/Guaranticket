@@ -10,7 +10,7 @@
                       <th>신청번호</th>
                       <th>공연명</th>
                       <th>신청일</th>
-                      <th>uid</th>
+                      <th>신청자</th>
                   </tr>
               </thead>
               <tbody>
@@ -19,7 +19,7 @@
                       <td><router-link :to="{ name: 'confirmperformancedetail',
                            params: {pid: item.pid, sid: item.sid}}">{{ performance_list[index].title }}</router-link></td>
                       <td>{{ item.submitDate }}</td>
-                      <td>{{ item.uid }}</td>
+                      <td>{{ user_list[index].data.name }}</td>
                   </tr>
               </tbody>
           </table>
@@ -46,6 +46,7 @@ export default {
       return {
         submission_list: [],
         performance_list: [],
+        user_list: [],
         msg: "",
         title: ""
       }
@@ -54,23 +55,34 @@ export default {
       axios
         .get(API_BASE_URL + '/api/performance/submission')
         .then(res => {
-          // console.log(res.data)
           this.submission_list = res.data;
           if(this.submission_list.length == 0) {
             this.msg = "승인을 요청 중인 공연이 없습니다.";
           } else {
             for (var i in this.submission_list) {
+              // 신청일 데이터 가공
+              this.submission_list[i].submitDate = this.submission_list[i].submitDate.substring(0,10);
+              // 공연정보
               axios
                 .get(API_BASE_URL + '/api/performance/' + this.submission_list[i].pid)
                 .then(res => {
                   this.performance_list.push(res.data);
                 })
                 .catch(err => {
-                  console.log("공연상세정보 찾는 중 에러")
+                  console.log("공연정보 get error!")
+                })
+              // 신청자 정보
+              axios
+                .get(API_BASE_URL + '/api/users/' + this.submission_list[i].uid)
+                .then(res => {
+                  this.user_list.push(res.data);
+                })
+                .catch(err => {
+                  console.log("신청자 정보 get error!")
                 })
             }
           }
-          // console.log(this.performance_list)
+          console.log(this.performance_list)
         })
         .catch(err => {
           console.log("created axios get method error!")
