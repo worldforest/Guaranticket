@@ -111,7 +111,7 @@
             </div>
           </li>
         </ul>
-        <br>
+        <!-- <br> -->
         <v-btn @click="deployContract">스마트컨트랙트 배포</v-btn>
         <v-btn @click="getContract">컨트랙트 값 가져오기</v-btn>
       </div>
