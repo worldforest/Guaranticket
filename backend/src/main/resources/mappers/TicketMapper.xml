@@ -32,6 +32,22 @@
 			a.tid = #{tid}
 	</select>
 	
+	<select id="getByPidAndDateAndTimeAndSeatNumber" parameterType="map" 
+		resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
+		SELECT
+			*
+		FROM 
+			tickets
+		WHERE 
+			pid = #{pid}
+		AND 
+			time = #{time}
+		AND
+			date = #{date}
+		AND
+			seat_number = #{seatNumber}
+	</select>
+	
 	<select id="getByPidAndDateAndTime" parameterType="map" 
 		resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
 		SELECT

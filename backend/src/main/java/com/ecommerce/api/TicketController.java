@@ -45,11 +45,21 @@ public class TicketController
 	@ApiOperation(value = "공연 예매 하기")
 	@RequestMapping(value = "/ticket", method = RequestMethod.POST)
     public String kakaoPay(@RequestBody Ticket ticket, HttpServletRequest request) {
-		String token = request.getHeader("jwt-auth-token");
-		Map<String,Object>userinfo = jwtService.get(token);
-		long uid = (Long.parseLong(userinfo.get("USER").toString()));
-		ticket.setUid(uid);
-        return kakakoService.kakaoPayReady(ticket);
+		Ticket ticketValidation = null;
+		// 결제전에 한번더 확인 좌석 결제 이미 된건지 확인
+		ticketValidation = ticketService.getByPidAndDateAndTimeAndSeatNumber(ticket.getPid(), ticket.getDate(),
+				ticket.getTime(), ticket.getSeatNumber());
+		if(ticketValidation != null) {
+			return "NOTEMPTY";
+		}
+		else {
+			String token = request.getHeader("jwt-auth-token");
+			Map<String,Object>userinfo = jwtService.get(token);
+			long uid = (Long.parseLong(userinfo.get("USER").toString()));
+			ticket.setUid(uid);
+	        return kakakoService.kakaoPayReady(ticket);
+		}
+		
     }
 	
     @GetMapping("/kakaoPaySuccess")

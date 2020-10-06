@@ -192,7 +192,13 @@ export default {
           this.grade,
           this.price,
           response => {
-            window.location.href = response.data;
+            console.log(response.data)
+            if(response.data == "NOTEMPTY"){
+              this.$router.go(-1);
+            }
+            else{
+              window.location.href = response.data;
+            }
           },
           error => {
               console.log(error);
