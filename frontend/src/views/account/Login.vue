@@ -50,9 +50,8 @@
           <v-divider></v-divider>
           <v-subheader>테스트용 로그인</v-subheader>
           <v-btn @click="testLogin(users[0])">일반</v-btn>
-          <!-- <v-btn @click="testLogin(users[1])">기업승인중</v-btn> -->
-          <v-btn @click="testLogin(users[2])">기업</v-btn>
-          <v-btn @click="testLogin(users[3])">관리자</v-btn>
+          <v-btn @click="testLogin(users[1])">기업</v-btn>
+          <v-btn @click="testLogin(users[2])">관리자</v-btn>
         </div>
       </div>
     </div>
@@ -76,11 +75,6 @@ export default {
           email : "ming___jee@naver.com",
           password : "1234zxcv",
         },
-        // 기업승인중
-        // {
-        //   email : "rim@naver.com",
-        //   password : "rimrim99",
-        // },
         // 기업
         {
           email : "test@test.com",
