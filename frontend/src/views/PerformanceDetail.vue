@@ -222,7 +222,8 @@ export default {
             });
             
             container.style.width = '500px';
-            container.style.height = '400px'; 
+            container.style.height = '400px';
+            container.style.margin='50px'; 
             map.relayout();
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);

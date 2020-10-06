@@ -67,12 +67,12 @@ public class KakakoService implements IKakakoService
         params.add("quantity", "1");
         params.add("total_amount", ticket.getPrice());
         params.add("tax_free_amount", "100");
-//        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
-//        params.add("cancel_url", "https://j3b101.p.ssafy.io");
-//        params.add("fail_url", "https://j3b101.p.ssafy.io");
-        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
-        params.add("cancel_url", "https://localhost:8081");
-        params.add("fail_url", "https://localhost:8081");
+        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
+        params.add("cancel_url", "https://j3b101.p.ssafy.io");
+        params.add("fail_url", "https://j3b101.p.ssafy.io");
+//        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
+//        params.add("cancel_url", "http://localhost:8081");
+//        params.add("fail_url", "http://localhost:8081");
         
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
         
