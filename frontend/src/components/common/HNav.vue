@@ -121,11 +121,8 @@
 import { dispatch, findById } from "@/api/user.js";
 
 import Web3 from "web3";
-
 import { ADMIN_ACCOUNT, ADMIN_ACCOUNT_PRIVATE_KEY, KEY_VALUE_DATA, BLOCKCHAIN_URL } from '../../config';
 import { KEY_VALUE_ABI } from '../../config/ABIs.js';
-import Wallet from "ethereumjs-wallet";
-import fs from "fs";
 
 export default {
   data: () => ({
@@ -175,11 +172,19 @@ export default {
   },
   methods: {
     getContract(){
+      // 티켓 구매 트랜잭션의 주소값
       var address = "0x8F7f2E88F2Df00c44ca83adF32661c92CC93655b";
       var web3 = new Web3(BLOCKCHAIN_URL);
       var contract = new web3.eth.Contract(KEY_VALUE_ABI, address);
-      contract.methods.getValue1(0).call().then(console.log)
-      contract.methods.getValue2(0).call().then(console.log)
+      contract.methods.getValue1(0).call().then(
+        // TO-DO : 티켓 아이디
+        console.log
+      );
+      
+      contract.methods.getValue2(0).call().then(
+        // TO-DO : 유저 아이디
+        console.log
+      );
       
     },
     async deployContract(){

@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { findAll, pay } from "@/api/ticket.js";
+import { setContratAddress, findAll, pay } from "@/api/ticket.js";
 import { findById, findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
 
@@ -162,19 +162,19 @@ export default {
   },
   methods: {
     pay(){
-        pay(
-          this.pid,
-          (this.row-1)*6+(this.col-1)+1,
-           this.date,
-          this.time,
-          this.grade,
-          this.price,
-          response => {
-            window.location.href = response.data;
-          },
-          error => {
-              console.log(error);
-          }
+      pay(
+        this.pid,
+        (this.row-1)*6+(this.col-1)+1,
+        this.date,
+        this.time,
+        this.grade,
+        this.price,
+        response => { 
+          window.location.href = response.data;
+        },
+        error => {
+          console.log(error);
+        }
       )
     },
     selectSeat(row, col){

@@ -22,7 +22,7 @@ public class TicketService implements ITicketService
 	
 	@Override
 	public List<TicketList> getByUid(long uid) {
-		// TODO Auto-generated method stub
+		System.out.println(this.TicketMapper.getByUid(uid));
 		return this.TicketMapper.getByUid(uid);
 	}
 

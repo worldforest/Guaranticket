@@ -5,10 +5,17 @@
 
 	<resultMap type="com.ecommerce.domain.Ticket" id="TicketSelectRM">
 		<result property="seatNumber" column="seat_number"/>
+		<result property="contractAddress" column="contract_address"/>
 	</resultMap>
 	
 	<resultMap type="com.ecommerce.domain.TicketDetail" id="TicketDeatilSelectRM">
 		<result property="seatNumber" column="seat_number"/>
+		<result property="contractAddress" column="contract_address"/>
+	</resultMap>
+
+	<resultMap type="com.ecommerce.domain.TicketList" id="TicketListSelectRM">
+		<result property="seatNumber" column="seat_number"/>
+		<result property="contractAddress" column="contract_address"/>
 	</resultMap>
 	
 	<insert id="create" parameterType="com.ecommerce.domain.Ticket">
@@ -55,7 +62,7 @@
 			pid = #{pid}
 	</select>
 	
-	<select id="getByUid" parameterType="Long" resultType="com.ecommerce.domain.TicketList" resultMap="TicketSelectRM">
+	<select id="getByUid" parameterType="Long" resultType="com.ecommerce.domain.TicketList" resultMap="TicketListSelectRM">
 		SELECT
 			*
 		FROM 
@@ -63,7 +70,7 @@
 		INNER JOIN 
 			performances as b on a.pid = b.pid 
 		WHERE 
-			a.uid = #{uid}
+			a.uid = #{uid};
 	</select>
 	
 	<update id="update" parameterType="long">
