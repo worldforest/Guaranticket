@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand fixed-top navbar-dark basic-color">
     <div class="container">
       <img id="nav-icon" src="../../../public/images/guaranticket.svg">
-      <router-link class="navbar-brand" to="/">GuaranTicket</router-link>
+      <router-link id="navbar-brand" class="navbar-brand" to="/"> GuaranTicket</router-link>
       <div
         class="navbar-collapse offcanvas-collapse"
         id="navbarsExampleDefault"
@@ -57,13 +57,13 @@
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text
+                  <li text
                     v-bind="attrs"
                     v-on="on"
-                    style="color: white; font-weight: bold; margin-top: 2px;"
+                    class="nav-link"
                   >
                   기업회원
-                  </v-btn>
+                  </li>
                 </template>
                 <v-list>
                   <v-list-item
@@ -83,13 +83,13 @@
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text
+                  <li text
                     v-bind="attrs"
                     v-on="on"
-                    style="color: white; font-weight: bold; margin-top: 2px;"
+                    class="nav-link"
                   >
                   관리자
-                  </v-btn>
+                  </li>
                 </template>
                 <v-list>
                   <v-list-item
@@ -139,6 +139,10 @@ export default {
 </script>
 
 <style>
+  #navbar-brand{
+    font-family: 'Sansita Swashed', cursive;
+    padding-left: 10px;
+  }
   #nav-icon {
     height: 40px;
     padding-right: 0.5rem;

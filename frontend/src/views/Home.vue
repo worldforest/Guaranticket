@@ -15,23 +15,23 @@
                 :key="i"
                 :src="item.src"
               >
-               {{item.title}}
+               <h3 style="background-color: rgba(255,255,255,0.5);">{{item.title}}</h3>
             </v-carousel-item>
           </v-carousel>
         </div>
       </div>
     </div>
     <!-- top 5 공연 포스터 -->
-    <div class="container px-5 py-3">
+    <div id="main-poster" class="col-md-12">
       <div style="width:100%;">
         <h2 style="float:left; width:60%; height:50px;">인기있는 공연 top5</h2>
         <div style="margin-bottom:8px;float:right; width:40%;height:50px; padding-top:20px;text-align: right; ">
-          <button @click="topFive(0)" style="float:left; font-size:15px;margin: 0px 15px;">콘서트</button>
-          <button @click="topFive(1)" style="float:left; font-size:15px;margin: 0px 15px;">뮤지컬</button>
-          <button @click="topFive(2)" style="float:left; font-size:15px;margin: 0px 15px;">스포츠</button>
+          <button @click="topFive(0)" >콘서트</button>
+          <button @click="topFive(1)" >뮤지컬</button>
+          <button @click="topFive(2)" >스포츠</button>
         </div>
       </div>
-      <div id="main-poster" class="flex-container" style="max-width:100%; height:auto;">
+      <div class="flex-container" style="max-width:100%; height:auto;">
         <v-row>
         <v-card v-for="(item, i) in poster" :key="i">
           <img
@@ -131,12 +131,25 @@ export default {
 </script>
 
 <style>
-.v-card--reveal {
+/* .v-card--reveal {
   align-items: center;
   bottom: 0;
   justify-content: center;
   opacity: .5;
   position: absolute;
   width: 100%;
+} */
+#main-poster{
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+button{
+  float:left;
+  font-size:20px;margin:
+  0px 15px;
+}
+*{ 
+  font-family: 'InfinitySans-BoldA1', cursive;
 }
 </style>
