@@ -28,7 +28,6 @@ import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
 //마이페이지(기업회원)
 import PerformanceRegister from "@/views/mypage_biz/PerformanceRegister.vue";
 //마이페이지(관리자)
-import ConfirmUser from "@/views/mypage_admin/ConfirmUser.vue";
 import ConfirmPerformance from "@/views/mypage_admin/ConfirmPerformance.vue";
 import ConfirmPerformanceDetail from "@/views/mypage_admin/ConfirmPerformanceDetail.vue";
 //공연
@@ -57,11 +56,6 @@ const routes = [
     component : UpdatePassword
   },
   //마이페이지(관리자)
-  {
-    path: "/confirmuser",
-    name: "confirmuser",
-    component: ConfirmUser
-  },
   {
     path: "/confirmperformance",
     name: "confirmperformance",
