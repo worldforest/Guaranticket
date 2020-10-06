@@ -47,6 +47,12 @@
               <strong>회원가입</strong>
             </router-link>
           </div>
+          <v-divider></v-divider>
+          <v-subheader>테스트용 로그인</v-subheader>
+          <v-btn @click="testLogin(users[0])">일반</v-btn>
+          <v-btn @click="testLogin(users[1])">기업승인중</v-btn>
+          <v-btn @click="testLogin(users[2])">기업</v-btn>
+          <v-btn @click="testLogin(users[3])">관리자</v-btn>
         </div>
       </div>
     </div>
@@ -64,6 +70,28 @@ export default {
   },
   data() {
     return {
+      users : [
+        // 일반
+        {
+          email : "ming___jee@naver.com",
+          password : "1234zxcv",
+        },
+        // 기업승인중
+        {
+          email : "rim@naver.com",
+          password : "rimrim99",
+        },
+        // 기업
+        {
+          email : "test@test.com",
+          password : "qqqq1111",
+        },
+        // 관리자
+        {
+          email: "admin@admin.com",
+          password: "qqqq1111"
+        }
+      ],
       user: {
         email: "",
         password: ""
@@ -71,6 +99,27 @@ export default {
     };
   },
   methods: {
+    testLogin(user){
+      const storage = window.localStorage;
+      storage.setItem("jwt-auth-token", "");
+      login(
+        user.email,
+        user.password,
+        response => {
+          if(response.data.status){
+            this.$store.commit("setIsSigned", true);
+            storage.setItem("jwt-auth-token", response.data.data);
+            this.$router.push("/");
+          }
+          else{
+            alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
+          }
+        },
+        error => {
+          alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
+        }
+      );
+    },
     login() {
       const scope = this;
       const storage = window.localStorage;
@@ -79,9 +128,15 @@ export default {
         this.user.email,
         this.user.password,
         response => {
-          scope.$store.commit("setIsSigned", true);
-          storage.setItem("jwt-auth-token", response.data.data);
-          // console.log(this.user.email)
+          if(response.data.status){
+            scope.$store.commit("setIsSigned", true);
+            storage.setItem("jwt-auth-token", response.data.data);
+            scope.$router.push("/");
+          }
+          else{
+            alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
+          }
+            // console.log(this.user.email)
 
           // findByEmail(this.user.email, 
           //   response => {
@@ -110,10 +165,9 @@ export default {
           //   }
           // );
 
-          scope.$router.push("/");
         },
         error => {
-          console.error(error);
+          // console.error(error);
           alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
         }
       );

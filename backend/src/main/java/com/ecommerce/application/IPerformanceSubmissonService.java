@@ -13,7 +13,7 @@ public interface IPerformanceSubmissonService {
 //	PerformanceSubmission get(long pid);
 
 	@Transactional
-	PerformanceSubmission create(Performance performance);
+	PerformanceSubmission create(PerformanceSubmission performanceSubmission);
 		
 //	@Transactional
 //	PerformanceSubmission update(Performance performance);

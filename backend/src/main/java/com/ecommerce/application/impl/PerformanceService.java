@@ -5,6 +5,7 @@ import com.ecommerce.domain.Performance;
 import com.ecommerce.domain.PerformanceDetail;
 import com.ecommerce.domain.PerformanceDate;
 import com.ecommerce.domain.PerformancePrice;
+import com.ecommerce.domain.PerformanceSubmission;
 import com.ecommerce.mapper.PerformanceDateMapper;
 import com.ecommerce.mapper.PerformanceMapper;
 import com.ecommerce.mapper.PerformancePriceMapper;
@@ -53,13 +54,13 @@ public class PerformanceService implements IPerformanceService
 	@Override
 	public Performance create(PerformanceDetail performanceAllData) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(performanceAllData);
 		Performance performance = new Performance();
 		performance.setTitle(performanceAllData.getTitle());
 		performance.setPoster(performanceAllData.getPoster());
-		performance.setCategory(performanceAllData.getTitle());
-		performance.setLocation(performanceAllData.getTitle());
-		performance.setPlace(performanceAllData.getTitle());
+		performance.setCategory(performanceAllData.getCategory());
+		performance.setLocation(performanceAllData.getLocation());
+		performance.setPlace(performanceAllData.getPlace());
 		performance.setRunning(performanceAllData.getRunning());
 		performance.setTicketingStartDate(performanceAllData.getTicketingStartDate());
 		performance.setTicketingEndDate(performanceAllData.getTicketingEndDate());
@@ -69,10 +70,9 @@ public class PerformanceService implements IPerformanceService
 		performance.setNotice(performanceAllData.getNotice());
 		performance.setDetail(performanceAllData.getDetail());
 		performance.setUid(performanceAllData.getUid());
-		performance.setPermission(performanceAllData.getPermission());
-		
-		long pid = this.performanceMapper.create(performance);
-		
+		performance.setPermission(false);
+		this.performanceMapper.create(performance);
+		long pid = performance.getPid();
 //		// 등록요청 db생성
 		List<String> grades = performanceAllData.getGrades();
 		List<String> prices = performanceAllData.getPrices();
@@ -121,7 +121,10 @@ public class PerformanceService implements IPerformanceService
 		}
 		
 //		공연 등록 요청 정보 저장
-		this.performanceSubmissionMapper.create(pid, performanceAllData.getUid());
+		PerformanceSubmission performanceSubmission = new PerformanceSubmission();
+		performanceSubmission.setPid(pid);
+		performanceSubmission.setUid(performanceAllData.getUid());
+		this.performanceSubmissionMapper.create(performanceSubmission);
         
 		return this.performanceMapper.get(pid);
 	}

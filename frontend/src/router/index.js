@@ -146,7 +146,7 @@ const routes = [
     beforeEnter(to, from, next) {
       store.commit("logout");
       alert("로그아웃 되었습니다.");
-      next("/");
+      router.push("/").catch(err=>{})
     },
   },
   {

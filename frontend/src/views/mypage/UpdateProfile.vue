@@ -183,7 +183,6 @@
 
 <script>
 import HNav from "@/components/common/HNav";
-import axios from "axios";
 import { dispatch, findById, update } from "@/api/user.js";
 import { API_BASE_URL } from "@/config";
 
