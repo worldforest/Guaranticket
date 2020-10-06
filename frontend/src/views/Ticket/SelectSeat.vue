@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { findAll, pay } from "@/api/ticket.js";
+import { setContratAddress, findAll, pay } from "@/api/ticket.js";
 import { findById, findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
 
