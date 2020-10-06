@@ -31,7 +31,7 @@ public class FileService implements IFileService
 		String fileFullName = fileName + "_" + date.format(today) + time.format(today) + "." + extension;
 		try {
 	    	// 서버에서 사용할때
-	    	FileCopyUtils.copy(file.getBytes(), new File("/home/ubuntu/dev/deploy/img/" + fileFullName));
+	    	FileCopyUtils.copy(file.getBytes(), new File("/home/ubuntu/dev/deploy/dist/img/" + fileFullName));
 	    	// 로컬에서 테스트할때
 //			FileCopyUtils.copy(file.getBytes(), new File("C:/"+fileFullName));
 		} catch (IOException e) {
