@@ -1,7 +1,9 @@
 import { createInstance } from "./index.js";
 
 const instance = createInstance();
-
+const config = { 
+  headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")
+}};
 function findAll(success, fail) {
     instance
       .get("/api/performance")
@@ -28,9 +30,9 @@ function findpriceById(pid, success, fail) {
     .catch(fail);
 }
 
-function create(body, success, fail, final) {
+function create(performanceDetail, success, fail, final) {
     instance
-      .post("/api/performance", JSON.stringify(body))
+      .post("/api/performance", JSON.stringify(performanceDetail),config)
       .then(success)
       .catch(fail)
       .finally(final);
