@@ -11,6 +11,7 @@ public interface ITicketService {
 	List<Ticket> getByPid(long uid);
 	List<TicketList> getByUid(long uid);
 	List<Ticket> getByPidAndDateAndTime(long pid,String date, String time);
+	Ticket getByPidAndDateAndTimeAndSeatNumber(long pid,String date, String time, int seatNumber);
 	@Transactional
 	TicketDetail get(long tid);
 	@Transactional
