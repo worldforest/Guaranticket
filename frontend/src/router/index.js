@@ -23,7 +23,6 @@ import UpdatePassword from "@/views/mypage/UpdatePassword.vue";
 //마이페이지(일반회원)
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
 import PurchaseDetail from "@/views/mypage/PurchaseDetail.vue";
-import SellList from "@/views/mypage/SellList.vue";
 import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
 //마이페이지(기업회원)
 import PerformanceRegister from "@/views/mypage_biz/PerformanceRegister.vue";
@@ -82,11 +81,6 @@ const routes = [
     path: "/purchasedetail/:tid",
     name: "purchasedetail",
     component: PurchaseDetail
-  },
-  {
-    path: "/selllist",
-    name: "selllist",
-    component: SellList
   },
   {
     path: "/updateprofile",

@@ -50,7 +50,7 @@
           <v-divider></v-divider>
           <v-subheader>테스트용 로그인</v-subheader>
           <v-btn @click="testLogin(users[0])">일반</v-btn>
-          <v-btn @click="testLogin(users[1])">기업승인중</v-btn>
+          <!-- <v-btn @click="testLogin(users[1])">기업승인중</v-btn> -->
           <v-btn @click="testLogin(users[2])">기업</v-btn>
           <v-btn @click="testLogin(users[3])">관리자</v-btn>
         </div>
@@ -77,10 +77,10 @@ export default {
           password : "1234zxcv",
         },
         // 기업승인중
-        {
-          email : "rim@naver.com",
-          password : "rimrim99",
-        },
+        // {
+        //   email : "rim@naver.com",
+        //   password : "rimrim99",
+        // },
         // 기업
         {
           email : "test@test.com",
@@ -110,6 +110,7 @@ export default {
             this.$store.commit("setIsSigned", true);
             storage.setItem("jwt-auth-token", response.data.data);
             this.$router.push("/");
+            this.$router.go(this.$router.currentRoute);
           }
           else{
             alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
@@ -131,7 +132,8 @@ export default {
           if(response.data.status){
             scope.$store.commit("setIsSigned", true);
             storage.setItem("jwt-auth-token", response.data.data);
-            scope.$router.push("/");
+            this.$router.push("/");
+            this.$router.go(this.$router.currentRoute);
           }
           else{
             alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
