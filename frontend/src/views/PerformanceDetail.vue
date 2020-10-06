@@ -98,8 +98,8 @@
         <div v-show="!this.tabs">
           <div>
             <h3>공연장 정보</h3>
-              <h4>{{performance.place}}</h4>
               <h4>{{performance.location}}</h4>
+              <h4>{{performance.place}}</h4>
           </div>
             <br>
             <div id="map" tyle="display:none;">
@@ -203,7 +203,7 @@ export default {
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 4 //지도의 레벨(확대, 축소 정도)
+        level: 3 //지도의 레벨(확대, 축소 정도)
       };
       
       var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -221,12 +221,13 @@ export default {
                 position: coords
             });
             
-
+            container.style.width = '500px';
+            container.style.height = '400px';
+            container.style.margin='50px'; 
+            map.relayout();
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
-            container.style.width = '500px';
-            container.style.height = '400px'; 
-            map.relayout();
+            
         } 
         else{
           this.message="주소를 검색할 수 없습니다."

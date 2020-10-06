@@ -67,8 +67,10 @@ public class TicketController
     public ModelAndView kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
        logger.info("kakaoPaySuccess get............................................");
        logger.info("kakaoPaySuccess pg_token : " + pg_token);
-       model.addAttribute("ticket", tickets);
-//        ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist");
+       //필수 
+       model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token));
+//       model.addAttribute("ticket", tickets);
+//       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist");
        ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist");
         return mav;
     }
@@ -78,20 +80,6 @@ public class TicketController
          @PathVariable String date,
          @PathVariable String time) {
       List<Ticket> list = ticketService.getByPidAndDateAndTime(pid,date,time);
-      if (list == null || list.isEmpty()) {
-         throw new NotFoundException(pid + "공연의 "+date+" 날짜의 예매 내역을 찾을 수 없습니다.");
-      }
-      return list;
-   }
-   @ApiOperation(value = "공연별 예매 내역 검색")
-   @RequestMapping(value = "/ticket/pid/{pid}", method = RequestMethod.GET)
-   public List<Ticket> getByPid(@PathVariable long pid) {
-      
-      List<Ticket> list = ticketService.getByPid(pid);
-
-      if (list == null || list.isEmpty())
-         throw new NotFoundException(pid + "공연의 예매 내역을 찾을 수 없습니다.");
-
       return list;
    }
    @ApiOperation(value = "사용자 예매 내역리스트 검색")
