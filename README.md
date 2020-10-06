@@ -47,10 +47,10 @@
 |PART|TECH|
 |:--:|----|
 |FRONTEND|`Vue.js` `Vuetify`|
-|BACKEND|`Springboot` `MyBatis` `Lombok`|
-|BLOCKCHAIN|`Go-Ethereum` `web.3js` `web3.j` |
-|DATABASE|`MYSQL`|
-|SERVER|`AWS EC2 Ubuntu 18.04` `Nginx` `Springboot Tomcat 8.0` `SSL`|
+|BACKEND|`Spring Boot` `MyBatis` `Lombok`|
+|BLOCKCHAIN|`Go-Ethereum` `web3.js` `web3.j` |
+|DATABASE|`MySQL`|
+|SERVER|`AWS EC2 Ubuntu 18.04` `Nginx` `Spring Boot Tomcat 8.0` `SSL`|
 |CO-WORK|`GitLab` `Slack` `Notion` `Jira` `Google Docs` `ERD Cloud` `Dirgrams`|
 
 
