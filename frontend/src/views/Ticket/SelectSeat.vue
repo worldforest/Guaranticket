@@ -34,11 +34,11 @@
           <v-col><h4 v-if="this.row!=''">선택한 좌석 | {{String.fromCharCode(64+row)}}행 {{this.col}}열</h4></v-col>
           </v-row>
         </div>
-        <div style="max-width:80%; margin:0 auto;">
-          <v-row v-for="i in 6" :key="i" style="max-width:100%; padding: auto;">
-            <v-col v-for="j in 6" :key="j" style="padding-left:0px; padding-right:0px;">
-              <v-btn color="#FF4155" disabled tile x-large v-if="check[(i-1)*6+j]==true"></v-btn>
-              <v-btn tile x-large v-else @click="selectSeat(i,j)">
+        <div style="max-width:60vmax; margin:0 auto;">
+          <v-row v-for="i in 6" :key="i" style="width:60vmax; ">
+            <v-col v-for="j in 6" :key="j" style="width:8vmin;">
+              <v-btn id="seat-btn" color="#FF4155" disabled tile v-if="check[(i-1)*6+j]==true"></v-btn>
+              <v-btn id="seat-btn" tile v-else @click="selectSeat(i,j)">
                {{String.fromCharCode(64+i)}} {{j}}
               </v-btn>
             </v-col>
@@ -50,10 +50,10 @@
             color="#FF4155"
             @click="e1 = 2, checkSeat()"
           >
-            👉다음단계
+            <h4>👉다음단계</h4>
           </v-btn>
           <v-btn id="prev-btn" @click="prev">
-            👈취소하기
+            <h4>👈취소하기</h4>
           </v-btn>
         </div>
       </v-stepper-content>
@@ -94,10 +94,10 @@
           color="#FF4155"
           @click="pay"
         >
-          💰 결제하기
+          <h4>💰 결제하기</h4>
         </v-btn>
         <v-btn id="prev-btn" @click="e1 = 2">
-          👈뒤로가기
+          <h4>👈뒤로가기</h4>
         </v-btn>
       </v-stepper-content>
     </v-stepper-items>
@@ -204,7 +204,7 @@ export default {
         this.e1=1;
       }
       else{
-        if((this.row-1)*6+this.col>=18){
+        if((this.row-1)*6+this.col>18){
           this.grade="S";
           if(this.grade==this.performancePrice[0].grade){
             this.price=this.performancePrice[0].price;
@@ -230,19 +230,23 @@ export default {
 
 <style scoped>
   #next-btn{
-    margin-top: 20px;
-    font-size: 20px;
-    height: 50px;
+    margin-top: 2vh;
+    font-size: 1.6vw;
+    height: 7vmin;
     float: right;
   }
   #prev-btn{
-    margin-top: 20px;
-    font-size: 20px;
-    height: 50px;
+    margin-top: 2vh;
+    font-size: 1.6vw;
+    height: 7vmin;
     float: left;
   }
+  #seat-btn{
+    height: 6vmin;
+    width: 6vmax;
+  }
   h4{
-    font-size: 23px;
+    font-size: 2vw;
     /* padding-bottom: 10px ; */
   }
 </style>
