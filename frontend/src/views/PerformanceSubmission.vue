@@ -408,7 +408,6 @@ export default {
                 prices : [],
                 times : [],
 
-                uid : 74
             },
             poster : [],
             detail : [],
@@ -464,7 +463,6 @@ export default {
             this.performance.times.sort();
         },
         submit(){
-            this.upload();
             if(this.$refs.form.validate()){
                 create(this.performance, 
                     response => {
@@ -541,7 +539,7 @@ export default {
                             this.performance.poster = response.data;
                             break;
                     }
-                    var uploadImg = `https://j3b101.p.ssafy.io/${response.data}`;
+                    //var uploadImg = `https://j3b101.p.ssafy.io/${response.data}`;
                 },
                 error => {
                     alert("이미지 전송 실패");

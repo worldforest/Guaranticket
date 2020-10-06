@@ -48,7 +48,18 @@ public class UserController {
 		Assert.notNull(userService, "userService 개체가 반드시 필요!");
 		this.userService = userService;
 	}
+	
+	// 기업회원 가입 신청 리스트 가져오기
+	@RequestMapping(value = "/use", method = RequestMethod.GET)
+	public List<User> getlist() {
+		List<User> userList = userService.list();
 
+		if (userList == null || userList.isEmpty())
+			throw new EmptyListException("NO DATA");
+
+		return userList;
+	}
+	
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public List<User> list() {
 		List<User> userList = userService.list();
@@ -88,7 +99,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/users/email/{email}", method = RequestMethod.GET)
-	public Object get(@PathVariable String email, HttpServletRequest request) {
+	public Object get(@PathVariable String email) {
 		User user = userService.get(email);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
@@ -98,13 +109,13 @@ public class UserController {
 			result.put("status", false);
 			result.put("data", "isExist");
 		}
-		if (user == null) {
-			logger.error("NOT FOUND EMAIL: ", email);
-			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
-		}
-		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.put("status", true);
-		result.put("data", user);
+//		if (user == null) {
+//			logger.error("NOT FOUND EMAIL: ", email);
+//			throw new NotFoundException(email + " 회원 정보를 찾을 수 없습니다.");
+//		}
+//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+//		result.put("status", true);
+//		result.put("data", user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -196,7 +207,8 @@ public class UserController {
 
 	// 비밀번호 찾기
 	@RequestMapping(value = "/users/sendemail", method = RequestMethod.POST)
-	public User sendEmail(@RequestBody User user) {
+	public User sendEmail(@RequestBody User users) {
+		User user = userService.get(users.getEmail());
 		// 임시 비밀번호 생성 저장 변수
 		String userPwd = "";
 		for (int i = 0; i < 12; i++) {
@@ -207,7 +219,7 @@ public class UserController {
 		// 임시비밀번호로 업데이트
 		user.setPassword(userPwd);
 		userService.update(user);
-
+		
 		// 메일보내기
 		try {
 			MimeMessage msg = mailSender.createMimeMessage();
