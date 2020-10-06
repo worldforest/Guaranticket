@@ -25,9 +25,9 @@ public class PerformanceSubmissionService implements IPerformanceSubmissonServic
 	private PerformanceSubmissionMapper performanceSubmissionMapper;
 	
 	@Override
-	public PerformanceSubmission create(Performance performance) {		
-		long sid = this.performanceSubmissionMapper.create(performance.getPid(), performance.getUid());
-		return this.performanceSubmissionMapper.get(sid);
+	public PerformanceSubmission create(PerformanceSubmission performanceSubmission) {		
+		this.performanceSubmissionMapper.create(performanceSubmission);
+		return this.performanceSubmissionMapper.get(performanceSubmission.getUid());
 	}
 
 	@Override

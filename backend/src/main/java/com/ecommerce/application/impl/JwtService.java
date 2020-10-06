@@ -29,7 +29,7 @@ public class JwtService implements IJwtService {
 		builder.setHeaderParam("typ", "JWT");
 		
 		builder.setSubject("LOGIN TOKEN")
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * expireMin))
+				.setExpiration(new Date(System.currentTimeMillis() + 864000000))
 				.claim("USER", uid);
 		
 		

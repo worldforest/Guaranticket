@@ -26,13 +26,16 @@
 	</select>
 	
 	<insert id="create" parameterType="com.ecommerce.domain.PerformanceSubmission">
-		INSERT INTO performances_date
+		<selectKey keyProperty="sid" resultType="Long" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
+		INSERT INTO performances_submission
 		(
-			pid, uid, submit_date
+			pid, uid
 		)
 		VALUES
 		(
-			#{pid}, #{uid}, #{submitDate}
+			#{pid}, #{uid}
 		)
 	</insert>
 	

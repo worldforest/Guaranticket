@@ -12,7 +12,7 @@ public interface PerformanceSubmissionMapper {
 	PerformanceSubmission get(long sid);
 
 	@Transactional
-	long create(long pid, long uid);
+	long create(PerformanceSubmission performanceSubmission);
 
 	@Transactional
 	int delete(long sid);

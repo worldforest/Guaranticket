@@ -124,8 +124,6 @@ import Web3 from "web3";
 
 import { ADMIN_ACCOUNT, ADMIN_ACCOUNT_PRIVATE_KEY, KEY_VALUE_DATA, BLOCKCHAIN_URL } from '../../config';
 import { KEY_VALUE_ABI } from '../../config/ABIs.js';
-import Wallet from "ethereumjs-wallet";
-import fs from "fs";
 
 export default {
   data: () => ({

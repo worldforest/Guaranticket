@@ -59,9 +59,11 @@
 	</delete>
 	
 	<insert id="create" parameterType="com.ecommerce.domain.Performance">
+		<selectKey keyProperty="pid" resultType="Long" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>
 		INSERT INTO performances
 		(
-			pid,
 			title,
 			poster,
 			category,
@@ -75,11 +77,11 @@
 			attendance,
 			notice,
 			detail,
-			permission
+			permission,
+			uid
 		)
 		VALUES
 		(
-			#{pid},
 			#{title},
 			#{poster},
 			#{category},
@@ -93,7 +95,8 @@
 			#{attendance},
 			#{notice},
 			#{detail},
-			#{permission}
+			#{permission},
+			#{uid}
 		)
 	</insert>
 </mapper>
