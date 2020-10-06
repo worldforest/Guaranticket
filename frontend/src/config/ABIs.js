@@ -914,4 +914,70 @@ const PURCHASE_RECORD_CONTRACT_ABI = [
 	}
 ];
 
-export { ESCROW_CONTRACT_ABI, ITEM_INVENTORY_CONTRACT_ABI, CASH_CONTRACT_ABI, PURCHASE_RECORD_CONTRACT_ABI };
+
+const KEY_VALUE_ABI = [
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_key",
+				"type": "uint256"
+			}
+		],
+		"name": "getValue1",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_key",
+				"type": "uint256"
+			}
+		],
+		"name": "getValue2",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_value1",
+				"type": "string"
+			},
+			{
+				"name": "_value2",
+				"type": "string"
+			}
+		],
+		"name": "setValue",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
+
+export { KEY_VALUE_ABI, ESCROW_CONTRACT_ABI, ITEM_INVENTORY_CONTRACT_ABI, CASH_CONTRACT_ABI, PURCHASE_RECORD_CONTRACT_ABI };

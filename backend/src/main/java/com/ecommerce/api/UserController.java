@@ -111,13 +111,17 @@ public class UserController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		User userFetched = userService.get(user.getEmail());
 		Map<String, Object> result = new HashMap<>();
-		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword()))
-			throw new DomainException("비밀번호가 일치하지 않습니다.");
-
-		String token = jwtService.create(userFetched.getId());
-		response.setHeader("jwt-auth-token", token);
-		result.put("status", true);
-		result.put("data", token);
+		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword())) {
+			result.put("status", false);
+			result.put("data", "request invalid");
+		}
+		else {
+			String token = jwtService.create(userFetched.getId());
+			response.setHeader("jwt-auth-token", token);
+			result.put("status", true);
+			result.put("data", token);
+			
+		}
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 

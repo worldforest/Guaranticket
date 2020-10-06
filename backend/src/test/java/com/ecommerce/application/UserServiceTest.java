@@ -17,29 +17,29 @@ public class UserServiceTest {
     @Autowired
     private IUserService userService;
 
-    	@Test
-    	public void testAdd() {
-    		User user = new User();
-    		user.setEmail("test@test.com");
-    		user.setPassword("password");
-    		user.setName("Jo");
-    		user.setGender("남");
-    		user.setPhone("010-9378-8047");
-    		user.setBusinessNumber("1234567890");
-    		user.setCompanyName("삼성전자");
-    		user.setRepresentativeName("이건희");
-    		user.setBirth("1994-01-20");
-    		
-    		User userAdded = this.userService.add(user);
-    		System.out.println(userAdded);
-    		assert userAdded.getId() > 0;
-    		assert userAdded.getName().equals("Jo");
-    		assert userAdded.getEmail().equals("test@test.com");
-    		assert userAdded.getBusinessNumber().equals("1234567890");
-    		assert userAdded.getCompanyName().equals("삼성전자");
-    		assert userAdded.getRepresentativeName().equals("이건희");
-    		assert userAdded.getBirth().equals("1994-01-20");
-    	}
+//    	@Test
+//    	public void testAdd() {
+//    		User user = new User();
+//    		user.setEmail("test@test.com");
+//    		user.setPassword("password");
+//    		user.setName("Jo");
+//    		user.setGender("남");
+//    		user.setPhone("010-9378-8047");
+//    		user.setBusinessNumber("1234567890");
+//    		user.setCompanyName("삼성전자");
+//    		user.setRepresentativeName("이건희");
+//    		user.setBirth("1994-01-20");
+//    		
+//    		User userAdded = this.userService.add(user);
+//    		System.out.println(userAdded);
+//    		assert userAdded.getId() > 0;
+//    		assert userAdded.getName().equals("Jo");
+//    		assert userAdded.getEmail().equals("test@test.com");
+//    		assert userAdded.getBusinessNumber().equals("1234567890");
+//    		assert userAdded.getCompanyName().equals("삼성전자");
+//    		assert userAdded.getRepresentativeName().equals("이건희");
+//    		assert userAdded.getBirth().equals("1994-01-20");
+//    	}
     
 //    @Test
 //    public void testAdd() {
