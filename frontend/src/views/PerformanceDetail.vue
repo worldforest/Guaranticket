@@ -97,7 +97,9 @@
           </v-btn-toggle>
       </v-row>
       <div>
-        <div v-if="this.tabs==true">
+        
+        
+        <div v-show="this.tabs">
           <div>
             <h4>공지사항</h4>
               {{performance.notice}}
@@ -111,7 +113,8 @@
               alt="공연 상세정보 포스터"/>
           </div>
         </div>
-        <div v-else-if="this.tabs==false">
+
+        <div v-show="!this.tabs">
           <div>
             <div>
               <h4>공연장 정보</h4>
@@ -119,6 +122,9 @@
                 <br>
                 {{performance.location}}으로 카카오map에서 검색하기
             </div>
+            <br>
+            <div id="map" tyle="display:none;">
+          </div>
             <div>
               <img
                 src="https://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040002/10/11/0400021011_1941_1111.gif"
@@ -136,7 +142,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { findById,finddateById,findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
@@ -159,13 +164,17 @@ export default {
       toggle_exclusive: undefined,
       selectTime: '',
       selectDate: '',
-      tabs: true
+      tabs: true,
     }
   },
-  // mounted() {
-  //   var scope = this;
-  //   var pid = this.$route.params.pid;
-  // },
+  mounted() {
+        const script = document.createElement("script");
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      // script.setAttribute('src', "https//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=d0aeea25c41e9c988d77fbd1738d8d25&libraries=services")
+      script.src = "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=d0aeea25c41e9c988d77fbd1738d8d25&libraries=services";
+      document.head.appendChild(script);
+  },
   created() {
     var scope = this;
     var pid = this.$route.params.pid;
@@ -201,12 +210,44 @@ export default {
     },
   },
 //  watch: {
-//     date (val) {
-//       this.dateFormatted = this.formatDate(this.date)
+  //     date (val) {
+    //       this.dateFormatted = this.formatDate(this.date)
 //     },
     
 //   },
   methods: {
+    initMap() {
+      var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      var options = {
+        //지도를 생성할 때 필요한 기본 옵션
+        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+        level: 4 //지도의 레벨(확대, 축소 정도)
+      };
+      
+      var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+      // this.searchMap();
+       // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new kakao.maps.services.Geocoder();
+      // 주소로 좌표를 검색합니다
+      geocoder.addressSearch(this.performance.location, (result, status) => {
+        // 정상적으로 검색이 완료됐으면 
+        if (status === kakao.maps.services.Status.OK) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            // var marker = new kakao.maps.Marker({
+            //     map: map,
+            //     position: coords
+            // });
+            
+
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+            container.style.width = '500px';
+            container.style.height = '400px'; 
+            map.relayout();
+        } 
+      });
+    },
     formatDate (date) {
       if (!date) return null
 
@@ -225,6 +266,9 @@ export default {
     },
     selecttab(select) {
       this.tabs=select
+      if(select == false){
+        this.initMap();
+      }  
     },
     ticket(){
       this.$router.push({

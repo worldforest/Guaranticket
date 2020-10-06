@@ -541,7 +541,7 @@ export default {
                             this.performance.poster = response.data;
                             break;
                     }
-                    var uploadImg = `http://localhost:8080/api/file/${response.data}`;
+                    var uploadImg = `https://j3b101.p.ssafy.io/${response.data}`;
                 },
                 error => {
                     alert("이미지 전송 실패");
