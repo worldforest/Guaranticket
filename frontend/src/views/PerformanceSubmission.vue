@@ -25,7 +25,7 @@
                         <v-select
                         v-model="performance.category"
                         placeholder="카테고리를 선택해주세요"
-                        :rules="[() => !!performance.category]"
+                        :rules="[() => !!(performance.category+'')]"
                         :items="items"
                         item-text="category"
                         item-value="value"
