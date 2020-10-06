@@ -38,8 +38,6 @@ import PerformanceDetail from "@/views/PerformanceDetail";
 import PerformanceSubmission from "@/views/PerformanceSubmission";
 //티켓 예매
 import SelectSeat from "@/views/Ticket/SelectSeat";
-import CheckTicket from "@/views/Ticket/CheckTicket";
-import PayTicket from "@/views/Ticket/PayTicket";
 
 //채팅
 import Chat from "@/views/Chat.vue";
@@ -309,16 +307,6 @@ const routes = [
     name : "selectSeat",
     path : "/selectSeat/:date/:time",
     component : SelectSeat,
-  },
-  {
-    name : "checkTicket",
-    path : "/checkTicket/:date/:time/:seat",
-    component : CheckTicket,
-  },
-  {
-    name : "payTicket",
-    path : "/payTicket",
-    component : PayTicket,
   },
 ];
 
