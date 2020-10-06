@@ -21,8 +21,14 @@ public class TicketService implements ITicketService
 	private TicketMapper TicketMapper;
 	
 	@Override
-	public List<TicketList> getByUid(long uid) {
+	public Ticket getByPidAndDateAndTimeAndSeatNumber(long pid, String date, String time, int seatNumber) {
 		// TODO Auto-generated method stub
+		return this.TicketMapper.getByPidAndDateAndTimeAndSeatNumber(pid, date, time, seatNumber);
+	}
+	
+	@Override
+	public List<TicketList> getByUid(long uid) {
+		System.out.println(this.TicketMapper.getByUid(uid));
 		return this.TicketMapper.getByUid(uid);
 	}
 

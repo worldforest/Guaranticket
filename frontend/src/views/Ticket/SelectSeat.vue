@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { findAll, pay } from "@/api/ticket.js";
+import { setContratAddress, findAll, pay } from "@/api/ticket.js";
 import { findById, findpriceById } from "@/api/performance.js";
 import HNav from "@/components/common/HNav";
 
@@ -192,7 +192,13 @@ export default {
           this.grade,
           this.price,
           response => {
-            window.location.href = response.data;
+            console.log(response.data)
+            if(response.data == "NOTEMPTY"){
+              this.$router.go(-1);
+            }
+            else{
+              window.location.href = response.data;
+            }
           },
           error => {
               console.log(error);

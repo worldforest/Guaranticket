@@ -89,7 +89,7 @@ public class PerformanceService implements IPerformanceService
 //		// 공연 날짜 정보 저장
 		PerformanceDate performancedate = null;
 		List<String>times = performanceAllData.getTimes();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-DD");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Date start = null;
 		Date end = null;

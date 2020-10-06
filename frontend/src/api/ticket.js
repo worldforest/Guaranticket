@@ -12,14 +12,15 @@ function findAll(pid,date,time,success,fail){
     .catch(fail);
 }
 
-function pay(pid,seatNumber,date,time,grade,price, success, fail){
+function pay(pid, seatNumber, date, time, grade, price, contractAddress, success, fail){
     const ticket = {
         pid : pid,
         seatNumber : seatNumber,
         date : date,
         time : time,
         grade : grade,
-        price : price
+        price : price,
+        contractAddress : contractAddress,
     };
     instance
     .post("/api/ticket",JSON.stringify(ticket),config)
@@ -33,4 +34,15 @@ function ticketDetail(tid, success,fail){
     .then(success)
     .catch(fail);
 }
-export{ findAll,pay,ticketDetail }
+
+function setContratAddress(contractAddress, success,fail){
+    const param = {
+        contractAddress : contractAddress
+    };
+    instance
+    .put("/api/ticket/contract", JSON.stringify(param), config)
+    .then(success)
+    .catch(fail);
+}
+
+export{ setContratAddress, findAll, pay, ticketDetail }
