@@ -64,23 +64,25 @@ public class UserController {
 		String token = request.getHeader("jwt-auth-token");
 		Map<String, Object> userInfo = jwtService.get(token);
 		long uid = Long.parseLong(userInfo.get("USER").toString());
-		Map<String, Object> result = new HashMap<>();
+		Map<String, Object> result = new 
+				HashMap<>();
 		result.put("status", true);
 		result.put("data", uid);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-	public Object get(@PathVariable int id, HttpServletRequest request) {
+	public Object get(@PathVariable int id) {
 		User user = userService.get(id);
+		System.out.println(user);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
 			logger.error("NOT FOUND ID: ", id);
 			throw new NotFoundException(id + " 회원 정보를 찾을 수 없습니다.");
 		}
 
-		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.put("status", true);
+//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+//		result.put("status", true);
 		result.put("data", user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
