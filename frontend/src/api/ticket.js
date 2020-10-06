@@ -12,15 +12,14 @@ function findAll(pid,date,time,success,fail){
     .catch(fail);
 }
 
-function pay(pid, seatNumber, date, time, grade, price, contractAddress, success, fail){
+function pay(pid, seatNumber, date, time, grade, price, success, fail){
     const ticket = {
         pid : pid,
         seatNumber : seatNumber,
         date : date,
         time : time,
         grade : grade,
-        price : price,
-        contractAddress : contractAddress,
+        price : price
     };
     instance
     .post("/api/ticket",JSON.stringify(ticket),config)
