@@ -45,4 +45,10 @@ public class DealService implements IDealService
 		return this.dealMapper.getBySeller(seller);
 	}
 
+	@Override
+	public DealDetail update(long did, long buyer) {
+		int res = this.dealMapper.update(did, buyer);
+		return this.get(did);
+	}
+
 }

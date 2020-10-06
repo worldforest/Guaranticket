@@ -39,7 +39,7 @@ public class UserController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private JwtService jwtService;
 
@@ -59,17 +59,30 @@ public class UserController {
 		return userList;
 	}
 
+	@RequestMapping(value = "/users/info", method = RequestMethod.GET)
+	public Object get(HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String, Object> userInfo = jwtService.get(token);
+		long uid = Long.parseLong(userInfo.get("USER").toString());
+		Map<String, Object> result = new 
+				HashMap<>();
+		result.put("status", true);
+		result.put("data", uid);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-	public Object get(@PathVariable int id, HttpServletRequest request) {
+	public Object get(@PathVariable int id) {
 		User user = userService.get(id);
+		System.out.println(user);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
 			logger.error("NOT FOUND ID: ", id);
 			throw new NotFoundException(id + " 회원 정보를 찾을 수 없습니다.");
 		}
 
-		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.put("status", true);
+//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+//		result.put("status", true);
 		result.put("data", user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -117,7 +130,8 @@ public class UserController {
 		User newUser = userService.add(user);
 		return newUser;
 	}
-
+	
+	// 회원정보 수정 (비밀번호 미포함)
 	@RequestMapping(value = "/users", method = RequestMethod.PUT)
 	public Object update(@RequestBody User user, HttpServletRequest request) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -126,6 +140,41 @@ public class UserController {
 		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		result.put("status", true);
 		result.put("data", user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	// 비밀번호 변경
+	@RequestMapping(value = "/users/pw", method = RequestMethod.PUT)
+	public Object update(@RequestBody Map<String, String> params, HttpServletRequest request) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Map<String, Object> result = new HashMap<>();
+		
+		String token = request.getHeader("jwt-auth-token");
+		Map<String, Object> userInfo = jwtService.get(token);
+		long uid = Long.parseLong(userInfo.get("USER").toString());
+		User user = userService.get(uid);
+
+		String originPassword = params.get("originPassword");
+		String newPassword = params.get("newPassword");
+		
+		// 입력한 현재 비밀번호와 DB에 저장된 비밀번호가 다르면
+		if(!passwordEncoder.matches(originPassword, user.getPassword())) {
+			result.put("status", false);
+			result.put("data", "INVALID_PASSWORD");
+		}
+		// 입력한 새 비밀번호와 DB에 저장된 비밀먼호가 같으면
+		else if(passwordEncoder.matches(newPassword, user.getPassword())) {
+			result.put("status", false);
+			result.put("data", "SAME_PASSWORD");
+		}
+		// 유효하면
+		else {
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user = userService.update(user);
+			result.put("status", true);
+			result.put("data", user);
+		}
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

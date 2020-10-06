@@ -5,23 +5,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ecommerce.mapper.ChatListMapper">
 	<!-- 나와 상대의 이름으로 방이름을 만들고 DB에 저장 -->
 	<insert id="insert" parameterType="String">
-		insert into chatlist(roomname)
-		values(#{roomname})
+		insert into chat_list
+		(
+			room_name
+		)
+		values
+		(
+			#{roomName}
+		)
 	</insert>
 
 	<!-- 채팅방 번호 no로 채팅방 이름 roomname가져오기 -->
 	<select id="select" parameterType="String" resultType="String">
 		select
-		roomname
-		from chatlist
-		where no=#{no}
+			room_name
+		from 
+			chat_list
+		where 
+			no=#{no}
 	</select>
 
 	<!-- roomname을 보내면 방번호를 알려줘 -->
 	<select id="selectno" parameterType="String" resultType="String">
 		select
-		no
-		from chatlist
-		where roomname=#{roomname}
+			no
+		from 
+			chat_list
+		where 
+			room_name = #{roomName}
 	</select>
 </mapper>

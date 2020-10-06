@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.ecommerce.mapper.TicketMapper">
+
+	<resultMap type="com.ecommerce.domain.Ticket" id="TicketSelectRM">
+		<result property="seatNumber" column="seat_number"/>
+	</resultMap>
+	
+	<resultMap type="com.ecommerce.domain.TicketDetail" id="TicketDeatilSelectRM">
+		<result property="seatNumber" column="seat_number"/>
+	</resultMap>
 	
 	<insert id="create" parameterType="com.ecommerce.domain.Ticket">
 		INSERT INTO tickets
@@ -13,8 +21,7 @@
 			#{tid},#{pid},#{seatNumber},#{date},#{time},#{uid},#{grade},#{price},#{trading}
 		)
 	</insert>
-
-	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.TicketDetail">
+	<select id="get" parameterType="Long" resultType="com.ecommerce.domain.TicketDetail" resultMap="TicketDeatilSelectRM">
 		SELECT
 			*
 		FROM 
@@ -26,7 +33,7 @@
 	</select>
 	
 	<select id="getByPidAndDateAndTime" parameterType="map" 
-		resultType="com.ecommerce.domain.Ticket">
+		resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
 		SELECT
 			*
 		FROM 
@@ -39,7 +46,7 @@
 			date = #{date}
 	</select>
 	
-	<select id="getByPid" parameterType="Long" resultType="com.ecommerce.domain.Ticket">
+	<select id="getByPid" parameterType="Long" resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
 		SELECT
 			*
 		FROM 
@@ -48,7 +55,7 @@
 			pid = #{pid}
 	</select>
 	
-	<select id="getByUid" parameterType="Long" resultType="com.ecommerce.domain.TicketList">
+	<select id="getByUid" parameterType="Long" resultType="com.ecommerce.domain.TicketList" resultMap="TicketSelectRM">
 		SELECT
 			*
 		FROM 
@@ -58,4 +65,14 @@
 		WHERE 
 			a.uid = #{uid}
 	</select>
+	
+	<update id="update" parameterType="long">
+		UPDATE
+			tickets
+		SET
+			trading = true,
+			uid = #{uid}
+		WHERE
+			tid = #{tid}
+	</update>
 </mapper>

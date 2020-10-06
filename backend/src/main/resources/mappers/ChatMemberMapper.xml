@@ -5,29 +5,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ecommerce.mapper.ChatMemberMapper">
 
 	<!-- 나와 상대이름으로 만들어진 방이름으로 번호를 조회해서 그 번호에 나와 상대를 저장 -->
-	<insert id="insert" parameterType="String">
-		insert into chatmember(no, username)
-		values(#{no},#{username})
+	<insert id="insert" parameterType="string">
+		insert into chat_member
+		(
+			no, user_name
+		)
+		values
+		(
+			#{no}, #{userName}
+		)
 	</insert>
-
+	
 	<!-- username보내면 내가 포함된 채팅방 번호 -->
 	<select id="selectAll" parameterType="String"
 		resultType="String">
-		select no
-		from chatmember
-		where username=#{username}
+		select
+			no
+		from
+			chat_member
+		where
+			user_name= #{userName}
 	</select>
 
 	
 	<select id="select" parameterType="String" resultType="String">
-		select no
-		from chatmember
-		where (username=#{yourname}
-		and (no in 
-		(select no
-		from chatmember
-		where username=#{myname}))
-		)
+		select
+			no
+		from
+			chat_member
+		where
+			(
+			user_name = #{yourName}
+			and
+				(
+				no in 
+					(
+					select
+						no
+					from
+						chat_member
+					where 
+						user_name = #{myName}
+					)
+				)
+			)
 	</select>
 
 </mapper>

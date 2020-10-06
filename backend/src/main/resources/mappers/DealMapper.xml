@@ -51,4 +51,13 @@
 		WHERE
 			a.seller = #{seller}
 	</select>
+	
+	<update id="update" parameterType="long" >
+		UPDATE
+			deals
+		SET
+			buyer = #{buyer}
+		WHERE
+			did = #{did}
+	</update>
 </mapper>

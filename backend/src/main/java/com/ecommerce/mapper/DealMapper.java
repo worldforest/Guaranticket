@@ -10,4 +10,5 @@ public interface DealMapper {
 	DealDetail get(long did);
 	long create(Deal deal);
 	List<DealList> getBySeller(long seller);
+	int update(long did, long buyer);
 }

@@ -25,22 +25,19 @@
           <li class="nav-item" v-if="!$store.state.isSigned">
             <router-link class="nav-link" to="/login">로그인</router-link>
           </li>
-          <li class="nav-item" v-if="!$store.state.isSigned">
-            <router-link class="nav-link" to="/chat">채팅하기</router-link>
-          </li>
           <!--마이페이지(일반회원): 로그인 시 활성화-->
           <!--추후 user type=0,1,2으로 구분해서 네비바 구성 다르게 띄울 것!!-->
           <li class="nav-item" v-if="$store.state.isSigned">
             <div class="text-center">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text
+                  <li text
                     v-bind="attrs"
                     v-on="on"
-                    style="color: white; font-weight: bold; margin-top: 2px;"
+                    class="nav-link"
                   >
                   마이페이지
-                  </v-btn>
+                  </li>
                 </template>
                 <v-list>
                   <v-list-item
@@ -120,6 +117,7 @@ export default {
       { title: '예매내역 확인', to: '/purchaselist' },
       { title: '판매내역 관리', to: '/selllist' },
       { title: '회원정보 수정', to: '/updateprofile' },
+      { title: '비밀번호 변경', to: '/update/password' },
       { title: '로그아웃', to: '/logout' }
     ],
     biz_items: [
@@ -144,5 +142,7 @@ export default {
   #nav-icon {
     height: 40px;
     padding-right: 0.5rem;
+    margin: 0px;
+    padding: 0px;
   }
 </style>
