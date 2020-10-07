@@ -3,9 +3,6 @@
     <h-nav></h-nav>
     <div class="container" style="text-align: center;">
       <h3>관리자 공연등록 관리 상세 페이지</h3>
-      pid: {{ $route.params.pid }}
-      sid: {{ $route.params.sid }}
-      <br>
 
       <div id="contents">
         <!--공연 분류, 공연명-->
@@ -76,6 +73,7 @@ export default {
     }
   },
   created() {
+    console.log(this.performance_detail)
       axios
         .get(API_BASE_URL + '/api/performance/' + this.pid)
         .then(res => {
@@ -93,6 +91,8 @@ export default {
               this.performance_detail.category = "스포츠";
               break;
           }
+          // 포스터
+          this.performance_detail.poster = 'https://j3b101.p.ssafy.io/api/file/' + this.performance_detail.poster;
         })
         .catch(err => {
           console.log("created axios get method error!")
@@ -101,8 +101,8 @@ export default {
   methods: {
     // 공연등록 승인하기
     submitPerformance() {
-      confirm("등록을 승인하시겠습니까?");
-      if(confirm) {
+      var answer = confirm("등록을 승인하시겠습니까?");
+      if(answer) {
         axios
           .delete(API_BASE_URL + '/api/performance/submission/' + this.sid)
           .then(res => {

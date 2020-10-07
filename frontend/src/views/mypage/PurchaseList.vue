@@ -32,12 +32,10 @@
                   </tr>
               </tbody>
           </table>
-          <!--토큰 해결될 때까지 예매내역 상세정보 테스트할 링크-->
-          <!-- <td><router-link :to="{ name: 'purchasedetail', params: {tid: 1}}">ㅌㅅㅌ</router-link></td> -->
           <!--예매내역이 없을 경우 메세지 출력-->
-          <!-- <div v-show="msg" id="msg">
+          <div v-show="msg" id="msg">
             {{ this.msg }}
-          </div> -->
+          </div>
       </div>
       </div>
   </div>
@@ -92,6 +90,9 @@ export default {
           });
         })
         .catch(err => {
+          if(err.response.status === 404) { // if (list == null || list.isEmpty())인 경우
+            this.msg = "예매내역이 존재하지 않습니다.";
+          }
           console.log("created axios get method error!")
         })
   },
@@ -133,5 +134,9 @@ export default {
      margin-top: 100px;
      font-weight: bold;
      margin-bottom: 10px;
+ }
+ #msg {
+     padding: 30px 0;
+     background: #f2f2f2;
  }
 </style>

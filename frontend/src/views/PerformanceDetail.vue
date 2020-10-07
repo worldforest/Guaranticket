@@ -65,7 +65,7 @@
           </div>
 
           <v-dialog v-model="modal" max-width="80%">
-            <SelectSeat :modalData="modalData"></SelectSeat>
+            <SelectSeat :key="reloadKey" @test="test" :modalData="modalData"></SelectSeat>
           </v-dialog>
             
         </div>
@@ -97,24 +97,16 @@
 
         <div v-show="!this.tabs">
           <div>
-            <div>
-              <h4>공연장 정보</h4>
-                {{performance.place}}
-                <br>
-                {{performance.location}}으로 카카오map에서 검색하기
-            </div>
+            <h3>공연장 정보</h3>
+              <h4>{{performance.location}}</h4>
+              <h4>{{performance.place}}</h4>
+          </div>
             <br>
             <div id="map" tyle="display:none;">
-          </div>
-            <div>
-              <img
-                src="https://ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040002/10/11/0400021011_1941_1111.gif"
-                width="60%"
-                height="auto"
-                style="margin:50px; float:center;"
-                alt="공연 상세정보 포스터"/>
             </div>
-          </div>
+              <div v-show="message">
+                {{this.message}}
+              </div>
         </div>
       </div>
     </div>
@@ -153,6 +145,8 @@ export default {
         date: "",
         time: "",
       },
+      message: "",
+      reloadKey : 0,
     }
   },
   mounted() {
@@ -198,12 +192,18 @@ export default {
     },
   },
   methods: {
+    test(){
+      this.modal = false;
+      this.modalData.pid="";
+      this.modalData.time="";
+      this.modalData.date="";
+    },
     initMap() {
       var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
       var options = {
         //지도를 생성할 때 필요한 기본 옵션
         center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-        level: 4 //지도의 레벨(확대, 축소 정도)
+        level: 3 //지도의 레벨(확대, 축소 정도)
       };
       
       var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -216,18 +216,22 @@ export default {
         if (status === kakao.maps.services.Status.OK) {
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
             // 결과값으로 받은 위치를 마커로 표시합니다
-            // var marker = new kakao.maps.Marker({
-            //     map: map,
-            //     position: coords
-            // });
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: coords
+            });
             
-
+            container.style.width = '500px';
+            container.style.height = '400px';
+            container.style.margin='50px'; 
+            map.relayout();
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
-            container.style.width = '500px';
-            container.style.height = '400px'; 
-            map.relayout();
+            
         } 
+        else{
+          this.message="주소를 검색할 수 없습니다."
+        }
       });
     },
     formatDate (date) {
@@ -261,17 +265,9 @@ export default {
         this.modalData.pid=this.pid;
         this.modalData.date=this.selectDate;
         this.modalData.time=this.selectTime;
-        console.log(this.modalData)
+        this.reloadKey++;
 
       }
-      // this.$router.push({
-      //   name: 'selectSeat',
-      //   params: {
-      //     pid: this.pid,
-      //     date: this.selectDate,
-      //     time: this.selectTime
-      //   }
-      // })
     }
   }
 }

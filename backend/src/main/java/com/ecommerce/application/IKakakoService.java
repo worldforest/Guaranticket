@@ -7,5 +7,5 @@ public interface IKakakoService {
 	
 	String kakaoPayReady(Ticket ticket);
 	
-	KakaoPayApproval kakaoPayInfo(String pg_token);
+	KakaoPayApproval kakaoPayInfo(String pg_token, Ticket ticket);
 }

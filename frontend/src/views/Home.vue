@@ -24,8 +24,8 @@
     <!-- top 5 공연 포스터 -->
     <div id="main-poster" class="col-md-12">
       <div style="width:100%;">
-        <h2 style="float:left; width:60%; height:50px;">인기있는 공연 top5</h2>
-        <div style="margin-bottom:8px;float:right; width:40%;height:50px; padding-top:20px;text-align: right; ">
+        <h2 style="float:left; width:60%; height:50px;"><span style="color:#FF4155;">관심집중</span> 핫이슈</h2>
+        <div style="margin-bottom:8px;float:right; width:40%;height:50px;">
           <button @click="topFive(0)" >콘서트</button>
           <button @click="topFive(1)" >뮤지컬</button>
           <button @click="topFive(2)" >스포츠</button>
@@ -38,7 +38,7 @@
             style="cursor:pointer;"
             :src="item.poster"
             height="auto"
-            alt="인기 공연"
+            alt="최신 공연"
             @click="performanceDetail(item)"/>
           <v-card-title style="width:200px">
             <div class="fig-author">{{ item.title }}</div>

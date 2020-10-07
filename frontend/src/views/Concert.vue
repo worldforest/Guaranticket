@@ -1,26 +1,20 @@
 <template>
     <div>
         <h-nav></h-nav>
-        <div id="performance-overview" class="container">
-        <v-container>
-            <v-layout>
-                <v-flex>
-                    <h1>콘서트</h1>
-                </v-flex>
-            </v-layout>
-            <div class="container px-5 py-3">
+        <div style="margin: 10vmax 8vmin 0 8vmin ">
+            <h1>콘서트</h1>
+            <div style="margin: 2vmax 0 0 0; ">
                 <v-row>
                     <div v-for="(concert,i) in Concerts" :key="i">
                         <div v-if="concert.category == 0">
-                            <img :src="concert.poster" height="auto" max-width="100%" @click="performanceDetail(concert)" alt="콘서트">
-                            <div style="width:80%;">
+                            <img :src="concert.poster" height="400vmin" width="300vmin" @click="performanceDetail(concert)" alt="콘서트">
+                            <div>
                                 {{concert.title}}
                             </div>
                         </div>
                     </div>
                 </v-row>
             </div>
-        </v-container>
         </div>
     </div>
 </template>
