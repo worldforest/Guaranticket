@@ -36,7 +36,7 @@
         <v-card v-for="(item, i) in poster" :key="i">
           <img
             style="cursor:pointer;"
-            :src="item.poster"
+            :src="`https://j3b101.p.ssafy.io/api/file/${item.poster}`"
             height="auto"
             alt="최신 공연"
             @click="performanceDetail(item)"/>
@@ -82,7 +82,7 @@ export default {
         },
         {
           src: 'https://post-phinf.pstatic.net/MjAyMDA3MTVfMTc5/MDAxNTk0NzgyMjU3Njk1.sB2F1KobN9u47olZIDqVP4DhiPxJ7w0hHyO0e7EKnyEg.Qy8YeAC4u05XRlNsZltvIyaRVu-uo3AAddH3ENBFObMg.JPEG/2020_%EB%AE%A4%EC%A7%80%EC%BB%AC_%ED%82%B9%ED%82%A4%EB%B6%80%EC%B8%A0_%EB%94%B0%EB%A1%9C%EB%98%90%EA%B0%99%EC%9D%B4_%EC%BB%A8%EC%85%89%ED%8F%AC%EC%8A%A4%ED%84%B0_%28%EA%B0%80%EB%A1%9C%29.jpg?type=w1200',
-          title: '함게하는 순간, 삶이 짜릿해진다. 킹키부츠',
+          title: '함께하는 순간, 삶이 짜릿해진다. 킹키부츠',
         },
       ],
     }
@@ -112,7 +112,6 @@ export default {
     findAll(
       res => {
       this.poster=res.data;
-
       this.poster.forEach(post => {
         if(post.category==0){
           this.concert.push(post)

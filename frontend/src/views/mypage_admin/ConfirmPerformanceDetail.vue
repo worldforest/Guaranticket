@@ -77,7 +77,6 @@ export default {
       axios
         .get(API_BASE_URL + '/api/performance/' + this.pid)
         .then(res => {
-          console.log(res.data)
           this.performance_detail = res.data;
           // 공연 분류 번호에 따라 문자열로 변환
           switch(this.performance_detail.category) {
