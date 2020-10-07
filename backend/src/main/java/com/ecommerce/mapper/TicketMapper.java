@@ -14,4 +14,5 @@ public interface TicketMapper {
 	TicketDetail get(long tid);
 	long create(Ticket ticket);
 	int update(long tid, long uid);
+	Ticket getByTid(long tid);
 }

@@ -37,7 +37,7 @@
 		WHERE
 			permission = true
 		AND
-			date(ticketing_end_date) <![CDATA[ <= ]]> date(now())
+			date(ticketing_end_date) <![CDATA[ >= ]]> date(now())
 	</select>
 	
 	<select id="latestList" resultType="com.ecommerce.domain.Performance" resultMap="PerformanceSelectRM">
@@ -52,7 +52,7 @@
 			where 
 				p.permission = true
 			AND
-				date(p.ticketing_end_date) <![CDATA[ <= ]]> date(now())
+				date(p.ticketing_end_date) <![CDATA[ >= ]]> date(now())
 			) a
 		WHERE 
 			a.RN <![CDATA[ <= ]]> 5

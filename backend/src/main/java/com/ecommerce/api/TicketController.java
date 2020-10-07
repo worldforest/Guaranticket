@@ -83,8 +83,8 @@ public class TicketController
       model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token, ticket));
       Ticket tickets = ticketService.getByPidAndDateAndTimeAndSeatNumber(pid, date, time, seatNumber);
       
-       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist?pid="+tickets.getPid()+"&uid"+tickets.getUid());
-//       ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist?pid="+tickets.getPid()+"&uid"+tickets.getUid());
+//       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist?tid="+tickets.getTid()+"&uid="+tickets.getUid());
+       ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist?tid="+tickets.getTid()+"&uid"+tickets.getUid());
         return mav;
     }
    @ApiOperation(value = "공연(날짜+시간)별 예매 내역 검색")
@@ -116,5 +116,20 @@ public class TicketController
          throw new NotFoundException(tid + "의 티켓 정보를 찾을 수 없습니다.");
 
       return ticketDetail;
+   }
+   
+   @ApiOperation(value = "티켓에 스마트 컨트랙트 주소 등록")
+   @RequestMapping(value = "/ticket/contract/{tid}", method = RequestMethod.PUT)
+   public Ticket setContractAddress(@PathVariable long tid, @RequestBody Map<String, String> body) {
+	   String contractAddress = body.get("contractAddress");
+	   System.out.println(tid + " " + contractAddress);
+	   Ticket ticket = ticketService.getByTid(tid);
+	   System.out.println(ticket);
+	   ticket.setContractAddress(contractAddress);
+	   
+	   if (ticket == null)
+		   throw new NotFoundException(tid + "의 티켓 정보를 찾을 수 없습니다.");
+	   
+	   return ticket;
    }
 }
