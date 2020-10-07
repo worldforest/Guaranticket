@@ -38,8 +38,6 @@ public class KakakoService implements IKakakoService
 	
     private KakaoPayApproval kakaoPayApproval;	  
     
-    private Ticket ticket;
-    
     @Autowired
     private PerformanceMapper performanceMapper;
     
@@ -47,11 +45,9 @@ public class KakakoService implements IKakakoService
     private TicketMapper ticketmapper;
     
 	@Override
-	public String kakaoPayReady(Ticket tickets) {
+	public String kakaoPayReady(Ticket ticket) {
 		RestTemplate restTemplate = new RestTemplate();
-		ticket = tickets;
 		Performance performance = performanceMapper.get(ticket.getPid());
-		System.out.println(performance.toString());
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "KakaoAK " + "c400fcd2965f6b8ab5a7161d409e43de");
@@ -67,10 +63,12 @@ public class KakakoService implements IKakakoService
         params.add("quantity", "1");
         params.add("total_amount", ticket.getPrice());
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess");
+        params.add("approval_url", "https://j3b101.p.ssafy.io/api/kakaoPaySuccess"+"?pid="+ticket.getPid()+"&seatNumber="+ticket.getSeatNumber()+"&date="+ticket.getDate()+"&time="+ticket.getTime()
+        +"&uid="+ticket.getUid()+"&grade="+ticket.getGrade()+"&price="+ticket.getPrice());
         params.add("cancel_url", "https://j3b101.p.ssafy.io");
         params.add("fail_url", "https://j3b101.p.ssafy.io");
-//        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess");
+//        params.add("approval_url", "http://localhost:8080/api/kakaoPaySuccess"+"?pid="+ticket.getPid()+"&seatNumber="+ticket.getSeatNumber()+"&date="+ticket.getDate()+"&time="+ticket.getTime()
+//        +"&uid="+ticket.getUid()+"&grade="+ticket.getGrade()+"&price="+ticket.getPrice());
 //        params.add("cancel_url", "http://localhost:8081");
 //        params.add("fail_url", "http://localhost:8081");
         
@@ -92,7 +90,7 @@ public class KakakoService implements IKakakoService
         return "/pay";
 	}
 	
-	public KakaoPayApproval kakaoPayInfo(String pg_token) {
+	public KakaoPayApproval kakaoPayInfo(String pg_token, Ticket ticket) {
 		 
 		logger.info("KakaoPayInfo............................................");
 		logger.info("-----------------------------");
