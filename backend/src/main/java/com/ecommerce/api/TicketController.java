@@ -62,7 +62,7 @@ public class TicketController
 		}
 		
     }
-    @GetMapping("/kakaoPaySuccess")
+   	@RequestMapping("/kakaoPaySuccess")
     public ModelAndView kakaoPaySuccess(@RequestParam("pid") long pid,
     		@RequestParam("seatNumber") int seatNumber,@RequestParam("date") String date,
     		@RequestParam("time") String time,@RequestParam("grade") String grade,
@@ -70,7 +70,6 @@ public class TicketController
     		@RequestParam("pg_token") String pg_token, Model model) {
       logger.info("kakaoPaySuccess get............................................");
       logger.info("kakaoPaySuccess pg_token : " + pg_token);
-       
       Ticket ticket = new Ticket();
       ticket.setPid(pid);
       ticket.setSeatNumber(seatNumber);
@@ -83,19 +82,14 @@ public class TicketController
        //필수 
       model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token, ticket));
       Ticket tickets = ticketService.getByPidAndDateAndTimeAndSeatNumber(pid, date, time, seatNumber);
-      //      model.addAttribute("ticket", ticket);
-      model.addAttribute("pid", tickets.getPid());
-      model.addAttribute("uid", tickets.getUid());
       
-//       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist");
-       ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist");
+//       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist?pid="+tickets.getPid()+"&uid"+tickets.getUid());
+       ModelAndView mav = new ModelAndView("redirect:https://j3b101.p.ssafy.io/purchaselist?pid="+tickets.getPid()+"&uid"+tickets.getUid());
         return mav;
     }
    @ApiOperation(value = "공연(날짜+시간)별 예매 내역 검색")
    @RequestMapping(value = "/ticket/pid/{pid}/date/{date}/time/{time}", method = RequestMethod.GET)
-   public List<Ticket> getByPidAndDateAndTime(@PathVariable long pid,
-         @PathVariable String date,
-         @PathVariable String time) {
+   public List<Ticket> getByPidAndDateAndTime(@PathVariable long pid,@PathVariable String date,@PathVariable String time) {
       List<Ticket> list = ticketService.getByPidAndDateAndTime(pid,date,time);
       return list;
    }
