@@ -85,7 +85,6 @@ public class UserController {
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
 	public Object get(@PathVariable int id) {
 		User user = userService.get(id);
-		System.out.println(user);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
 			logger.error("NOT FOUND ID: ", id);

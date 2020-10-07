@@ -63,14 +63,14 @@ public class TicketService implements ITicketService
 
 	@Override
 	public TicketDetail update(long tid, long uid) {
-		// TODO Auto-generated method stub
 		int res = this.ticketMapper.update(tid, uid);
 		return this.get(tid);
 	}
 
 	@Override
 	public Ticket updateContract(long tid, String contractAddress) {
-		return this.ticketMapper.updateContract(tid, contractAddress);
+		int affected = this.ticketMapper.updateContract(tid, contractAddress);
+		return this.ticketMapper.getByTid(tid);
 	}
 
 

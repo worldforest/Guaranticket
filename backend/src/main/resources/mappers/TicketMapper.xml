@@ -108,11 +108,11 @@
 			tid = #{tid}
 	</update>
 	
-	<update id="updateContract" parameterType="Map" parameterMap="TicketSelectRM">
+	<update id="updateContract" parameterType="map">
 		UPDATE
 			tickets
 		SET
-			contractAddress = #{contractAddress}
+			contract_address = #{contractAddress}
 		WHERE
 			tid = #{tid}
 	</update>
