@@ -13,7 +13,7 @@
                       <th>날짜</th>
                       <th>회차(시간대)</th>
                       <th>좌석</th>
-                      <th>블록에 기록하기</th>
+                      <th>컨트랙트 주소</th>
                       <!-- <th>가격</th> -->
                   </tr>
               </thead>
@@ -63,16 +63,17 @@ export default {
   },
   created() {
     // 넘어온 uid와 pid가 있으면
-    if(Object.keys(this.$route.query).length > 0){
-      var uid = this.$route.query.uid;
-      var tid = this.$route.query.tid;
-      this.deployContract(tid, uid);
+      if(Object.keys(this.$route.query).length > 0){
+        var uid = this.$route.query.uid;
+        var tid = this.$route.query.tid;
+        this.deployContract(tid, uid);
 
-    }
+      }
 
       axios
         .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
         .then(res => {
+          console.log(res)
           res.data.forEach(ticket => {
             var seat = "";
             if(ticket.seatNumber > 18) {
@@ -139,6 +140,7 @@ export default {
           )
         },
         error => {
+          console.log(error)
           alert("스마트 컨트랙트 배포에 실패했습니다.");
         }
       )
