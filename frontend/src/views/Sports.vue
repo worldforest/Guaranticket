@@ -12,7 +12,8 @@
                 <v-row>
                     <div v-for="(sports,i) in Sports" :key="i">
                         <div v-if="sports.category == 2">
-                        <img :src="sports.poster" height="350" width="250" @click="performanceDetail(sports)" alt="스포츠">
+                        <img :src="`https://j3b101.p.ssafy.io/api/file/${sports.poster}`"
+                            height="350" width="250" @click="performanceDetail(sports)" alt="스포츠">
                         <figcaption>
                             <div class="fig-author">
                                 {{sports.title}}

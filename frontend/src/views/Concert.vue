@@ -7,7 +7,8 @@
                 <v-row>
                     <div v-for="(concert,i) in Concerts" :key="i">
                         <div v-if="concert.category == 0">
-                            <img :src="concert.poster" height="400vmin" width="300vmin" @click="performanceDetail(concert)" alt="콘서트">
+                            <img :src="`https://j3b101.p.ssafy.io/api/file/${concert.poster}`"
+                                height="400vmin" width="300vmin" @click="performanceDetail(concert)" alt="콘서트">
                             <div>
                                 {{concert.title}}
                             </div>
