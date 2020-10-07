@@ -66,6 +66,7 @@
                                         @keyup.enter="searchPlace"
                                         @click:append="searchPlace"
                                     ></v-text-field>
+                                    <div class="text-center" v-show="places.length==0">검색 결과가 없습니다.</div>
                                     <v-card
                                         v-for="(place, i) in places"
                                         :key="i"
@@ -520,7 +521,13 @@ export default {
                         places.push(place);
                     }
                 });
-                this.places = places;
+                if(places.length > 0){
+                    this.places = places;
+                }
+                else{
+                    this.places = [];
+                }
+                
             }       
         },
         upload(uploadFile, type) {

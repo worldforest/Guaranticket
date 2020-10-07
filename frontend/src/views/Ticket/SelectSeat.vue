@@ -35,19 +35,22 @@
           </v-row>
         </div>
         <div style="max-width:80%; margin:0 auto;">
-          <v-row v-for="i in 6" :key="i" style="max-width:100%; padding: auto;">
-            <v-col v-for="j in 6" :key="j" style="padding-left:0px; padding-right:0px;">
-              <v-btn color="#FF4155" disabled tile x-large v-if="check[(i-1)*6+j]==true"></v-btn>
-              <v-btn tile x-large v-else @click="selectSeat(i,j)">
-               {{String.fromCharCode(64+i)}} {{j}}
-              </v-btn>
-            </v-col>
-          </v-row>
+          <v-btn-toggle>
+            <v-row v-for="i in 6" :key="i" style="max-width:100%; padding: auto;">
+              <v-col v-for="j in 6" :key="j" style="padding-left:0px; padding-right:0px;">
+                <v-btn color="#FF4155" disabled tile x-large v-if="check[(i-1)*6+j]==true"></v-btn>
+                <v-btn tile x-large v-else @click="selectSeat(i,j)">
+                {{String.fromCharCode(64+j)}} {{i}}
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-btn-toggle>
         </div>
         <div style="justify-content: center; align-items: center;">
           <v-btn
             id="next-btn"
             color="#FF4155"
+            tile
             @click="e1 = 2, checkSeat()"
           >
             👉다음단계
@@ -206,6 +209,7 @@ export default {
       )
     },
     selectSeat(row, col){
+      console.log((row-1)*6+col);
       this.row=row;
       this.col=col;
 
@@ -251,5 +255,8 @@ export default {
   h4{
     font-size: 23px;
     /* padding-bottom: 10px ; */
+  }
+  .v-btn--active{
+    color:#FF4155;
   }
 </style>

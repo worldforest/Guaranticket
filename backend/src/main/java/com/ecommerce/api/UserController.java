@@ -149,7 +149,6 @@ public class UserController {
 	// 회원정보 수정 (비밀번호 미포함)
 	@RequestMapping(value = "/users", method = RequestMethod.PUT)
 	public Object update(@RequestBody User user, HttpServletRequest request) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Map<String, Object> result = new HashMap<>();
 		user = userService.update(user);
 		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
@@ -212,16 +211,19 @@ public class UserController {
 	// 비밀번호 찾기
 	@RequestMapping(value = "/users/sendemail", method = RequestMethod.POST)
 	public User sendEmail(@RequestBody User users) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		User user = userService.get(users.getEmail());
 		// 임시 비밀번호 생성 저장 변수
 		String userPwd = "";
+		String encryptPwd = "";
 		for (int i = 0; i < 12; i++) {
 			userPwd += (char) ((Math.random() * 26) + 97);
 		}
 		userPwd += (int) (Math.random() * 9) + 1;
+		encryptPwd = passwordEncoder.encode(userPwd);
 
 		// 임시비밀번호로 업데이트
-		user.setPassword(userPwd);
+		user.setPassword(encryptPwd);
 		userService.update(user);
 		
 		// 메일보내기
