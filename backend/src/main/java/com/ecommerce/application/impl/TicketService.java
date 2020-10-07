@@ -49,6 +49,11 @@ public class TicketService implements ITicketService
 		// TODO Auto-generated method stub
 		return this.TicketMapper.get(tid);
 	}
+	
+	@Override
+	public Ticket getByTid(long tid) {
+		return this.TicketMapper.getByTid(tid);
+	}
 
 	@Override
 	public List<Ticket> getByPidAndDateAndTime(long pid, String date, String time) {

@@ -45,6 +45,7 @@
 import HNav from "@/components/common/HNav";
 import axios from "axios";
 import { API_BASE_URL } from "@/config";
+import { setContratAddress } from "../../api/ticket.js";
 
 import Web3 from "web3";
 import { ADMIN_ACCOUNT, ADMIN_ACCOUNT_PRIVATE_KEY, KEY_VALUE_DATA, BLOCKCHAIN_URL } from '../../config';
@@ -61,6 +62,14 @@ export default {
       }
   },
   created() {
+    // 넘어온 uid와 pid가 있으면
+    if(Object.keys(this.$route.query).length > 0){
+      var uid = this.$route.query.uid;
+      var tid = this.$route.query.tid;
+      this.deployContract(tid, uid);
+
+    }
+
       axios
         .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
         .then(res => {
@@ -97,8 +106,9 @@ export default {
         })
   },
   methods : {
-    async deployContract(ticket){
-      console.log(ticket)
+    async deployContract(tid, uid){
+      console.log(tid);
+      console.log(uid);
       var web3 = new Web3(BLOCKCHAIN_URL);
       var keyvaluestoreContract = new web3.eth.Contract(KEY_VALUE_ABI);
       var keyvaluestore = keyvaluestoreContract.deploy({data:KEY_VALUE_DATA});
@@ -108,22 +118,36 @@ export default {
       }
       var signedTransaction = await web3.eth.accounts.signTransaction(options, ADMIN_ACCOUNT_PRIVATE_KEY);
       var hash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
-      ticket["contractAddress"] = hash.contractAddress;
-      console.log(ticket)
       keyvaluestoreContract.options.address = hash.contractAddress;
-      keyvaluestoreContract.methods.setValue(ticket.tid+"", ticket.uid+"").send(
-        {from : ADMIN_ACCOUNT}
-      ).then(
+      console.log(hash.contractAddress)
+      setContratAddress(tid, hash.contractAddress,
         response => {
-          console.log(response)
-          keyvaluestoreContract.methods.getValue1(0).call(
+          console.log(response);
+          keyvaluestoreContract.methods.setValue(tid+"", uid+"").send(
             {from : ADMIN_ACCOUNT}
-          ).then(console.log)
-          keyvaluestoreContract.methods.getValue2(0).call(
-            {from : ADMIN_ACCOUNT}
-          ).then(console.log)
+          ).then(
+            response => {
+              console.log(response)
+              keyvaluestoreContract.methods.getValue1(0).call(
+                {from : ADMIN_ACCOUNT}
+              ).then(console.log)
+              keyvaluestoreContract.methods.getValue2(0).call(
+                {from : ADMIN_ACCOUNT}
+              ).then(console.log)
+              alert("티켓 등록이 완료되었습니다.");
+            }
+          )
+        },
+        error => {
+          alert("스마트 컨트랙트 배포에 실패했습니다.");
         }
       )
+      
+      // ticket["contractAddress"] = hash.contractAddress;
+
+
+
+
     },
   },
 }

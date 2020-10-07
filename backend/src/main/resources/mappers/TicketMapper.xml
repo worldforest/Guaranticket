@@ -89,6 +89,15 @@
 			a.uid = #{uid};
 	</select>
 	
+	<select id="getByTid" parameterType="Long" resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
+		SELECT
+			*
+		FROM 
+			ticket
+		WHERE 
+			tid = #{tid};
+	</select>
+	
 	<update id="update" parameterType="long">
 		UPDATE
 			tickets

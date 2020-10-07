@@ -111,6 +111,7 @@ export default {
   created() {
     findAll(
       res => {
+        console.log(res.data)
       this.poster=res.data;
 
       this.poster.forEach(post => {

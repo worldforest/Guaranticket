@@ -31,11 +31,11 @@
           <v-row>
           <v-col><h4>날짜 | {{this.date}}</h4></v-col>
           <v-col><h4>시간 | {{this.time}}</h4></v-col>
-          <v-col><h4 v-if="this.row!=''">선택한 좌석 | {{String.fromCharCode(64+row)}}행 {{this.col}}열</h4></v-col>
+          <v-col><h4 v-if="this.row!=''">선택한 좌석 | {{String.fromCharCode(64+col)}}행 {{this.row}}열</h4></v-col>
           </v-row>
         </div>
         <div style="max-width:80%; margin:0 auto;">
-          <v-btn-toggle>
+          <v-btn-toggle mandatory>
             <v-row v-for="i in 6" :key="i" style="max-width:100%; padding: auto;">
               <v-col v-for="j in 6" :key="j" style="padding-left:0px; padding-right:0px;">
                 <v-btn color="#FF4155" disabled tile x-large v-if="check[(i-1)*6+j]==true"></v-btn>

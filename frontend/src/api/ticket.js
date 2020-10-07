@@ -34,12 +34,12 @@ function ticketDetail(tid, success,fail){
     .catch(fail);
 }
 
-function setContratAddress(contractAddress, success,fail){
+function setContratAddress(tid, contractAddress, success, fail){
     const param = {
         contractAddress : contractAddress
     };
     instance
-    .put("/api/ticket/contract", JSON.stringify(param), config)
+    .put("/api/ticket/contract/" + tid, JSON.stringify(param), config)
     .then(success)
     .catch(fail);
 }
