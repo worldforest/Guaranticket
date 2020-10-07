@@ -93,12 +93,22 @@
 		SELECT
 			*
 		FROM 
-			ticket
+			tickets
 		WHERE 
 			tid = #{tid};
 	</select>
 	
 	<update id="update" parameterType="long">
+		UPDATE
+			tickets
+		SET
+			trading = true,
+			uid = #{uid}
+		WHERE
+			tid = #{tid}
+	</update>
+	
+	<update id="updateContract" parameterType="long" resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
 		UPDATE
 			tickets
 		SET

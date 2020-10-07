@@ -123,9 +123,9 @@ public class TicketController
    public Ticket setContractAddress(@PathVariable long tid, @RequestBody Map<String, String> body) {
 	   String contractAddress = body.get("contractAddress");
 	   System.out.println(tid + " " + contractAddress);
-	   Ticket ticket = ticketService.getByTid(tid);
-	   System.out.println(ticket);
-	   ticket.setContractAddress(contractAddress);
+//	   Ticket ticket = ticketService.getByTid(tid);
+//	   ticket.setContractAddress(contractAddress);
+	   Ticket ticket = ticketService.updateContract(tid, contractAddress);
 	   
 	   if (ticket == null)
 		   throw new NotFoundException(tid + "의 티켓 정보를 찾을 수 없습니다.");

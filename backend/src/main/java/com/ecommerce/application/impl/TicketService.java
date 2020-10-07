@@ -18,54 +18,59 @@ public class TicketService implements ITicketService
 	public static final Logger logger = LoggerFactory.getLogger(TicketService.class);
 
 	@Autowired
-	private TicketMapper TicketMapper;
+	private TicketMapper ticketMapper;
 	
 	@Override
 	public Ticket getByPidAndDateAndTimeAndSeatNumber(long pid, String date, String time, int seatNumber) {
 		// TODO Auto-generated method stub
-		return this.TicketMapper.getByPidAndDateAndTimeAndSeatNumber(pid, date, time, seatNumber);
+		return this.ticketMapper.getByPidAndDateAndTimeAndSeatNumber(pid, date, time, seatNumber);
 	}
 	
 	@Override
 	public List<TicketList> getByUid(long uid) {
-		System.out.println(this.TicketMapper.getByUid(uid));
-		return this.TicketMapper.getByUid(uid);
+		System.out.println(this.ticketMapper.getByUid(uid));
+		return this.ticketMapper.getByUid(uid);
 	}
 
 	@Override
 	public TicketDetail create(Ticket ticket) {
-		long tid = this.TicketMapper.create(ticket);
-		return this.TicketMapper.get(tid);
+		long tid = this.ticketMapper.create(ticket);
+		return this.ticketMapper.get(tid);
 	}
 
 	@Override
 	public List<Ticket> getByPid(long pid) {
 		// TODO Auto-generated method stub
-		return this.TicketMapper.getByPid(pid);
+		return this.ticketMapper.getByPid(pid);
 	}
 
 	@Override
 	public TicketDetail get(long tid) {
 		// TODO Auto-generated method stub
-		return this.TicketMapper.get(tid);
+		return this.ticketMapper.get(tid);
 	}
 	
 	@Override
 	public Ticket getByTid(long tid) {
-		return this.TicketMapper.getByTid(tid);
+		return this.ticketMapper.getByTid(tid);
 	}
 
 	@Override
 	public List<Ticket> getByPidAndDateAndTime(long pid, String date, String time) {
 		// TODO Auto-generated method stub
-		return this.TicketMapper.getByPidAndDateAndTime(pid, date, time);
+		return this.ticketMapper.getByPidAndDateAndTime(pid, date, time);
 	}
 
 	@Override
 	public TicketDetail update(long tid, long uid) {
 		// TODO Auto-generated method stub
-		int res = this.TicketMapper.update(tid, uid);
+		int res = this.ticketMapper.update(tid, uid);
 		return this.get(tid);
+	}
+
+	@Override
+	public Ticket updateContract(long tid, String contractAddress) {
+		return this.ticketMapper.updateContract(tid, contractAddress);
 	}
 
 

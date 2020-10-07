@@ -19,4 +19,5 @@ public interface ITicketService {
 	@Transactional
 	TicketDetail update(long tid, long uid);
 	Ticket getByTid(long tid);
+	Ticket updateContract(long tid, String contractAddress);
 }

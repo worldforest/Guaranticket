@@ -120,7 +120,7 @@ export default {
       var hash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
       keyvaluestoreContract.options.address = hash.contractAddress;
       console.log(hash.contractAddress)
-      setContratAddress(tid, hash.contractAddress,
+      await setContratAddress(tid, hash.contractAddress,
         response => {
           console.log(response);
           keyvaluestoreContract.methods.setValue(tid+"", uid+"").send(

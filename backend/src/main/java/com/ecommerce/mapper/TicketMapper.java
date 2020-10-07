@@ -15,4 +15,5 @@ public interface TicketMapper {
 	long create(Ticket ticket);
 	int update(long tid, long uid);
 	Ticket getByTid(long tid);
+	Ticket updateContract(long tid, String contractAddress);
 }
