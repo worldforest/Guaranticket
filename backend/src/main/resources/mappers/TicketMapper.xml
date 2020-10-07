@@ -98,7 +98,7 @@
 			tid = #{tid};
 	</select>
 	
-	<update id="update" parameterType="long">
+	<update id="update" parameterType="Long">
 		UPDATE
 			tickets
 		SET
@@ -108,12 +108,11 @@
 			tid = #{tid}
 	</update>
 	
-	<update id="updateContract" parameterType="long" resultType="com.ecommerce.domain.Ticket" resultMap="TicketSelectRM">
+	<update id="updateContract" parameterType="Map" parameterMap="TicketSelectRM">
 		UPDATE
 			tickets
 		SET
-			trading = true,
-			uid = #{uid}
+			contractAddress = #{contractAddress}
 		WHERE
 			tid = #{tid}
 	</update>
