@@ -35,6 +35,7 @@
         <v-row>
         <v-card v-for="(item, i) in poster" :key="i">
           <img
+            style="cursor:pointer;"
             :src="item.poster"
             height="auto"
             alt="최신 공연"
