@@ -5,7 +5,7 @@
       <h1>{{ performance.title }}</h1>
       <v-row style="padding:10px;">
           <img
-            :src="performance.poster"
+            :src="`https://j3b101.p.ssafy.io/api/file/${performance.poster}`"
             height="400px"
             alt="공연 포스터"/>
           <figcaption style="margin:10px 10px;">
@@ -87,7 +87,7 @@
           </div>
           <div>
             <img
-              :src="performance.detail"
+              :src="`https://j3b101.p.ssafy.io/api/file/${performance.detail}`"
               width="60%"
               height="auto"
               style="margin:50px; float:center;"
@@ -164,7 +164,7 @@ export default {
     findById(
       pid,
       res => {
-        this.performance = res.data
+        this.performance = res.data;
         this.min=this.performance.startDate;
         this.max=this.performance.endDate;
         this.date=this.min;

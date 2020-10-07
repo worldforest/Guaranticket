@@ -12,7 +12,8 @@
                 <v-row>
                     <div v-for="(musical,i) in Musicals" :key="i">
                         <div v-if="musical.category == 1">
-                            <img :src="musical.poster" height="auto" max-width="100%" @click="performanceDetail(musical)" alt="뮤지컬">
+                            <img :src="`https://j3b101.p.ssafy.io/api/file/${musical.poster}`"
+                                height="auto" max-width="100%" @click="performanceDetail(musical)" alt="뮤지컬">
                             <div style="width:50%;">
                                 {{musical.title}}
                             </div>
