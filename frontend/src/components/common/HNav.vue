@@ -205,10 +205,10 @@ export default {
           // console.log(response)
           keyvaluestoreContract.methods.getValue1(0).call(
             {from : ADMIN_ACCOUNT}
-          ).then(// console.log)
+          ).then()
           keyvaluestoreContract.methods.getValue2(0).call(
             {from : ADMIN_ACCOUNT}
-          ).then(// console.log)
+          ).then()
         }
       )
     },
