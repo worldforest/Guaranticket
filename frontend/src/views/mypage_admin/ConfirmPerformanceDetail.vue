@@ -73,7 +73,7 @@ export default {
     }
   },
   created() {
-    console.log(this.performance_detail)
+    // console.log(this.performance_detail)
       axios
         .get(API_BASE_URL + '/api/performance/' + this.pid)
         .then(res => {
@@ -94,7 +94,7 @@ export default {
           this.performance_detail.poster = 'https://j3b101.p.ssafy.io/api/file/' + this.performance_detail.poster;
         })
         .catch(err => {
-          console.log("created axios get method error!")
+          // console.log("created axios get method error!")
         })
   },
   methods: {
@@ -110,7 +110,7 @@ export default {
             this.$router.push("/confirmperformance");
           })
           .catch(err => {
-            console.log("axios delete performance submit method error!")
+            // console.log("axios delete performance submit method error!")
           })
       }
     }

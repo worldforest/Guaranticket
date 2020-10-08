@@ -31,7 +31,7 @@ export default new Vuex.Store({
     // getAllPerform(state, response){
     //   state.concert = response;
     //   allPerform=response;
-    //   console.log(response)
+    //   // console.log(response)
     // }
   },
   actions: {},

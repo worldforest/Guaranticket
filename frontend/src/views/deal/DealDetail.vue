@@ -83,7 +83,7 @@ export default {
             break;
         }
         // 좌석의 행,열 구하기
-        // console.log("처리 전:" + this.deal_detail.seatNumber)
+        // // console.log("처리 전:" + this.deal_detail.seatNumber)
         if(this.deal_detail.seatNumber > 18) {
           this.deal_detail.seatNumber -= 18;
         }
@@ -96,7 +96,7 @@ export default {
         this.deal_detail.price = Number(this.deal_detail.price).toLocaleString();
       })
       .catch(err => {
-        console.log("created axios get method error!")
+        // console.log("created axios get method error!")
       })
   },
   computed: {

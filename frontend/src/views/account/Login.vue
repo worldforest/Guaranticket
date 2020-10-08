@@ -133,11 +133,11 @@ export default {
           else{
             alert("유저 이메일 혹은 비밀번호가 일치하지 않습니다.");
           }
-            // console.log(this.user.email)
+            // // console.log(this.user.email)
 
           // findByEmail(this.user.email, 
           //   response => {
-          //     console.log(response);
+          //     // console.log(response);
           //   },
           //   error => {
 

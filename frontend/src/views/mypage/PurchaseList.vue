@@ -26,7 +26,7 @@
                       <td>{{ item.date }}</td>
                       <td>{{ item.time }}</td>
                       <td>{{ item.grade }}석 {{ item.seat }}</td>
-                      <td v-if="!!item.contractAddress">{{ item.contractAddress }}</td>
+                      <td v-if="!!item.contractAddress"><router-link :to="{ name: 'blockchaintest', params: {ticket:item}}">{{ item.contractAddress }}</router-link></td>
                       <td v-else>
                         <v-progress-circular
                           indeterminate
@@ -79,7 +79,7 @@ export default {
       axios
         .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
         .then(res => {
-          console.log(res)
+          // // console.log(res)
           res.data.forEach(ticket => {
             var seat = "";
             if(ticket.seatNumber > 18) {
@@ -109,13 +109,13 @@ export default {
           if(err.response.status === 404) { // if (list == null || list.isEmpty())인 경우
             this.msg = "예매내역이 존재하지 않습니다.";
           }
-          console.log("created axios get method error!")
+          // console.log("created axios get method error!")
         })
   },
   methods : {
     async deployContract(tid, uid){
-      console.log(tid);
-      console.log(uid);
+      // // console.log(tid);
+      // // console.log(uid);
       var web3 = new Web3(BLOCKCHAIN_URL);
       var keyvaluestoreContract = new web3.eth.Contract(KEY_VALUE_ABI);
       var keyvaluestore = keyvaluestoreContract.deploy({data:KEY_VALUE_DATA});
@@ -126,26 +126,26 @@ export default {
       var signedTransaction = await web3.eth.accounts.signTransaction(options, ADMIN_ACCOUNT_PRIVATE_KEY);
       var hash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
       keyvaluestoreContract.options.address = hash.contractAddress;
-      console.log(hash.contractAddress)
+      // // console.log(hash.contractAddress)
       setContratAddress(tid, hash.contractAddress,
         response => {
-          console.log(response);
+          // // console.log(response);
           keyvaluestoreContract.methods.setValue(tid+"", uid+"").send(
             {from : ADMIN_ACCOUNT}
           ).then(
             response => {
-              console.log(response)
+              // // console.log(response)
               keyvaluestoreContract.methods.getValue1(0).call(
                 {from : ADMIN_ACCOUNT}
-              ).then(console.log)
+              ).then()
               keyvaluestoreContract.methods.getValue2(0).call(
                 {from : ADMIN_ACCOUNT}
-              ).then(console.log)
+              ).then()
                     axios
                       .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
                       .then(res => {
                         this.purchase_list = [];
-                        console.log(res)
+                        // // console.log(res)
                         res.data.forEach(ticket => {
                           var seat = "";
                           if(ticket.seatNumber > 18) {
@@ -177,7 +177,7 @@ export default {
           )
         },
         error => {
-          console.log(error)
+          // console.log(error)
           alert("스마트 컨트랙트 배포에 실패했습니다.");
         }
       )
