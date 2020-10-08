@@ -27,7 +27,13 @@
                       <td>{{ item.time }}</td>
                       <td>{{ item.grade }}석 {{ item.seat }}</td>
                       <td v-if="!!item.contractAddress">{{ item.contractAddress }}</td>
-                      <td v-else><v-btn @click="deployContract(item)" color="success">기록하기</v-btn></td>
+                      <td v-else>
+                        <v-progress-circular
+                          indeterminate
+                          color="red"
+                        ></v-progress-circular>
+                        <p class="mb-0 red--text">컨트랙트 배포중입니다. 잠시만 기다려주세요.</p>
+                      </td>
                       <!-- <td>{{ item.price }}원</td> -->
                   </tr>
               </tbody>
@@ -135,7 +141,38 @@ export default {
               keyvaluestoreContract.methods.getValue2(0).call(
                 {from : ADMIN_ACCOUNT}
               ).then(console.log)
-              alert("티켓 등록이 완료되었습니다.");
+                    axios
+                      .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
+                      .then(res => {
+                        this.purchase_list = [];
+                        console.log(res)
+                        res.data.forEach(ticket => {
+                          var seat = "";
+                          if(ticket.seatNumber > 18) {
+                            ticket.seatNumber -= 18;
+                          }
+                          if(ticket.seatNumber % 6 == 0) { // 6의 배수일 때
+                            seat = (ticket.seatNumber/6) + "행 6열";
+                          } else {
+                            seat = parseInt(ticket.seatNumber/6)+1 + "행 " + (ticket.seatNumber%6) + "열";
+                          }
+                          ticket["seat"] = seat;
+                          switch (ticket.category) {
+                            case "0":
+                              ticket.category = '콘서트';
+                              break;
+                            case "1":
+                              ticket.category = '뮤지컬';
+                              break;
+                            case "2":
+                              ticket.category = '스포츠';
+                              break;
+                          }
+                          this.purchase_list.push(ticket);
+                        })
+                        alert("티켓 등록이 완료되었습니다.");
+                      }
+                    )
             }
           )
         },

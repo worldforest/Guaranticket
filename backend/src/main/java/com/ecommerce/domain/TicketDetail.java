@@ -15,6 +15,7 @@ public class TicketDetail
 	private String price;
 	private String category;
 	private String title;
+	private String contractAddress;
 	private String place;
 	private String poster;
 	private boolean trading;
