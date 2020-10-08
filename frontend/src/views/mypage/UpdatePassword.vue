@@ -37,8 +37,10 @@
                         ></v-text-field>
                     </v-col>
                 </v-row>
-                <v-btn @click="$router.go(-1)" class="mx-3 mb-3 action_btn" large width="30%" color="grey lighten-2">취소</v-btn>
-                <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">변경하기</v-btn>
+                <div style="padding-left: 120px;">
+                    <v-btn @click="$router.go(-1)" class="mx-3 mb-3 action_btn" large width="30%" color="grey lighten-2">취소</v-btn>
+                    <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">변경하기</v-btn>
+                </div>
            
             </v-form>
       </div>

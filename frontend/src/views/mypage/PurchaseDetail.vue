@@ -9,7 +9,7 @@
         <h4><span style="color: #FF4155">{{ purchase_detail.category }}</span> {{ purchase_detail.title }}</h4>
         <!--공연 포스터-->
         <div id="poster">
-          <img :src="purchase_detail.poster" style="width: 218px;">
+          <img :src="`https://j3b101.p.ssafy.io/api/file/${purchase_detail.poster}`" style="width: 218px;">
         </div>
         <!--공연 상세정보-->
         <div id="detail">
@@ -41,7 +41,7 @@
       </div>
 
       <!--버튼-->
-      <div id="buttons" style="margin-top: 50px;">
+      <div id="buttons" style="margin-top: 30px; margin-left: 530px;">
         <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="15%" color="grey lighten-2">목록으로</v-btn>
         <!-- <v-btn @click="dealRegister()" class="mx-3 mb-3 white--text" large width="15%" color="#FF4155">거래 등록</v-btn> -->
       </div>

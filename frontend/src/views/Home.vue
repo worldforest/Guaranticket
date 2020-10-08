@@ -22,22 +22,22 @@
       </div>
     </div>
     <!-- top 5 공연 포스터 -->
-    <div id="main-poster" class="col-md-12">
+    <div id="main-poster" class="col-md-12" style="margin-left: 80px;">
       <div style="width:100%;">
-        <h2 style="float:left; width:60%; height:50px;"><span style="color:#FF4155;">관심집중</span> 핫이슈</h2>
-        <div style="margin-bottom:8px;float:right; width:40%;height:50px;">
+        <h2 style="float:left; width:60%; height:50px;"><span style="color:#FF4155; margin-left: 180px;">관심집중</span> 핫이슈</h2>
+        <div style="margin-bottom:8px; float:right; width:40%; height:50px;">
           <button @click="topFive(0)" >콘서트</button>
           <button @click="topFive(1)" >뮤지컬</button>
           <button @click="topFive(2)" >스포츠</button>
         </div>
       </div>
-      <div class="flex-container" style="max-width:100%; height:auto;">
+      <div class="flex-container" style="width: 1000px; height:auto; margin-left: 230px;">
         <v-row>
         <v-card v-for="(item, i) in poster" :key="i">
           <img
             style="cursor:pointer;"
             :src="`https://j3b101.p.ssafy.io/api/file/${item.poster}`"
-            height="auto"
+            height="280px" width="218px"
             alt="최신 공연"
             @click="performanceDetail(item)"/>
           <v-card-title style="width:200px">

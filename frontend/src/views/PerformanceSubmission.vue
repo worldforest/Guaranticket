@@ -368,12 +368,12 @@
                 </v-row>
 
                 <v-divider></v-divider>
-                <v-row justify="center">
+                <div style="margin-left: 130px;">
                     <v-col>
                         <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
                         <v-btn @click="submit" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">등록하기</v-btn>
                     </v-col>
-                </v-row>
+                </div>
 
         </v-form>
      </v-container>

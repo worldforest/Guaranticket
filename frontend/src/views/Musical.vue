@@ -1,27 +1,23 @@
 <template>
     <div>
         <h-nav></h-nav>
-        <div id="performance-overview" class="container">
-        <v-container>
-            <v-layout>
-                <v-flex>
-                    <h1>뮤지컬</h1>
-                </v-flex>
-            </v-layout>
+        <div id="performance-overview" class="container" style="padding-left: 200px;">
+            <h1>뮤지컬</h1>
             <div class="container px-5 py-3">
                 <v-row>
                     <div v-for="(musical,i) in Musicals" :key="i">
                         <div v-if="musical.category == 1">
                             <img :src="`https://j3b101.p.ssafy.io/api/file/${musical.poster}`"
-                                height="auto" max-width="100%" @click="performanceDetail(musical)" alt="뮤지컬">
-                            <div style="width:50%;">
-                                {{musical.title}}
+                                style="cursor:pointer;"
+                                height="280px" width="218px"
+                                @click="performanceDetail(musical)" alt="뮤지컬">
+                            <div style="width:218px; height:100px; font-size: 18px;">
+                                {{ musical.title }}
                             </div>
                         </div>
                     </div>
                 </v-row>
             </div>
-        </v-container>
         </div>
     </div>
 </template>

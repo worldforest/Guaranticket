@@ -64,7 +64,7 @@
         <div>
           <v-row>
             <v-img
-            :src="this.performance.poster"
+            :src="`https://j3b101.p.ssafy.io/api/file/${this.performance.poster}`"
             max-width="30%"
             height="auto"
             style="padding:0px; margin:0px;"
