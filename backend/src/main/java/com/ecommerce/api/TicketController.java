@@ -83,7 +83,7 @@ public class TicketController {
 
 //       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist?tid="+tickets.getTid()+"&uid="+tickets.getUid());
 		ModelAndView mav = new ModelAndView(
-				"redirect:https://j3b101.p.ssafy.io/purchaselist?tid=" + tickets.getTid() + "&uid" + tickets.getUid());
+				"redirect:https://j3b101.p.ssafy.io/purchaselist?tid=" + tickets.getTid() + "&uid=" + tickets.getUid());
 		return mav;
 	}
 
