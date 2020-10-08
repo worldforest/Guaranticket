@@ -87,11 +87,11 @@ export default {
                         this.user = response.data.data;
                     },
                     error =>{
-                        console.log(error);
+                        // console.log(error);
                     })
             },
             error => {
-                console.log(error);
+                // console.log(error);
             }
         )
     },
@@ -118,7 +118,7 @@ export default {
                     }
                 },
                 error => {
-                    console.log(error);
+                    // console.log(error);
                 }
             )
         }

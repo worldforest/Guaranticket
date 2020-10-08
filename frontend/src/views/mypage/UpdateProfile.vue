@@ -254,11 +254,11 @@ export default {
               this.email2 = email.split('@')[1];
             },
             error => {
-              console.log(error)
+              // console.log(error)
             })
         },
         error => {
-          console.log(error)
+          // console.log(error)
         }
       )
   },
@@ -270,7 +270,7 @@ export default {
           this.$router.push("/");
         },
         error => {
-          console.log(error);
+          // console.log(error);
         }
       )
     }

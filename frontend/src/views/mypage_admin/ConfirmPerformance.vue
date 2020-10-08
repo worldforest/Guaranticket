@@ -69,7 +69,7 @@ export default {
                   this.performance_list.push(res.data);
                 })
                 .catch(err => {
-                  console.log("공연정보 get error!")
+                  // console.log("공연정보 get error!")
                 })
               // 신청자 정보
               axios
@@ -78,14 +78,14 @@ export default {
                   this.user_list.push(res.data);
                 })
                 .catch(err => {
-                  console.log("신청자 정보 get error!")
+                  // console.log("신청자 정보 get error!")
                 })
             }
           }
-          console.log(this.performance_list)
+          // console.log(this.performance_list)
         })
         .catch(err => {
-          console.log("created axios get method error!")
+          // console.log("created axios get method error!")
         })
   },
 }

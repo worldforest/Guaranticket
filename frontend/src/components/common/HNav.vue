@@ -161,11 +161,11 @@ export default {
               this.email2 = email.split('@')[1];
             },
             error => {
-              console.log(error)
+              // console.log(error)
             })
         },
         error => {
-          console.log(error)
+          // console.log(error)
         }
       )
     }
@@ -178,12 +178,12 @@ export default {
       var contract = new web3.eth.Contract(KEY_VALUE_ABI, address);
       contract.methods.getValue1(0).call().then(
         // TO-DO : 티켓 아이디
-        console.log
+        // console.log
       );
       
       contract.methods.getValue2(0).call().then(
         // TO-DO : 유저 아이디
-        console.log
+        // console.log
       );
       
     },
@@ -202,13 +202,13 @@ export default {
         {from : ADMIN_ACCOUNT}
       ).then(
         response => {
-          console.log(response)
+          // console.log(response)
           keyvaluestoreContract.methods.getValue1(0).call(
             {from : ADMIN_ACCOUNT}
-          ).then(console.log)
+          ).then(// console.log)
           keyvaluestoreContract.methods.getValue2(0).call(
             {from : ADMIN_ACCOUNT}
-          ).then(console.log)
+          ).then(// console.log)
         }
       )
     },

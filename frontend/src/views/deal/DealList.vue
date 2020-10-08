@@ -80,7 +80,7 @@ export default {
             if(err.response.status === 404) { // if (list == null || list.isEmpty())인 경우
                 this.msg = "거래 중인 티켓이 없습니다.";
             } else {
-                console.log("created axios get method error!")
+                // console.log("created axios get method error!")
             }
         })
   },

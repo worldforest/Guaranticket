@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     setFlow() {
-      console.log("setFlow 실행: ", this.history);
+      // console.log("setFlow 실행: ", this.history);
       if (this.history.filter(h => h.state === "Cancelled").length === 1) {
         this.isCancelled = true;
         this.activeCount = 1;
@@ -72,7 +72,7 @@ export default {
   },
   watch: {
     history() {
-      console.log("History 변경됨");
+      // console.log("History 변경됨");
       this.setFlow();
     },
   }

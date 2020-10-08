@@ -69,7 +69,7 @@ export default {
       .post('https://toss.im/transfer-web/linkgen-api/link',body) 
       .then(
         res => { 
-          console.log(res.data.success.link);
+          // console.log(res.data.success.link);
           this.saveMessage(res.data.success.link);
       })
     },
