@@ -2,18 +2,16 @@ package com.ecommerce.application.impl;
 
 import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.domain.Performance;
-import com.ecommerce.domain.PerformanceAllData;
+import com.ecommerce.domain.PerformanceDetail;
 import com.ecommerce.domain.PerformanceDate;
 import com.ecommerce.domain.PerformancePrice;
-import com.ecommerce.domain.repository.IPerformanceDateRepository;
-import com.ecommerce.domain.repository.IPerformancePriceRepository;
-import com.ecommerce.domain.repository.IPerformanceRepository;
-import com.ecommerce.domain.repository.IPerformanceSubmissionRepository;
-
-import java.sql.Time;
+import com.ecommerce.domain.PerformanceSubmission;
+import com.ecommerce.mapper.PerformanceDateMapper;
+import com.ecommerce.mapper.PerformanceMapper;
+import com.ecommerce.mapper.PerformancePriceMapper;
+import com.ecommerce.mapper.PerformanceSubmissionMapper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,46 +27,40 @@ public class PerformanceService implements IPerformanceService
 {
 	public static final Logger logger = LoggerFactory.getLogger(PerformanceService.class);
 
-	private IPerformanceRepository iPerformanceRepository;
-	private IPerformanceSubmissionRepository iPerformanceSubmissionRepository;
-	private IPerformancePriceRepository iPerformancePriceRepository;
-	private IPerformanceDateRepository iPerformanceDateRepository;
-	
 	@Autowired
-	public PerformanceService(IPerformanceRepository iPerformanceRepository,
-			IPerformanceSubmissionRepository iPerformanceSubmissionRepository,
-			IPerformancePriceRepository iPerformancePriceRepository,
-			IPerformanceDateRepository iPerformanceDateRepository) {
-		
-		this.iPerformanceRepository = iPerformanceRepository;
-		this.iPerformanceSubmissionRepository = iPerformanceSubmissionRepository;
-		this.iPerformancePriceRepository = iPerformancePriceRepository;
-		this.iPerformanceDateRepository = iPerformanceDateRepository;
-	}
+	private PerformanceMapper performanceMapper;
+	@Autowired
+	private PerformanceDateMapper performanceDateMapper;
+	@Autowired
+	private PerformancePriceMapper performancePriceMapper;
+	@Autowired
+	private PerformanceSubmissionMapper performanceSubmissionMapper;
+	
 	@Override
 	public List<Performance> latestList() {
-		return this.iPerformanceRepository.latestList();
+		return this.performanceMapper.latestList();
 	}
 	@Override
 	public List<Performance> list() {
-		return this.iPerformanceRepository.list();
+		return this.performanceMapper.list();
 	}
 
 	@Override
 	public Performance get(long pid) {
 		// TODO Auto-generated method stub
-		return this.iPerformanceRepository.get(pid);
+		return this.performanceMapper.get(pid);
 	}
 
 	@Override
-	public Performance create(PerformanceAllData performanceAllData) {
+	public Performance create(PerformanceDetail performanceAllData) {
 		// TODO Auto-generated method stub
+		System.out.println(performanceAllData);
 		Performance performance = new Performance();
 		performance.setTitle(performanceAllData.getTitle());
-//		performance.setPoster(performanceAllData.getPoster());
-		performance.setCategory(performanceAllData.getTitle());
-		performance.setLocation(performanceAllData.getTitle());
-		performance.setPlace(performanceAllData.getTitle());
+		performance.setPoster(performanceAllData.getPoster());
+		performance.setCategory(performanceAllData.getCategory());
+		performance.setLocation(performanceAllData.getLocation());
+		performance.setPlace(performanceAllData.getPlace());
 		performance.setRunning(performanceAllData.getRunning());
 		performance.setTicketingStartDate(performanceAllData.getTicketingStartDate());
 		performance.setTicketingEndDate(performanceAllData.getTicketingEndDate());
@@ -76,10 +68,11 @@ public class PerformanceService implements IPerformanceService
 		performance.setEndDate(performanceAllData.getEndDate());
 		performance.setAttendance(performanceAllData.getAttendance());
 		performance.setNotice(performanceAllData.getNotice());
-//		performance.setDetail(performanceAllData.getDetail());
+		performance.setDetail(performanceAllData.getDetail());
 		performance.setUid(performanceAllData.getUid());
-		performance.setPermission(performanceAllData.getPermission());
-		long pid = this.iPerformanceRepository.create(performance);
+		performance.setPermission(false);
+		this.performanceMapper.create(performance);
+		long pid = performance.getPid();
 //		// 등록요청 db생성
 		List<String> grades = performanceAllData.getGrades();
 		List<String> prices = performanceAllData.getPrices();
@@ -90,12 +83,13 @@ public class PerformanceService implements IPerformanceService
 			performancePrice.setPid(pid);
 			performancePrice.setGrade(grades.get(i));
 			performancePrice.setPrice(prices.get(i));
-			this.iPerformancePriceRepository.create(performancePrice);
+			this.performancePriceMapper.create(performancePrice);
 		}
+		
 //		// 공연 날짜 정보 저장
 		PerformanceDate performancedate = null;
 		List<String>times = performanceAllData.getTimes();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-DD");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
 		Date start = null;
 		Date end = null;
@@ -120,28 +114,25 @@ public class PerformanceService implements IPerformanceService
 			// 날짜 마다 시간대 반복
 			for (String time : times) {
 				performancedate.setTime(time);
-				this.iPerformanceDateRepository.create(performancedate);
+				this.performanceDateMapper.create(performancedate);
 			}
 			// 하루 증가
 			startDate.add(Calendar.DATE, 1);
 		}
-//		// 공연 등록 요청 정보 저장
-		this.iPerformanceSubmissionRepository.create(pid, performanceAllData.getUid());
 		
-        return this.iPerformanceRepository.get(pid);
+//		공연 등록 요청 정보 저장
+		PerformanceSubmission performanceSubmission = new PerformanceSubmission();
+		performanceSubmission.setPid(pid);
+		performanceSubmission.setUid(performanceAllData.getUid());
+		this.performanceSubmissionMapper.create(performanceSubmission);
+        
+		return this.performanceMapper.get(pid);
 	}
 
-//	@Override
-//	public Performance update(Performance performance) {
-//		// TODO Auto-generated method stub
-//		this.iPerformanceRepository.update(performance);
-//		return null;
-//	}
-//
 	@Override
 	public int delete(long pid) {
 		// TODO Auto-generated method stub
-		return this.iPerformanceRepository.delete(pid);
+		return this.performanceMapper.delete(pid);
 	}
 
 }

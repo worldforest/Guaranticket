@@ -1,7 +1,7 @@
 package com.ecommerce.application;
 
 import com.ecommerce.domain.Performance;
-import com.ecommerce.domain.PerformanceAllData;
+import com.ecommerce.domain.PerformanceDetail;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface IPerformanceService {
 	Performance get(long pid);
 
 	@Transactional
-	Performance create(PerformanceAllData performanceAllData);
+	Performance create(PerformanceDetail performanceAllData);
 	@Transactional
 	int delete(long pid);
 }

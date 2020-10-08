@@ -1,13 +1,13 @@
 package com.ecommerce.api;
 
+import com.ecommerce.application.IFileService;
+import com.ecommerce.application.IJwtService;
 import com.ecommerce.application.IPerformanceDateService;
 import com.ecommerce.application.IPerformancePriceService;
 import com.ecommerce.application.IPerformanceService;
 import com.ecommerce.application.IPerformanceSubmissonService;
-import com.ecommerce.application.impl.PerformanceSubmissionService;
-import com.ecommerce.domain.Item;
 import com.ecommerce.domain.Performance;
-import com.ecommerce.domain.PerformanceAllData;
+import com.ecommerce.domain.PerformanceDetail;
 import com.ecommerce.domain.PerformanceDate;
 import com.ecommerce.domain.PerformancePrice;
 import com.ecommerce.domain.PerformanceSubmission;
@@ -15,23 +15,16 @@ import com.ecommerce.domain.exception.EmptyListException;
 import com.ecommerce.domain.exception.NotFoundException;
 
 import io.swagger.annotations.ApiOperation;
-
-import org.apache.http.message.BasicHttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,16 +37,23 @@ public class PerformanceController
 	private IPerformanceSubmissonService performanceSubmissonService;
 	private IPerformanceDateService performanceDateService;
 	private IPerformancePriceService performancePriceService;
+	private IFileService fileService;
+	private IJwtService jwtService;
+	
 	@Autowired
 	public PerformanceController(IPerformanceService performanceService,
 			IPerformanceSubmissonService performanceSubmissonService,
 			IPerformanceDateService performanceDateService,
-			IPerformancePriceService performancePriceService) {
+			IPerformancePriceService performancePriceService,
+			IFileService fileService,
+			IJwtService jwtService) {
 		
 		this.performanceService = performanceService;
 		this.performanceSubmissonService = performanceSubmissonService;
 		this.performanceDateService = performanceDateService;
 		this.performancePriceService = performancePriceService;
+		this.fileService = fileService;
+		this.jwtService = jwtService;
 	}
 	@ApiOperation(value = "카테고리별 최근순 5개씩 총 15개 공연 검색")
 	@RequestMapping(value = "/performance/latest", method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class PerformanceController
 		return list;
 	}
 	
-	@ApiOperation(value = "공연검색 with 공연번호")
+	@ApiOperation(value = "공연 상세 검색")
 	@RequestMapping(value = "/performance/{pid}", method = RequestMethod.GET)
 	public Performance get(@PathVariable long pid) {
 		Performance performance = performanceService.get(pid);
@@ -85,9 +85,12 @@ public class PerformanceController
 	
 	@ApiOperation(value = "공연 등록")
 	@RequestMapping(value = "/performance", method = RequestMethod.POST)
-	public Performance create(@RequestBody PerformanceAllData performanceAllData) {
-//		this.uploadFile(performanceAllData.getPoster());
-		return performanceService.create(performanceAllData);
+	public Performance create(@RequestBody PerformanceDetail performanceDetail, HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String,Object>userinfo = jwtService.get(token);
+		long uid = (Long.parseLong(userinfo.get("USER").toString()));
+		performanceDetail.setUid(uid);
+		return performanceService.create(performanceDetail);
 	}
 	
 	@ApiOperation(value = "공연 삭제")
@@ -139,31 +142,5 @@ public class PerformanceController
 		return list;
 	}
 	
-//	@ApiOperation(value = "공연등록시 이미지파일 저장 후 파일 이름 리턴")
-//	@RequestMapping(value = "/performance/img", method = RequestMethod.POST)
-//	public String uploadFile(@RequestBody MultipartFile file){
-//		System.out.println("파일 이름 : " + file.getOriginalFilename());
-//		System.out.println("파일 크기 : " + file.getSize());
-//		StringTokenizer st = new StringTokenizer(file.getOriginalFilename(), ".");
-//		String fileName = st.nextToken();
-//		String extension = st.nextToken();
-//		System.out.println(fileName);
-//		System.out.println(extension);
-//
-//		Date today = new Date();
-//		SimpleDateFormat date = new SimpleDateFormat("yyyyMMdd");
-//		SimpleDateFormat time = new SimpleDateFormat("hhmmss");
-//
-//		String fileFullName = fileName + "_" + date.format(today) + time.format(today) + "." + extension;
-//		// 서버에서 사용할때
-////		FileCopyUtils.copy(file.getBytes(), new File("/home/ubuntu/deploy/img/user/" + fileFullName));
-//	    try {
-//	    	// 로컬에서 테스트할때
-//			FileCopyUtils.copy(file.getBytes(), new File("C:/"+fileFullName));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return fileFullName;
-//	}
+	
 }

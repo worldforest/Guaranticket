@@ -48,7 +48,18 @@ public class UserController {
 		Assert.notNull(userService, "userService 개체가 반드시 필요!");
 		this.userService = userService;
 	}
+	
+	// 기업회원 가입 신청 리스트 가져오기
+	@RequestMapping(value = "/use", method = RequestMethod.GET)
+	public List<User> getlist() {
+		List<User> userList = userService.list();
 
+		if (userList == null || userList.isEmpty())
+			throw new EmptyListException("NO DATA");
+
+		return userList;
+	}
+	
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public List<User> list() {
 		List<User> userList = userService.list();
@@ -59,8 +70,20 @@ public class UserController {
 		return userList;
 	}
 
+	@RequestMapping(value = "/users/info", method = RequestMethod.GET)
+	public Object get(HttpServletRequest request) {
+		String token = request.getHeader("jwt-auth-token");
+		Map<String, Object> userInfo = jwtService.get(token);
+		long uid = Long.parseLong(userInfo.get("USER").toString());
+		Map<String, Object> result = new 
+				HashMap<>();
+		result.put("status", true);
+		result.put("data", uid);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-	public Object get(@PathVariable int id, HttpServletRequest request) {
+	public Object get(@PathVariable int id) {
 		User user = userService.get(id);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
@@ -68,14 +91,14 @@ public class UserController {
 			throw new NotFoundException(id + " 회원 정보를 찾을 수 없습니다.");
 		}
 
-		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
-		result.put("status", true);
+//		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
+//		result.put("status", true);
 		result.put("data", user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/users/email/{email}", method = RequestMethod.GET)
-	public Object get(@PathVariable String email, HttpServletRequest request) {
+	public Object get(@PathVariable String email) {
 		User user = userService.get(email);
 		Map<String, Object> result = new HashMap<>();
 		if (user == null) {
@@ -100,13 +123,17 @@ public class UserController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		User userFetched = userService.get(user.getEmail());
 		Map<String, Object> result = new HashMap<>();
-		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword()))
-			throw new DomainException("비밀번호가 일치하지 않습니다.");
-
-		String token = jwtService.create(userFetched.getId());
-		response.setHeader("jwt-auth-token", token);
-		result.put("status", true);
-		result.put("data", token);
+		if (!passwordEncoder.matches(user.getPassword(), userFetched.getPassword())) {
+			result.put("status", false);
+			result.put("data", "request invalid");
+		}
+		else {
+			String token = jwtService.create(userFetched.getId());
+			response.setHeader("jwt-auth-token", token);
+			result.put("status", true);
+			result.put("data", token);
+			
+		}
 		return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
 	}
 
@@ -117,15 +144,50 @@ public class UserController {
 		User newUser = userService.add(user);
 		return newUser;
 	}
-
+	
+	// 회원정보 수정 (비밀번호 미포함)
 	@RequestMapping(value = "/users", method = RequestMethod.PUT)
 	public Object update(@RequestBody User user, HttpServletRequest request) {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		Map<String, Object> result = new HashMap<>();
 		user = userService.update(user);
 		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		result.put("status", true);
 		result.put("data", user);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	// 비밀번호 변경
+	@RequestMapping(value = "/users/pw", method = RequestMethod.PUT)
+	public Object update(@RequestBody Map<String, String> params, HttpServletRequest request) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Map<String, Object> result = new HashMap<>();
+		
+		String token = request.getHeader("jwt-auth-token");
+		Map<String, Object> userInfo = jwtService.get(token);
+		long uid = Long.parseLong(userInfo.get("USER").toString());
+		User user = userService.get(uid);
+
+		String originPassword = params.get("originPassword");
+		String newPassword = params.get("newPassword");
+		
+		// 입력한 현재 비밀번호와 DB에 저장된 비밀번호가 다르면
+		if(!passwordEncoder.matches(originPassword, user.getPassword())) {
+			result.put("status", false);
+			result.put("data", "INVALID_PASSWORD");
+		}
+		// 입력한 새 비밀번호와 DB에 저장된 비밀먼호가 같으면
+		else if(passwordEncoder.matches(newPassword, user.getPassword())) {
+			result.put("status", false);
+			result.put("data", "SAME_PASSWORD");
+		}
+		// 유효하면
+		else {
+			user.setPassword(passwordEncoder.encode(newPassword));
+			user = userService.update(user);
+			result.put("status", true);
+			result.put("data", user);
+		}
+		result.putAll(jwtService.get(request.getHeader("jwt-auth-token")));
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
@@ -147,18 +209,22 @@ public class UserController {
 
 	// 비밀번호 찾기
 	@RequestMapping(value = "/users/sendemail", method = RequestMethod.POST)
-	public User sendEmail(@RequestBody User user) {
+	public User sendEmail(@RequestBody User users) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		User user = userService.get(users.getEmail());
 		// 임시 비밀번호 생성 저장 변수
 		String userPwd = "";
+		String encryptPwd = "";
 		for (int i = 0; i < 12; i++) {
 			userPwd += (char) ((Math.random() * 26) + 97);
 		}
 		userPwd += (int) (Math.random() * 9) + 1;
+		encryptPwd = passwordEncoder.encode(userPwd);
 
 		// 임시비밀번호로 업데이트
-		user.setPassword(userPwd);
+		user.setPassword(encryptPwd);
 		userService.update(user);
-
+		
 		// 메일보내기
 		try {
 			MimeMessage msg = mailSender.createMimeMessage();

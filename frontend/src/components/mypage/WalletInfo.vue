@@ -16,7 +16,7 @@
               </tr>
               <tr>
                 <th>보유 ETH</th>
-                <td class="text-right">{{ wallet["balance"] }} ETH</td>
+                <td class="text-right">{{ weiToEth(wallet["balance"]+"") }} ETH</td>
                 <td colspan="2" class="text-left">
                   <button
                     type="button"
@@ -77,7 +77,7 @@ import { findById } from "@/api/user.js";
 import { createWeb3 } from "@/utils/itemInventory.js";
 import { buyCash, getBalance } from "@/utils/cashContract.js";
 import MyPageNav from "./MyPageNav.vue";
-import { ethToWei } from "@/utils/ethereumUnitUtils.js";
+import { ethToWei, weiToEth } from "@/utils/ethereumUnitUtils.js";
 import BN from "bn.js";
 
 export default {
@@ -112,6 +112,9 @@ export default {
     }
   },
   methods: {
+    weiToEth(value) {
+      return weiToEth(value);
+    },
     fetchWalletInfo() {
       /**
        * TODO: PJTⅡ 과제1 Req.1-2 [지갑 조회]
@@ -119,11 +122,12 @@ export default {
        */
       walletService.findByUserId(this.userId, 
         response => {
-          console.log(response);
           this.wallet = response.data;
+          this.walletAddress = this.wallet.address;
+          this.wallet.balance = this.wallet.balance;
         },
         function(error){
-          console.log(error);
+          // console.log(error);
         }
       );
 
@@ -144,10 +148,10 @@ export default {
         response => {
           this.isCharging = false;
           this.wallet = response.data;
-          console.log(response);
+          // console.log(response);
         },
         error => {
-          console.log(error);
+          // console.log(error);
         }  
       )
   
@@ -157,11 +161,18 @@ export default {
       this.isCashCharging = true;
       const privateKey = prompt("캐시를 충전하시려면 개인키를 입력하세요.");
       if (privateKey) {
+        var web3 = createWeb3();
         /**
          * TODO: PJTⅡ 과제3 Req.1-1 [토큰 구매]
          * 이더를 지불하고 캐시를 충전
          */
-        
+        buyCash(10, privateKey,
+          response => {
+            // console.log(response);
+          },
+          error => { 
+            // console.log(error);
+          })
       }
     },
     /**
@@ -185,7 +196,7 @@ export default {
     fetchUserInfo() {
       const vm = this;
       findById(this.userId, function(response) {
-        const data = response.data;
+        const data = response.data.data;
         vm.user.name = data["name"];
         vm.user.email = data["email"];
       });

@@ -13,4 +13,6 @@ public class Ticket
 	private String time;
 	private String grade;
 	private String price;
+	private String contractAddress;
+	private boolean trading;
 }

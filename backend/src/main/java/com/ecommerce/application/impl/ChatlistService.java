@@ -12,8 +12,8 @@ public class ChatlistService implements IChatlistService{
 	@Autowired
 	private ChatListMapper chatListMapper;
 	@Override
-	public boolean insert(String roomname) {
-		return chatListMapper.insert(roomname);
+	public boolean insert(String roomName) {
+		return chatListMapper.insert(roomName);
 	}
 
 	@Override
@@ -22,8 +22,8 @@ public class ChatlistService implements IChatlistService{
 	}
 
 	@Override
-	public String selectno(String roomname) {
-		return chatListMapper.selectno(roomname);
+	public String selectno(String roomName) {
+		return chatListMapper.selectno(roomName);
 	}
 
 }

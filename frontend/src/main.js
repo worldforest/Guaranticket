@@ -41,6 +41,11 @@ new Vue({
   router,
   store,
   vuetify,
+  beforeCreate() {
+    var token = localStorage.getItem("jwt-auth-token");
+    if(token)
+      this.$store.commit("setIsSigned", true);
+  },
   render: h => h(App)
 }).$mount("#app");
 

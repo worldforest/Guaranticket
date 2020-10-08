@@ -1,28 +1,22 @@
 <template>
     <div>
         <h-nav></h-nav>
-        <div id="main-overview" class="container">
-        <v-container>
-            <v-layout>
-                <v-flex>
-                    <h2>스포츠</h2>
-                </v-flex>
-            </v-layout>
+        <div id="performance-overview" class="container" style="padding-left: 200px;">
+            <h1>스포츠</h1>
             <div class="container px-5 py-3">
                 <v-row>
                     <div v-for="(sports,i) in Sports" :key="i">
                         <div v-if="sports.category == 2">
-                        <img :src="sports.poster" height="350" width="250" @click="performanceDetail(sports)" alt="스포츠">
-                        <figcaption>
-                            <div class="fig-author">
-                                {{sports.title}}
+                        <img :src="`https://j3b101.p.ssafy.io/api/file/${sports.poster}`"
+                            height="280px" width="218px"
+                            @click="performanceDetail(sports)" alt="스포츠">
+                            <div style="width:218px; height:100px; font-size: 18px;">
+                                {{ sports.title }}
                             </div>
-                        </figcaption>
                         </div>
                     </div>
                 </v-row>
             </div>
-        </v-container>
         </div>
     </div>
 </template>

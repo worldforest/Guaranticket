@@ -59,12 +59,57 @@ a {
     margin-top: 15px;
 }
 
+#main-poster {
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 20px;
+}
+
 .breadcrumb {
     padding-top: 100px;
 }
 
 #my-item .myitem {
     padding: 10px !important;
+}
+
+/* 공연 목록 페이지 */
+#performance-overview {
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+#performance-overview h1 {
+    font-size: 50px;
+    font-weight: 800;
+    padding-top: 50px;
+}
+#performance-poster{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/* 공연 상세 페이지 */
+#pDetail-overview {
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding-left: 80px;
+    text-justify: center;
+}
+#pDetail-overview h1 {
+    font-size: 50px;
+    font-weight: 800;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+#ticket-overview {
+    margin-top: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 /* 상품 리스트 스타일 시트 */
@@ -180,8 +225,10 @@ nav.bottom-pagination {
 .navbar { 
     font-family: 'BPreplayExtended';
     font-weight: bold;
+    color: #FF4155;
 }
 
+/* navbar 색상 */
 .basic-color {
     color: #FF4155;
     background-color: #FF4155;

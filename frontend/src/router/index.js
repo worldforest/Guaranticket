@@ -1,10 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-//계정(로그인,회원가입)
-import Login from "@/views/Login.vue";
-import Signup from "@/views/Signup.vue";
-import SignupUser from "@/views/SignupUser.vue";
-import SignupBiz from "@/views/SignupBiz.vue";
+
 import Home from "@/views/Home.vue";
 import store from "@/store";
 import Shop from "@/views/Shop.vue";
@@ -12,22 +8,39 @@ import MyPage from "@/views/MyPage.vue";
 import Item from "@/views/Item.vue";
 import Explorer from "@/views/Explorer.vue";
 import Escrow from "@/views/Escrow.vue";
+//계정(로그인,회원가입,비밀번호찾기)
+import Login from "@/views/account/Login.vue";
+import Signup from "@/views/account/Signup.vue";
+import SignupUser from "@/views/account/SignupUser.vue";
+import SignupBiz from "@/views/account/SignupBiz.vue";
+import FindPw from "@/views/account/FindPw.vue";
 //티켓거래
 import DealList from "@/views/deal/DealList.vue";
 import DealRegister from "@/views/deal/DealRegister.vue";
 import DealDetail from "@/views/deal/DealDetail.vue";
+//비밀번호변경
+import UpdatePassword from "@/views/mypage/UpdatePassword.vue";
 //마이페이지(일반회원)
 import PurchaseList from "@/views/mypage/PurchaseList.vue";
-import SellList from "@/views/mypage/SellList.vue";
+import PurchaseDetail from "@/views/mypage/PurchaseDetail.vue";
 import UpdateProfile from "@/views/mypage/UpdateProfile.vue";
-//비밀번호찾기
-import FindPw from "@/views/FindPw.vue";
+//마이페이지(기업회원)
+import PerformanceRegister from "@/views/mypage_biz/PerformanceRegister.vue";
+//마이페이지(관리자)
+import ConfirmPerformance from "@/views/mypage_admin/ConfirmPerformance.vue";
+import ConfirmPerformanceDetail from "@/views/mypage_admin/ConfirmPerformanceDetail.vue";
 //공연
 import Concert from "@/views/Concert.vue";
 import Musical from "@/views/Musical.vue";
 import Sports from "@/views/Sports.vue";
 //공연 상세
 import PerformanceDetail from "@/views/PerformanceDetail";
+import PerformanceSubmission from "@/views/PerformanceSubmission";
+//티켓 예매
+import SelectSeat from "@/views/Ticket/SelectSeat";
+//블록체인 테스트 페이지
+import BlockchainTest from "@/views/BlockchainTest";
+
 //채팅
 import Chat from "@/views/Chat.vue";
 // import { component } from "vue/types/umd";
@@ -35,16 +48,44 @@ import Chat from "@/views/Chat.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  //마이페이지
+  {
+    path : "/blockchain",
+    name : "blockchaintest",
+    component : BlockchainTest
+  },
+  //비민번호변경
+  {
+    path : "/update/password",
+    name : "updatepassword",
+    component : UpdatePassword
+  },
+  //마이페이지(관리자)
+  {
+    path: "/confirmperformance",
+    name: "confirmperformance",
+    component: ConfirmPerformance
+  },
+  {
+    path: "/confirmperformancedetail/:pid/:sid",
+    name: "confirmperformancedetail",
+    component: ConfirmPerformanceDetail
+  },
+  //마이페이지(기업회원)
+  {
+    path: "/performanceregister",
+    name: "performanceregister",
+    component: PerformanceRegister
+  },
+  //마이페이지(일반회원)
   {
     path: "/purchaselist",
     name: "purchaselist",
     component: PurchaseList
   },
   {
-    path: "/selllist",
-    name: "selllist",
-    component: SellList
+    path: "/purchasedetail/:tid",
+    name: "purchasedetail",
+    component: PurchaseDetail
   },
   {
     path: "/updateprofile",
@@ -104,7 +145,7 @@ const routes = [
     beforeEnter(to, from, next) {
       store.commit("logout");
       alert("로그아웃 되었습니다.");
-      next("/");
+      router.push("/").catch(err=>{})
     },
   },
   {
@@ -263,20 +304,17 @@ const routes = [
     name:"performanceDetail",
     path: "/performanceDetail/:pid",
     component: PerformanceDetail,
-    // props: (route) => ({pid: route.pis}),
-    children: [
-      {
-        name: "performanceDetail.Detail",
-        path: "Detail",
-        component: () => import("../views/performanceDetail/Detail.vue"),
-      },
-      {
-        name: "performanceDetail.Location",
-        path: "Location",
-        component: () => import("../views/performanceDetail/Location.vue"),
-      }
-    ]
-  }
+  },
+  {
+    name : "performanceSubmission",
+    path : "/performance/submission",
+    component : PerformanceSubmission,
+  },
+  {
+    name : "selectSeat",
+    path : "/selectSeat/:date/:time",
+    component : SelectSeat,
+  },
 ];
 
 const router = new VueRouter({
@@ -286,13 +324,14 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem("jwt-auth-token");
   let isSigned = store.state.isSigned;
   let isAvailableToGuest =
-    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat"].includes(to.path) ||
-    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail") ;
+    ["/", "/login", "/register", "/findpw", "/SignupUser", "/SignupBiz","/concert","/musical","/sports","/chat", "/performance/submission"].includes(to.path) ||
+    to.path.startsWith("/explorer") ||to.path.startsWith("/performanceDetail")||to.path.startsWith("/selectSeat") ;
 
   // 로그인도 하지 않았고 게스트에게 허용된 주소가 아니라면 로그인 화면으로 이동한다.
-  if (!isSigned && !isAvailableToGuest) {
+  if (!token && !isSigned && !isAvailableToGuest) {
     alert("로그인을 하신 뒤에 사용이 가능합니다.");
     next("/login");
   } else {

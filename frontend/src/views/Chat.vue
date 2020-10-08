@@ -25,6 +25,11 @@
               </div>
             </div>
         </div>
+        <div>
+          <v-btn @click="deposit">
+            입금 주소 보내기
+          </v-btn>
+        </div>
       </div>
     </div>
 </template>
@@ -35,6 +40,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
+import axios from "axios";
+
 export default {
   name: 'Chat',
   data(){
@@ -47,6 +55,24 @@ export default {
     this.fetchMessages();
   },
   methods:{
+    deposit(){
+      var bankname = prompt('은행 입력(ex : 신한)');
+      var bankAccountNo = prompt('계좌번호 입력(ex : 1234567890)');
+      const body = {
+        apiKey : "dd0e2083af714c878cef77388c2c7c2c",
+        bankName : bankname,
+        bankAccountNo : bankAccountNo,
+        amount : "1",
+        message : "땡규베리감사"
+      }
+      axios
+      .post('https://toss.im/transfer-web/linkgen-api/link',body) 
+      .then(
+        res => { 
+          // console.log(res.data.success.link);
+          this.saveMessage(res.data.success.link);
+      })
+    },
     saveMessage(sendnick){
       //save to message
       db.collection('chat').add({
@@ -74,7 +100,9 @@ export default {
 }
 </script>
 <style scoped>
-   *{ font-family: 'Jua', sans-serif;}
+   *{ 
+      font-family: 'Poor Story', cursive;
+    }
    
   .container{max-width:1170px; margin:auto;}
   img{ max-width:100%;}

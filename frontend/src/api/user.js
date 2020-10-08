@@ -2,6 +2,16 @@
 import { createInstance } from "./index.js";
 
 const instance = createInstance();
+const config = { 
+  headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")
+}};
+
+function dispatch(success, fail){
+  instance
+    .get("/api/users/info" , config)
+    .then(success)
+    .catch(fail)
+}
 
 function findByEmail(email, success, fail) {
   instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
@@ -39,6 +49,7 @@ function signup(email, password, name, phone, gender, birth, businessNumer, comp
 }
 
 function login(email, password, success, fail) {
+  instance.defaults.headers["jwt-auth-token"] = window.localStorage.getItem("jwt-auth-token");
   const body = {
     email: email,
     password: password
@@ -57,6 +68,19 @@ function update(user, success, fail) {
     .then(success)
     .catch(fail);
 }
+
+function updatePwd(originPassword, newPassword, success, fail){
+  const body = {
+    originPassword : originPassword,
+    newPassword : newPassword
+  };
+
+  instance
+    .put("/api/users/pw", JSON.stringify(body), config)
+    .then(success)
+    .catch(fail);
+}
+
 // 비밀번호찾기
 function findpw(name, email, success, fail) {
   const user = {
@@ -87,4 +111,4 @@ function sendSMS(phone, success, fail){
     .then(success)
     .catch(fail)
 }
-export { findByEmail, findById, signup, login, update, findpw, sendEmail, sendSMS };
+export { dispatch, findByEmail, findById, signup, login, update, updatePwd, findpw, sendEmail, sendSMS };

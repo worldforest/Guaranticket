@@ -1,28 +1,23 @@
 <template>
     <div>
         <h-nav></h-nav>
-        <div id="main-overview" class="container">
-        <v-container>
-            <v-layout>
-                <v-flex>
-                    <h2>콘서트</h2>
-                </v-flex>
-            </v-layout>
-            <div class="container px-5 py-3">
+        <div id="performance-overview" class="container" style="padding-left: 200px;">
+            <h1>콘서트</h1>
+            <div class="container px-5 py-3" style="margin-right: 10px;">
                 <v-row>
                     <div v-for="(concert,i) in Concerts" :key="i">
                         <div v-if="concert.category == 0">
-                        <img :src="concert.poster" height="350" width="250" @click="performanceDetail(concert)" alt="콘서트">
-                        <figcaption>
-                            <div class="fig-author">
-                                {{concert.title}}
+                            <img :src="`https://j3b101.p.ssafy.io/api/file/${concert.poster}`"
+                                style="cursor:pointer;"
+                                height="280px" width="218px"
+                                @click="performanceDetail(concert)" alt="콘서트">
+                            <div style="width:218px; height:100px; font-size: 18px;">
+                                {{ concert.title }}
                             </div>
-                        </figcaption>
                         </div>
                     </div>
                 </v-row>
             </div>
-        </v-container>
         </div>
     </div>
 </template>

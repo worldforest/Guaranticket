@@ -3,11 +3,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ChatMemberMapper {
-	public boolean insert(String no, String name);
+	public boolean insert(String no, String userName);
 
-	public List<String> selectAll(String name);
+	public List<String> selectAll(String userName);
 
-	public String select(String myname, String yourname);
+	public String select(String myName, String yourName);
 }
