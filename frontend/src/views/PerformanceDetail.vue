@@ -2,8 +2,8 @@
   <div>
     <h-nav></h-nav>
     <div id="pDetail-overview" style="width:100%;">
-      <h1>{{ performance.title }}</h1>
-      <v-row style="padding:10px;">
+      <h1 style="text-align: center; margin-right: 100px;">{{ performance.title }}</h1>
+      <v-row style="margin-left:280px;">
           <img
             :src="`https://j3b101.p.ssafy.io/api/file/${performance.poster}`"
             height="400px"
@@ -23,7 +23,7 @@
             </v-row>
           </figcaption>
       </v-row>
-      <v-row style="padding:10px;">
+      <v-row style="margin-left:280px;">
         <div style="margin-left:30px;">
           <h4>| 날짜 선택 |</h4>
           <v-text-field
@@ -71,7 +71,7 @@
         </div>
       </v-row>
       <v-spacer></v-spacer>
-      <v-row wrap style="margin-top:50px;">
+      <v-row wrap style="margin-top:50px; margin-left:100px;">
           <v-btn-toggle v-model="toggle_exclusive" align="center">
             <v-btn v-on:click="selecttab(true)" x-large block color="#FDDAB4"><h4>🔎 공연 상세정보</h4></v-btn>
             <v-btn v-on:click="selecttab(false)" x-large block color="#FDDAB4"><h4>🚩 공연장 정보</h4></v-btn>
@@ -81,8 +81,8 @@
         
         
         <div v-show="this.tabs">
-          <div>
-            <h4>공지사항</h4>
+          <div style="margin-top: 10px; margin-left:230px; width: 800px;">
+            <h4 style="margin-left: -12px;">공지사항</h4>
               {{performance.notice}}
           </div>
           <div>
@@ -90,21 +90,22 @@
               :src="`https://j3b101.p.ssafy.io/api/file/${performance.detail}`"
               width="60%"
               height="auto"
-              style="margin:50px; float:center;"
+              style="margin:50px; margin-left:200px;"
               alt="공연 상세정보 포스터"/>
           </div>
         </div>
 
         <div v-show="!this.tabs">
-          <div>
-            <h3>공연장 정보</h3>
-              <h4>{{performance.location}}</h4>
-              <h4>{{performance.place}}</h4>
+          <div style="margin-top: 10px; margin-left:230px;">
+            <h3 style="margin-left: 8px;">공연장 정보</h3>
+              <h4>위치: {{performance.location}}</h4>
+              <h4>장소: {{performance.place}}</h4>
           </div>
-            <br>
+          <div style="margin-left: 330px;">
             <div id="map" tyle="display:none;">
-            </div>
-              <div v-show="message">
+          </div>
+        </div>
+              <div v-show="message" style="margin-left: 280px;">
                 {{this.message}}
               </div>
         </div>
@@ -158,6 +159,7 @@ export default {
       document.head.appendChild(script);
   },
   created() {
+    scroll(0, 0); // 페이지 최상단으로 이동
     var scope = this;
     var pid = this.$route.params.pid;
     this.pid=pid;

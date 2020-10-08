@@ -26,7 +26,7 @@
                         outlined
                     >
                         <template v-slot:append-outer>
-                            <v-btn style="top:-17px;" @click="duplicationValid" x-large width="100%" color="grey lighten-2 font-weight-bold">
+                            <v-btn style="top:-17px;" @click="duplicationValid" x-large width="90%" color="grey lighten-2 font-weight-bold">
                                 중복확인
                             </v-btn>
                         </template>
@@ -69,7 +69,7 @@
                 outlined
             >
                 <template v-slot:append-outer>
-                    <v-btn style="top:-17px;" @click="sms" x-large width="100%" color="grey lighten-2 font-weight-bold">
+                    <v-btn style="top:-17px;" @click="sms" x-large width="90%" color="grey lighten-2 font-weight-bold">
                         문자인증
                     </v-btn>
                     <v-dialog
@@ -112,7 +112,7 @@
             </v-text-field>
 
             <v-row> 
-                <v-col class="pt-0 pb-7" cols="6">
+                <v-col class="pt-0 pb-7" cols="6" style="margin-left: -15px;">
                     <v-btn ref="male" @click="user.gender='남'" :color="user.gender=='남'?'#FF4155':'grey'" x-large outlined width="100%">
                         남성
                     </v-btn>
@@ -154,9 +154,10 @@
                 ></v-date-picker>
             </v-menu>
 
-           
-            <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
-            <v-btn @click="doJoin" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">가입하기</v-btn>
+           <div style="margin-left: 130px;">
+                <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="30%" color="grey lighten-2">취소</v-btn>
+                <v-btn @click="doJoin" class="mx-3 mb-3 white--text" large width="30%" color="#FF4155">가입하기</v-btn>
+           </div>
             </v-form>
         </v-container>
     </div>

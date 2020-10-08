@@ -26,7 +26,7 @@
               placeholder="이메일"
             />
           </div>
-          <button type="button" class="btn btn-primary" v-on:click="findpw">
+          <button type="button" class="btn btn-primary" v-on:click="findpw" style="margin-left: 190px;">
             임시비밀번호 발급
           </button>
         </div>

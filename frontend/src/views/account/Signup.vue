@@ -1,9 +1,9 @@
 <template>
-<div class="text-center" style="margin-top:20rem;">
+<div class="text-center" style="margin-top:17rem;">
   <h-nav></h-nav>
     <div class="text-h4">회원가입</div>
     <div class="text-h6">가입 종류를 선택해주세요</div>
-    <div class="my-16">
+    <div class="my-16" style="margin-left: 640px;">
       <v-btn @click="goSignupUser()" class="ma-2" width="100" height="100">
         <v-card width="100" height="100" color="#FF4155" flat>
           <v-card-title class="pb-2">

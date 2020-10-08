@@ -72,12 +72,12 @@
               <v-col cols="3">
                 <v-subheader>성별</v-subheader>
               </v-col>
-              <v-col cols="4.5">
+              <v-col cols="4.5" style="margin-left: -15px;">
                   <v-btn class="gender_btn" ref="male" @click="user.gender='남'" :color="user.gender=='남'?'#FF4155':'grey'" x-large outlined width="100%">
                       남성
                   </v-btn>
               </v-col>
-              <v-col cols="4.5">
+              <v-col cols="4.5" style="margin-right: 15px;">
                   <v-btn class="gender_btn" ref="female" @click="user.gender='여'" :color="user.gender=='여'?'#FF4155':'grey'" x-large outlined width="100%">
                       여성
                   </v-btn>
@@ -174,8 +174,10 @@
               </v-col>
             </v-row>
 
-            <v-btn @click="$router.go(-1)" class="mx-3 mb-3 action_btn" large width="30%" color="grey lighten-2">취소</v-btn>
-            <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">변경하기</v-btn>
+            <div style="padding-left: 120px;">
+              <v-btn @click="$router.go(-1)" class="mx-3 mb-3 action_btn" large width="30%" color="grey lighten-2">취소</v-btn>
+              <v-btn @click="update" class="mx-3 mb-3 white--text action_btn" large width="30%" color="#FF4155">변경하기</v-btn>
+            </div>
             </v-form>
       </div>
   </div>

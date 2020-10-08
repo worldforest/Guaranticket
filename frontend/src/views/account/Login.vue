@@ -27,7 +27,8 @@
             />
           </div>
           <!--로그인 버튼-->
-          <button type="submit" class="btn btn-primary" @click="login">
+          <button type="submit" class="btn btn-primary" @click="login"
+            style="margin-left: 230px;">
             로그인
           </button>
           <br>
@@ -49,10 +50,12 @@
             </router-link>
           </div>
           <v-divider></v-divider>
-          <v-subheader>테스트용 로그인</v-subheader>
-          <v-btn @click="testLogin(users[0])">일반</v-btn>
-          <v-btn @click="testLogin(users[1])">기업</v-btn>
-          <v-btn @click="testLogin(users[2])">관리자</v-btn>
+          <div style="margin-left: 120px;">
+            <v-subheader>테스트용 로그인</v-subheader>
+            <v-btn @click="testLogin(users[0])">일반</v-btn>
+            <v-btn @click="testLogin(users[1])">기업</v-btn>
+            <v-btn @click="testLogin(users[2])">관리자</v-btn>
+          </div>
         </div>
       </div>
     </div>
