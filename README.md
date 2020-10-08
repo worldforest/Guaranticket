@@ -63,6 +63,7 @@
 |SERVER|`AWS EC2 Ubuntu 18.04` `Nginx` `Spring Boot Tomcat 8.0` `SSL`|
 |CO-WORK|`GitLab` `Slack` `Notion` `Jira` `Google Docs` `ERD Cloud` `Dirgrams`|
 
+![](./img/기술스택.PNG)
 
 
 
