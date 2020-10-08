@@ -38,6 +38,8 @@ import PerformanceDetail from "@/views/PerformanceDetail";
 import PerformanceSubmission from "@/views/PerformanceSubmission";
 //티켓 예매
 import SelectSeat from "@/views/Ticket/SelectSeat";
+//블록체인 테스트 페이지
+import BlockchainTest from "@/views/BlockchainTest";
 
 //채팅
 import Chat from "@/views/Chat.vue";
@@ -46,6 +48,11 @@ import Chat from "@/views/Chat.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path : "/blockchain",
+    name : "blockchaintest",
+    component : BlockchainTest
+  },
   //비민번호변경
   {
     path : "/update/password",

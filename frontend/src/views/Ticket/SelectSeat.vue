@@ -198,7 +198,7 @@ export default {
       )
     },
     selectSeat(row, col){
-      console.log((row-1)*6+col);
+      // console.log((row-1)*6+col);
       this.row=row;
       this.col=col;
     },

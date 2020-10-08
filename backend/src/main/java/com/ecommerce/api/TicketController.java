@@ -81,9 +81,9 @@ public class TicketController {
 		model.addAttribute("info", kakakoService.kakaoPayInfo(pg_token, ticket));
 		Ticket tickets = ticketService.getByPidAndDateAndTimeAndSeatNumber(pid, date, time, seatNumber);
 
-       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist?tid="+tickets.getTid()+"&uid="+tickets.getUid());
-//		ModelAndView mav = new ModelAndView(
-//				"redirect:https://j3b101.p.ssafy.io/purchaselist?tid=" + tickets.getTid() + "&uid" + tickets.getUid());
+//       ModelAndView mav = new ModelAndView("redirect:http://localhost:8081/purchaselist?tid="+tickets.getTid()+"&uid="+tickets.getUid());
+		ModelAndView mav = new ModelAndView(
+				"redirect:https://j3b101.p.ssafy.io/purchaselist?tid=" + tickets.getTid() + "&uid=" + tickets.getUid());
 		return mav;
 	}
 

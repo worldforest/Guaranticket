@@ -268,7 +268,7 @@ export default {
                     this.authNumber = response.data;
                 },
                 error => {
-                    console.log(error);
+                    // console.log(error);
                 }
             )
         },
@@ -318,7 +318,7 @@ export default {
                         this.$router.push("/");
                     },
                     error => {
-                        console.log(error);
+                        // console.log(error);
                     }
                 )
             }

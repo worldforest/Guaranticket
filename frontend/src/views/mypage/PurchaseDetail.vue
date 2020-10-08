@@ -69,7 +69,7 @@ export default {
       axios
         .get(API_BASE_URL + '/api/ticket/tid/' + this.tid)
         .then(res => {
-            // console.log(res.data)
+            // // console.log(res.data)
             this.purchase_detail = res.data;
             // 공연 분류 번호에 따라 문자열로 변환
             switch(this.purchase_detail.category) {
@@ -96,7 +96,7 @@ export default {
             this.purchase_detail.price = Number(this.purchase_detail.price).toLocaleTimeString();
         })
         .catch(err => {
-            console.log("created axios get method error!")
+            // console.log("created axios get method error!")
         })
   },
   computed: {

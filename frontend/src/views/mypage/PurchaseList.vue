@@ -26,8 +26,14 @@
                       <td>{{ item.date }}</td>
                       <td>{{ item.time }}</td>
                       <td>{{ item.grade }}석 {{ item.seat }}</td>
-                      <td v-if="!!item.contractAddress">{{ item.contractAddress }}</td>
-                      <td v-else><v-btn @click="deployContract(item)" color="success">기록하기</v-btn></td>
+                      <td v-if="!!item.contractAddress"><router-link :to="{ name: 'blockchaintest', params: {ticket:item}}">{{ item.contractAddress }}</router-link></td>
+                      <td v-else>
+                        <v-progress-circular
+                          indeterminate
+                          color="red"
+                        ></v-progress-circular>
+                        <p class="mb-0 red--text">컨트랙트 배포중입니다. 잠시만 기다려주세요.</p>
+                      </td>
                       <!-- <td>{{ item.price }}원</td> -->
                   </tr>
               </tbody>
@@ -73,7 +79,7 @@ export default {
       axios
         .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
         .then(res => {
-          console.log(res)
+          // // console.log(res)
           res.data.forEach(ticket => {
             var seat = "";
             if(ticket.seatNumber > 18) {
@@ -103,13 +109,13 @@ export default {
           if(err.response.status === 404) { // if (list == null || list.isEmpty())인 경우
             this.msg = "예매내역이 존재하지 않습니다.";
           }
-          console.log("created axios get method error!")
+          // console.log("created axios get method error!")
         })
   },
   methods : {
     async deployContract(tid, uid){
-      console.log(tid);
-      console.log(uid);
+      // // console.log(tid);
+      // // console.log(uid);
       var web3 = new Web3(BLOCKCHAIN_URL);
       var keyvaluestoreContract = new web3.eth.Contract(KEY_VALUE_ABI);
       var keyvaluestore = keyvaluestoreContract.deploy({data:KEY_VALUE_DATA});
@@ -120,27 +126,58 @@ export default {
       var signedTransaction = await web3.eth.accounts.signTransaction(options, ADMIN_ACCOUNT_PRIVATE_KEY);
       var hash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
       keyvaluestoreContract.options.address = hash.contractAddress;
-      console.log(hash.contractAddress)
+      // // console.log(hash.contractAddress)
       setContratAddress(tid, hash.contractAddress,
         response => {
-          console.log(response);
+          // // console.log(response);
           keyvaluestoreContract.methods.setValue(tid+"", uid+"").send(
             {from : ADMIN_ACCOUNT}
           ).then(
             response => {
-              console.log(response)
+              // // console.log(response)
               keyvaluestoreContract.methods.getValue1(0).call(
                 {from : ADMIN_ACCOUNT}
-              ).then(console.log)
+              ).then()
               keyvaluestoreContract.methods.getValue2(0).call(
                 {from : ADMIN_ACCOUNT}
-              ).then(console.log)
-              alert("티켓 등록이 완료되었습니다.");
+              ).then()
+                    axios
+                      .get(API_BASE_URL + '/api/ticket/uid', { headers : { "jwt-auth-token" : localStorage.getItem("jwt-auth-token")}})
+                      .then(res => {
+                        this.purchase_list = [];
+                        // // console.log(res)
+                        res.data.forEach(ticket => {
+                          var seat = "";
+                          if(ticket.seatNumber > 18) {
+                            ticket.seatNumber -= 18;
+                          }
+                          if(ticket.seatNumber % 6 == 0) { // 6의 배수일 때
+                            seat = (ticket.seatNumber/6) + "행 6열";
+                          } else {
+                            seat = parseInt(ticket.seatNumber/6)+1 + "행 " + (ticket.seatNumber%6) + "열";
+                          }
+                          ticket["seat"] = seat;
+                          switch (ticket.category) {
+                            case "0":
+                              ticket.category = '콘서트';
+                              break;
+                            case "1":
+                              ticket.category = '뮤지컬';
+                              break;
+                            case "2":
+                              ticket.category = '스포츠';
+                              break;
+                          }
+                          this.purchase_list.push(ticket);
+                        })
+                        alert("티켓 등록이 완료되었습니다.");
+                      }
+                    )
             }
           )
         },
         error => {
-          console.log(error)
+          // console.log(error)
           alert("스마트 컨트랙트 배포에 실패했습니다.");
         }
       )
