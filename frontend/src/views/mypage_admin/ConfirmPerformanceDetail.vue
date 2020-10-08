@@ -42,8 +42,10 @@
       
       <!--버튼-->
       <div id="buttons" style="margin-top: 50px;">
-        <v-btn @click="$router.go(-1)" class="mx-3 mb-3" large width="15%" color="grey lighten-2">목록으로</v-btn>
-        <v-btn @click="submitPerformance()" class="mx-3 mb-3 white--text" large width="15%" color="#FF4155">승인</v-btn>
+        <v-btn @click="$router.go(-1)" large width="15%" color="grey lighten-2"
+          style="float: left; margin-left: 380px;">목록으로</v-btn>
+        <v-btn @click="submitPerformance()" large width="15%" color="#FF4155"
+          style="color: white; float: right; margin-right: 380px;">승인</v-btn>
       </div>
     </div>
 
