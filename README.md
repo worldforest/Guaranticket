@@ -1,5 +1,4 @@
 # Guranticket : 개런티켓
-> - ![](./img/기술스택.PNG)
 > - Guarantee + Ticket
 > - 블록체인의 투명성을 활용한 공정한 티켓거래 플랫폼
 
