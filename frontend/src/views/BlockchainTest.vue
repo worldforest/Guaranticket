@@ -4,7 +4,7 @@
     <div class="container" style="text-align: center;width:800px; margin-top:8rem;">
         <h3>블록체인 입장 페이지</h3><br>
         <div style="margin-bottom:4rem;">
-            <v-img class="mx-auto" width="30%" src="https://lh3.googleusercontent.com/proxy/MG6Zx4ihVOryAgQKla0nQBsLRa-LZRML2038UhDrLhQ21Aq8FSmXpfbkXhpsyGDafUHVaGfeVbwBCHrKYQMnFJaWq9j-JtGLlp34eg-uGvgBKu4H63o"></v-img>
+            <v-img class="mx-auto" width="30%" src='https://lh3.googleusercontent.com/proxy/hsFPw3bpb80o5hx1Eg7QLY9bVBKgCC_cr3fMBGfuCIdaGeSqAVTbzKqWkuf-w86pvrezGUNEU4uI_82UYgnLCwA0JSpSczuz_HQgyLLz7yUAqe0TmNs'></v-img>
             <p class="grey--text"><i>*시연을 위해 임의로 생성된 QR입니다.</i></p>
         </div>
         
