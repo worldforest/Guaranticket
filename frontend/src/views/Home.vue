@@ -68,14 +68,14 @@ export default {
       musical: [],
       sports: [],
       mainPosters:[
-        {
-          src : 'https://www.gangel.kr/files/attach/images/287/543/397/001/ced86dfc54a61132ac249ea4b051ccaa.jpg',
-          title : '오마이걸 Fall in Love',
-        },
-        {
-          src : 'https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2019/01/PS19011400024.jpg',
-          title : 'BLACK PINK 세번째 단독 콘서트',
-        },
+        // {
+        //   src : 'https://www.gangel.kr/files/attach/images/287/543/397/001/ced86dfc54a61132ac249ea4b051ccaa.jpg',
+        //   title : '오마이걸 Fall in Love',
+        // },
+        // {
+        //   src : 'https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2019/01/PS19011400024.jpg',
+        //   title : 'BLACK PINK 세번째 단독 콘서트',
+        // },
         {
           src: 'https://t1.daumcdn.net/cfile/tistory/2705294E565BCB2411',
           title: '전두엽을 마비시키는 뮤지컬 시카고',

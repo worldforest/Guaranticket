@@ -234,10 +234,10 @@ export default {
             }
         },
         sms(){
-            if(!this.user.phone){
-                alert("휴대폰 번호를 입력해주세요.");
-                return;
-            }
+            // if(!this.user.phone){
+            //     alert("휴대폰 번호를 입력해주세요.");
+            //     return;
+            // }
             this.authMenu = true;
             sendSMS(this.user.phone,
                 response => {
@@ -274,8 +274,8 @@ export default {
         doJoin(){
             if(!this.validations.email)
                 alert("이메일 중복확인이 필요합니다.");
-            else if(!this.validations.auth)
-                alert("휴대폰 인증이 필요합니다.");
+            // else if(!this.validations.auth)
+            //     alert("휴대폰 인증이 필요합니다.");
             else if(!this.user.gender)
                 alert("성별을 선택하세요.");
             else if(this.$refs.form.validate()){

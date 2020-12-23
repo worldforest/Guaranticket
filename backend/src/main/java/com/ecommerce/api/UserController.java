@@ -142,6 +142,7 @@ public class UserController {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User newUser = userService.add(user);
+		System.out.println(newUser);
 		return newUser;
 	}
 	

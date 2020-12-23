@@ -73,7 +73,7 @@
 
 	<insert id="create" parameterType="com.ecommerce.domain.User">
 	    <selectKey keyProperty="id" resultType="Integer" order="AFTER">
-        	SELECT LAST_INSERT_ID() as id
+        	SELECT LASTVAL() as id
     	</selectKey>
 		INSERT INTO users
 		(

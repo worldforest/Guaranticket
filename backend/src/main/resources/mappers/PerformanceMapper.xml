@@ -69,7 +69,7 @@
 	
 	<insert id="create" parameterType="com.ecommerce.domain.Performance">
 		<selectKey keyProperty="pid" resultType="Long" order="AFTER">
-        	SELECT LAST_INSERT_ID()
+        	SELECT LASTVAL()
     	</selectKey>
 		INSERT INTO performances
 		(

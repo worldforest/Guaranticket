@@ -69,8 +69,8 @@ public class UserService implements IUserService {
 
 	@Override
 	public void certifiedPhoneNumber(String phoneNumber, String certNum) {
-		String API_KEY = "NCSVILBBS8YJR771";
-        String API_SECRET = "G8Q3QQVESJSMWMM2HBE5TUFWQBS99EUG";
+		String API_KEY = "NCSGNSQNIU6YUBYC";
+        String API_SECRET = "ZL3KXTSFK00FSPV7LZVB8EXPFFMVL0QR";
         String FROM = "01093788047";
         Message coolsms = new Message(API_KEY, API_SECRET);
 
